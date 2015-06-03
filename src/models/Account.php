@@ -1,6 +1,6 @@
-<?php
+<?php namespace Cloudoki\OaStack
 
-class Account extends BaseModel {
+class Account extends Eloquent {
 
 	use SoftDeletingTrait;
 
@@ -23,16 +23,6 @@ class Account extends BaseModel {
 	{
 		return $this->belongsToMany ('User');
 	}
-	
-	/**
-	 * Get account id
-	 *
-	 * @return	int
-	 */
-	public function getId ()
-	{
-		return (int) $this->id;
-	}
 
 	/**
 	 * Get account name
@@ -44,7 +34,6 @@ class Account extends BaseModel {
 		return $this->name;
 	}
 
-		
 	/**
 	 * Set account name
 	 *
@@ -56,65 +45,7 @@ class Account extends BaseModel {
 		
 		return $this;
 	}
-	
-	/**
-	 * Get account unique name
-	 *
-	 * @return	string
-	 */
-	public function getUnique ()
-	{
-		return $this->unique;
-	}
-	
-	/**
-	 * Set account unique name
-	 *
-	 * @param	string	$unique
-	 */
-	public function setUnique ($unique)
-	{
-		$this->unique = $unique;
-		
-		return $this;
-	}
-	
-	/**
-	 * Get Users
-	 * All users related to the account.
-	 *
-     * @param $display
-     * @return array
-     */
-	public function getUsers ($display)
-	{
-		# Get related users
-		return $this->users->schema ($display);
-	}
 
-	/**
-	 *	Get Active
-	 *
-	 *	@return int
-	 */
-	public function getActive ()
-	{
-		return $this->active;
-	}
-	
-	/**
-	 *	Set Active
-	 *
-	 *	@param	int		$active
-	 *	@return self
-	 */
-	public function setActive ($active)
-	{
-		$this->active = $active;
-		
-		return $this;
-	}
-	
 	/**
 	 *	Get Invitation Token
 	 *

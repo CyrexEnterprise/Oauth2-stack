@@ -1,6 +1,6 @@
-<?php
+<?php namespace Cloudoki\OaStack
 
-class User extends BaseModel {
+class User extends Eloquent {
 	
 	use SoftDeletingTrait;
 	

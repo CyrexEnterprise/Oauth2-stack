@@ -1,4 +1,4 @@
-@extends('master')
+@extends('oastack::master')
 
 @section('content')
 

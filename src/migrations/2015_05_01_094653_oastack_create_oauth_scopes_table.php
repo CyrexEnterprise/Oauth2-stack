@@ -16,6 +16,7 @@ class OastackCreateOauthScopesTable extends Migration {
 		
 			Schema::create ('oauth_scopes', function (Blueprint $table)
 			{
+				$table->increments ('id');
 				$table->text ('scope')->nullable ();
 				$table->tinyInteger('is_default');
 			});
@@ -30,5 +31,4 @@ class OastackCreateOauthScopesTable extends Migration {
 	{
 		Schema::dropIfExists ('oauth_scopes');
 	}
-
 }

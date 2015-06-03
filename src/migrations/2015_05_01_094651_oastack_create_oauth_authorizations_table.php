@@ -16,6 +16,7 @@ class OastackCreateOauthAuthorizationsTable extends Migration {
 		
 			Schema::create ('oauth_authorizations', function (Blueprint $table)
 			{
+				$table->increments ('id');
 				$table->string ('client_id', 80)->primary ();
 				$table->integer('user_id');
 				$table->dateTime('authorization_date');

@@ -22,6 +22,7 @@ class OastackCreateUsersTable extends Migration {
 				$table->string ('lastname', 32);
 				$table->string ('password', 64)->nullable ();
 				$table->string ('reset_token', 40)->nullable ();
+				$table->string ('avatar', 80)->nullable ();
 				
 				$table->softDeletes ();
 				$table->timestamps ();

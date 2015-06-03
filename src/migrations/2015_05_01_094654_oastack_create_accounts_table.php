@@ -12,7 +12,16 @@ class OastackCreateAccountsTable extends Migration {
 	 */
 	public function up()
 	{
-		//
+		if (!Schema::hasTable('accounts'))
+		
+			Schema::create('accounts', function(Blueprint $table)
+			{
+				$table->increments('id');
+				$table->string('name', 32);
+
+				$table->softDeletes();
+				$table->timestamps();
+			});
 	}
 
 	/**
@@ -22,7 +31,7 @@ class OastackCreateAccountsTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::dropIfExists ('accounts');
 	}
 
 }

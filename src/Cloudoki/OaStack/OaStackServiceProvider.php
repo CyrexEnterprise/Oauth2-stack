@@ -19,6 +19,9 @@ class OaStackServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('cloudoki/oastack');
+		
+		# Oauth2 Routes
+		include __DIR__.'/../../routes.php';
 	}
 
 	/**
