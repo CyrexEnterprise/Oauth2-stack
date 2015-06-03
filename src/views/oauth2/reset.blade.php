@@ -41,7 +41,7 @@
 			<div class="input-group">
 				{{ Form::label ('password', trans('oastack::oauth2.user.reset.password'), ['class'=> 'input-group-addon']) }}
 				{{ Form::password ('password', ['required'=> 'required', 'minlength'=> 6, 'class'=> 'form-control']) }}
-				<span class="input-group-addon">min. 6 chars</span>
+				<span class="input-group-addon">{{trans('oastack::oauth2.user.reset.minchars')}}</span>
 			</div>
 			<br>
 			

@@ -25,6 +25,8 @@ Route::group(array ('prefix'=> 'oauth2'), function ()
 	
 	Route::get ('invitation/{path?}', 'OaStackViewController@subscribe');
 	Route::post ('invitation/{path?}', 'OaStackViewController@subscribed');
+	
+	Route::get ('invite', 'OaStackViewController@invite');
 });
 
 # Authentication required.

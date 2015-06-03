@@ -48,14 +48,15 @@
 			<br>
 			
 			<div class="input-group">
-				
 				{{ Form::label ('password', trans('oastack::oauth2.user.subscribe.password'), ['class'=> 'input-group-addon']) }}
-				{{ Form::text ('password', '', ['placeholder'=> trans('oastack::oauth2.user.subscribe.pholder'), 'required'=> 'required', 'minlength'=> 6, 'class'=> 'form-control']) }}
-				<span class="input-group-btn">
-					<button type="button" class="btn btn-default">
-						<span class="glyphicon glyphicon-cloud-download" aria-hidden="true" onclick="javascript:generate ();"></span>
-					</button>
-				</span>
+				{{ Form::password ('password', ['required'=> 'required', 'minlength'=> 6, 'class'=> 'form-control']) }}
+				<span class="input-group-addon">{{trans('oastack::oauth2.user.subscribe.minchars')}}</span>
+			</div>
+			<br>
+			
+			<div class="input-group">
+				{{ Form::label ('password_confirmation', trans('oastack::oauth2.user.subscribe.password_conf'), ['class'=> 'input-group-addon']) }}
+				{{ Form::password ('password_confirmation', ['required'=> 'required', 'minlength'=> 6, 'class'=> 'form-control']) }}
 			</div>
 			<br>
 			
@@ -72,30 +73,7 @@
 		<a href="{{ Config::get ('oastack::config.privacy_url') }}">{{ Config::get ('oastack::config.privacy_url') }}</a>
 		
 	</div>
-	
-	<script type="application/javascript">
 		
-		function generate ()
-		{
-			// Some randomness
-			if (window.crypto)
-			{
-				var numeric = new Uint32Array(2);
-				window.crypto.getRandomValues (numeric);
-			}
-			else var numeric = ['01234','56789'];
-			
-			// Build password			
-			var alphanum = numeric[0] + 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#@&-+=!?_.' + numeric[1];
-			var password = '';
-			
-			for (var n=0; n < 32; n++) password += alphanum[Math.floor(Math.random()*alphanum.length)];
-			
-			document.getElementById('password').value = password;
-		}
-		
-	</script>
-	
 </article>
 
 @stop

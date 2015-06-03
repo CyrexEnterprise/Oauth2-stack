@@ -155,6 +155,23 @@ class OaStackViewController extends Controller {
 	}
 	
 	/**
+	 *	User Invite Form
+	 *	Show user invite fields
+	 */
+	public function invite ($token)
+	{
+		// Accounts list
+		$accounts = [];
+		Account::all()->each (function ($account) use ($accounts)
+		{
+			$accounts [$account->getKey ()] = $account->getName ();
+		});
+		
+		// Build View
+		return View::make ('oastack::oauth2.invite', ['accounts'=> $accounts]);
+	}
+	
+	/**
 	 *	Subscribe User
 	 *	Show user registration
 	 *

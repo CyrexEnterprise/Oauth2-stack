@@ -50,7 +50,22 @@ return array(
 			'email'		=> 'E-mail address',
 			'password'	=> 'New Password &nbsp; &nbsp;',
 			'password_conf'	=> 'Repeat Password',
+			'minchars'	=> 'min. 6 chars',
 			'submit'	=> 'Change'
+		],
+		
+		'invite' =>
+		[
+			'title'		=> 'Invite User',
+			'info'		=> 'Provide the user\'s e-mail address, first and last name. An invitation e-mail will be sent for the selected account.',
+			'firstname'	=> 'First Name',
+			'fholder'	=> 'John',
+			'lastname'	=> 'Last Name',
+			'lholder'	=> 'Doe',
+			'email'		=> 'E-mail address',
+			'eholder'	=> 'johndoe@gmail.com',
+			'account'	=> 'Account',
+			'submit'	=> 'Send Invite'
 		],
 		
 		'subscribe' =>
@@ -64,8 +79,9 @@ return array(
 			'lholder'	=> 'Doe',
 			'email'		=> 'E-mail address',
 			'eholder'	=> 'johndoe@gmail.com',
-			'password'	=> 'Password',
-			'pholder'	=> 'Make it strong yet memorable!',
+			'password'	=> 'Password &nbsp; &nbsp; &nbsp; &nbsp;',
+			'minchars'	=> 'min. 6 chars',
+			'password_conf'	=> 'Repeat Password',
 			'submit'	=> 'Register',
 			'footer'	=> 'You can find out more about our privacy policy at '
 		],
