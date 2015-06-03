@@ -7,7 +7,7 @@
 	@if ( empty ($error) )
 	
 	<div class="panel-heading">
-		<h3 class="panel-title">{{ trans('oastack::oauth2.user.invite.title', ['account'=> $account['name']]) }}</h3>
+		<h3 class="panel-title">{{ trans('oastack::oauth2.user.invite.title') }}</h3>
 	</div>
 	
 	@endif
@@ -25,35 +25,35 @@
 			
 		@else
 		
-		<p>{{ trans('oastack::oauth2.user.invite.info', ['account'=> $account['name']]) }}</p>
+		<p>{{ trans('oastack::oauth2.user.invite.info') }}</p>
 	
 		{{ Form::open (['url' => '#']) }}
 					
 			<div class="input-group">
 				{{ Form::label ('firstname', trans('oastack::oauth2.user.invite.firstname'), ['class'=> 'input-group-addon']) }}
-				{{ Form::text ('firstname', $user['firstname'], ['placeholder'=> trans('oastack::oauth2.user.invite.fholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
+				{{ Form::text ('firstname', '', ['placeholder'=> trans('oastack::oauth2.user.invite.fholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
 			</div>
 			<br>
 			
 			<div class="input-group">
 				{{ Form::label ('lastname', trans('oastack::oauth2.user.invite.lastname'), ['class'=> 'input-group-addon']) }}
-				{{ Form::text ('lastname', $user['lastname'], ['placeholder'=> trans('oastack::oauth2.user.invite.lholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
+				{{ Form::text ('lastname', '', ['placeholder'=> trans('oastack::oauth2.user.invite.lholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
 			</div>
 			<br>
 			
 			<div class="input-group">
 				{{ Form::label ('email', trans('oastack::oauth2.user.invite.email'), ['class'=> 'input-group-addon']) }}
-				{{ Form::email ('email', $user['email'], ['placeholder'=> trans('oastack::oauth2.user.invite.eholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
+				{{ Form::email ('email', '', ['placeholder'=> trans('oastack::oauth2.user.invite.eholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
 			</div>
 			<br>
 			
 			<div class="input-group">
-				<span class="input-group-addon">trans('oastack::oauth2.user.invite.account')</span>
-				Form::select('size', $accounts, ['class'=> 'input-group-addon']);
+				<span class="input-group-addon">{{ trans('oastack::oauth2.user.invite.account') }}</span>
+				{{ Form::select('size', $accounts, ['class'=> 'input-group-addon']) }}
 			</div>
 			<br>
 						
-			{{ Form::submit(trans('oastack::oauth2.user.invite.submit'), ['class'=> 'btn btn-default']) }}
+			{{ Form::submit(trans('oastack::oauth2.user.invite.submit'), ['class'=> 'btn btn-primary']) }}
 		
 		{{ Form::close () }}
 		

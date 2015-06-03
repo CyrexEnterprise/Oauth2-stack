@@ -25,14 +25,15 @@ Route::group(array ('prefix'=> 'oauth2'), function ()
 	
 	Route::get ('invitation/{path?}', 'OaStackViewController@subscribe');
 	Route::post ('invitation/{path?}', 'OaStackViewController@subscribed');
-	
-	Route::get ('invite', 'OaStackViewController@invite');
 });
 
 # Authentication required.
 
 Route::group(array ('prefix'=> 'oauth2', 'before'=> 'auth'), function ()
 {
+	# User
+	Route::get ('invite', 'OaStackViewController@invite');
+	
 	# App
 	Route::get ('register', 'OaStackViewController@registerapp');
 	Route::post ('register', 'OaStackViewController@registeredapp');

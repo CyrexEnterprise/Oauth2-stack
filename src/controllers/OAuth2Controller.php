@@ -162,6 +162,19 @@ class OAuth2Controller extends Controller {
 		});
 	}
 	
+	/**
+	 *	Accounts list
+	 *	For API side invite usage.
+	 *
+	 *	@return	array
+	 */
+	public static function accounts ()
+	{
+		// Bouncer here
+		
+		return [];
+	}
+
 	
 	/**
 	 *	Reset user password
