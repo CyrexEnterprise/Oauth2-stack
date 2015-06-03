@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BouncerCreateOauthClientsTable extends Migration {
+class OastackCreateOauthClientsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -17,7 +17,7 @@ class BouncerCreateOauthClientsTable extends Migration {
 			Schema::create ('oauth_clients', function (Blueprint $table)
 			{
 				$table->increments ('id');
-				$table->string ('client_id', 80)->primary ();
+				$table->string ('client_id', 80);
 				$table->string ('client_secret', 80);
 				$table->string ('client_name', 80);
 				$table->string ('redirect_uri', 256);

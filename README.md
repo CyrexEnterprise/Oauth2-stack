@@ -1,8 +1,6 @@
 # Oauth2 Stack
 ####A complete Oauth2 Server and Views stack
 
-Cloudoki just released a brand new package, all [MIT](http://opensource.org/licenses/MIT).
-
 With the **Oauth2 Stack** one can integrate the complete Open Authentication 2.0 flow in a single require.
 The package includes **DB** migration files, the **Oauth2 Server**, **Account/User models** and all the required **web** and **e-mail views**.
 
@@ -71,3 +69,5 @@ $ php artisan migrate --package="cloudoki/oauth2-stack"
 ```
 *Make sure your project database is connected, first...*
 
+
+This package is all [MIT](http://opensource.org/licenses/MIT).

@@ -17,7 +17,7 @@ class OastackCreateUsersTable extends Migration {
 			Schema::create ('users', function (Blueprint $table)
 			{
 				$table->increments ('id');
-				$table->unique ('email', 32);
+				$table->string('email', 32)->unique();
 				$table->string ('firstname', 32);
 				$table->string ('lastname', 32);
 				$table->string ('password', 64)->nullable ();
