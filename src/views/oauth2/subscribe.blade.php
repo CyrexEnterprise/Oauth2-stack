@@ -69,7 +69,7 @@
 	<div class="panel-footer">
 	
 		{{ trans ('oastack::oauth2.user.subscribe.footer') }}
-		<a href="{{ Config::get ('oastack::config.privacyurl') }}">{{ Config::get ('oastack::config.privacyurl') }}</a>
+		<a href="{{ Config::get ('oastack::config.privacy_url') }}">{{ Config::get ('oastack::config.privacy_url') }}</a>
 		
 	</div>
 	

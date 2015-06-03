@@ -76,7 +76,6 @@ return array(
 			'info'		=> 'Your subscription to :account was successful!',
 			'retry'		=> 'Retry subscription',
 			'proceed'	=> 'Proceed'
-			
 		]
 	],
 	

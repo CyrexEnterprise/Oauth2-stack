@@ -22,6 +22,9 @@ class OaStackServiceProvider extends ServiceProvider {
 		
 		# Oauth2 Routes
 		include __DIR__.'/../../routes.php';
+		
+		# Ouath2 simple filter
+		include __DIR__.'/../../filters.php';
 	}
 
 	/**

@@ -1,8 +1,6 @@
 <?php namespace Cloudoki\OaStack;
 
 use OAuth2\GrantType\AuthorizationCode;
-//use OAuth2\GrantType\ClientCredentials;
-//use OAuth2\GrantType\JwtBearer;
 use OAuth2\GrantType\RefreshToken;
 use OAuth2\Request;
 use OAuth2\Server;
@@ -44,13 +42,7 @@ class Oauth2Verifier
 		$pdoconfig = array
 		(
 			'client_table' => 'oauth_clients',
-			'access_token_table' => 'oauth_access_tokens',
-			/*'refresh_token_table' => 'oauth2_refresh_tokens',
-			'code_table' => 'oauth2_authorization_codes',
-			'user_table' => 'oauth2_users',
-			'jwt_table'  => 'oauth2_jwt',
-			'scope_table'  => 'oauth2_scopes',
-			'public_key_table'  => 'oauth2_public_keys',*/
+			'access_token_table' => 'oauth_access_tokens'
 		);
 
 		$storage = new Pdo (array('dsn' => $dsn, 'username' => $db->username, 'password' => $db->password), $pdoconfig);
@@ -84,7 +76,7 @@ class Oauth2Verifier
 	{
 		if (!isset ($this->request))
 		{
-			$this->request = $this->createRequestFromGlobals(); // Request::createFromGlobals();
+			$this->request = $this->createRequestFromGlobals();
 		}
 
 		return $this->request;

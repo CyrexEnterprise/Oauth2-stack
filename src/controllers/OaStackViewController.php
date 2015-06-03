@@ -1,6 +1,6 @@
 <?php
 
-class StackViewController extends Controller {
+class OaStackViewController extends Controller {
 	
 	protected static $loginRules = array
 	(	
@@ -274,7 +274,6 @@ class StackViewController extends Controller {
 			$payload = array_intersect_key (Input::all(), $rules);
 		}
 		
-		
 		# Request Foreground Job
 		return self::jobdispatch ( 'controllerDispatch', (object) array
 		(
@@ -282,13 +281,5 @@ class StackViewController extends Controller {
 			'controller'=> $controller, 
 			'payload'=> isset ($payload)? $payload: self::prepInput (array ())
 		));
-		
-		//# Error catching
-		//if (preg_match ('/error/', substr ($response, 2, 8)))
-			
-		//	throw new WorkerException ($response);
-		
-		# Return	
-		//return $response;
 	}
 }

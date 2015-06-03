@@ -24,13 +24,11 @@ class OAuth2Controller extends Controller {
 		$request = Oauth2Verifier::getInstance ()->getRequest ();
 		$response = new Response();
 		
-		$client = self::validateClient ($server, $request, $response); // list($client, $clientid) = self::validateClient ($server, $request, $response);
+		$client = self::validateClient ($server, $request, $response);
 		
 		if (!$client || $client->getRedirectUri () != $payload->redirect_uri)
 			
 			throw new InvalidParameterException ('Invalid client id or redirect uri');
-			
-			//throw new InvalidParameterException ($response->getParameter ('error_description'));
 		
 		
 		# Validate user
@@ -51,7 +49,7 @@ class OAuth2Controller extends Controller {
 				'access_token'=> Oauth2AccessToken::generateAccessToken(),
 				'client_id'=> $client->getClientId (),
 				'user_id'=> $user->getId (),
-				'expires'=> new Carbon('+ 2 minute', Config::get ('oastack::config.timezone'))
+				'expires'=> new Carbon('+ 2 minute', Config::get ('app.timezone'))
 			]);
 			
 			return 
@@ -72,7 +70,7 @@ class OAuth2Controller extends Controller {
 				'access_token'=> Oauth2AccessToken::generateAccessToken(),
 				'client_id'=> $client->getClientId (),
 				'user_id'=> $user->getId (),
-				'expires'=> Carbon::now(new DateTimeZone(Config::get ('oastack::config.timezone')))->addYear ()
+				'expires'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))->addYear ()
 			]);
 
 		return
@@ -104,18 +102,17 @@ class OAuth2Controller extends Controller {
 		
 		
 		# Token handling
-		Oauth2Authorization::create (['client_id'=> $sessiontoken->client->getClientId (), 'user_id'=> $sessiontoken->user->getId (), 'authorization_date'=> Carbon::now(new DateTimeZone(Config::get ('oastack::config.timezone')))]);
+		Oauth2Authorization::create (['client_id'=> $sessiontoken->client->getClientId (), 'user_id'=> $sessiontoken->user->getId (), 'authorization_date'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))]);
 		
 		$accesstoken = Oauth2AccessToken::create (
 		[
 			'access_token'=> Oauth2AccessToken::generateAccessToken(), 
 			'client_id'=> $sessiontoken->client->getClientId (), 
 			'user_id'=> $sessiontoken->user->getId (), 
-			'expires'=> Carbon::now(new DateTimeZone(Config::get ('oastack::config.timezone')))->addYear ()
+			'expires'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))->addYear ()
 		]);
 		
 		$sessiontoken->delete ();
-		
 		
 		return
 		[
@@ -138,13 +135,6 @@ class OAuth2Controller extends Controller {
 		$clientid = $server->getAuthorizeController ()->getClientId ();
 		
 		return Oauth2Client::whereClientId ($clientid)->first ();
-		
-		
-		/*return array
-		(
-			(object) $server->getStorage ('client')->getClientDetails ($clientid),
-			$clientid
-		);*/
 	}
 
 
@@ -172,23 +162,6 @@ class OAuth2Controller extends Controller {
 		});
 	}
 	
-	/*public static function invite ($user, $accountid)
-	{		
-		$account = $user->accounts->find ($accountid);
-
-		$data =
-		[
-			'url'=> Config::get ('oastack::invite_url') . '/' . $account->getInvitationToken (), 
-			'account'=> $account->getName ()
-		];
-		
-		Mail::send ('oastack::emails.invitation', $data, function ($message) use ($user)
-		{
-			$message->to ($user->getEmail (), $user->getFullName ())
-			    	->subject (trans ('oastack::oauth2.user.invite.subject'));
-			
-		});
-	}*/
 	
 	/**
 	 *	Reset user password
@@ -224,6 +197,7 @@ class OAuth2Controller extends Controller {
 		});
 	}
 	
+	
 	/**
 	 *	Change user password
 	 *	Based on simple form.
@@ -251,6 +225,7 @@ class OAuth2Controller extends Controller {
 			 ->save ();
 	}
 
+
 	/**
 	 *	Invitation Token
 	 *	Get related models.
@@ -266,6 +241,7 @@ class OAuth2Controller extends Controller {
 			Account::whereHas ('users', function ($q) use ($token) { $q->where ('account_user.invitation_token', $token); })->first ()
 		];
 	}
+	
 	
 	/**
 	 *	Ratify Token
@@ -288,6 +264,7 @@ class OAuth2Controller extends Controller {
 			'account'=>  $account->schema ('basic')
 		];
 	}
+	
 	
 	/**
 	 *	Subscribe
@@ -313,6 +290,7 @@ class OAuth2Controller extends Controller {
 			
 		return $account->schema ('basic');
 	}
+		
 			
 	/**
 	 *	Register user
@@ -330,6 +308,7 @@ class OAuth2Controller extends Controller {
 		return $client->schema ('full');
 	}
 	
+	
 	/**
 	 *	Register app
 	 *	Based on simple form.
@@ -340,7 +319,7 @@ class OAuth2Controller extends Controller {
 		// OaStack::check ();
 		
 		$client = new Oauth2Client ();
-		$client ->appendPayload (Input::get ('payload')) // (json_decode (Input::get ('payload')))
+		$client ->appendPayload (Input::get ('payload'))
 				->save ();
 		
 		return $client->schema ('full');
