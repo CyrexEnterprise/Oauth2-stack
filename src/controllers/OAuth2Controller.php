@@ -180,7 +180,7 @@ class OAuth2Controller extends Controller {
 			throw new InvalidParameterException ('Unknown e-mail address.');
 			
 		# Reset token
-		$reset_token = $user->makeInvitationToken ();
+		$reset_token = $user->makeToken ();
 		$user->setResetToken ($reset_token)->save ();
 		
 		$data =

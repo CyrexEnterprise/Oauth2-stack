@@ -25,6 +25,26 @@ class User extends Eloquent {
 	}
 	
 	/**
+	 * Acces Token relationship
+	 *
+	 * @return hasMany
+	 */
+	public function oauth2accesstokens ()
+	{
+		return $this->hasMany('Oauth2AccessToken');
+	}
+
+	/**
+	 * Authoirzations relationship
+	 *
+	 * @return hasMany
+	 */
+	public function oauth2authorizations ()
+	{
+		return $this->hasMany('Oauth2Authorization');
+	}
+
+	/**
 	 *	Find By Email
 	 *
 	 *	@param	object	$query
@@ -34,28 +54,20 @@ class User extends Eloquent {
 	 */
 	public function scopeEmail ($query, $email)
 	{
-		return $query->where ('email', $email);
-	}
-	
-	
-	/**
-	 * Get user id
-	 *
-	 * @return	int
-	 */
-	public function getId ()
-	{
-		return (int) $this->id;
+		return $query->where('email', $email);
 	}
 	
 	/**
-	 * Get user full name
+	 * Check Reset Token
 	 *
-	 * @return	string
+	 *	@param	object	$query
+	 *	@param	string	$token
+	 *
+	 *	@return	object
 	 */
-	public function getFullName ()
+	public function scopeResetToken ($query, $token)
 	{
-		return $this->firstname . ' ' . $this->name;
+		return $query->where('reset_token', $token);
 	}
 	
 	/**
@@ -93,7 +105,7 @@ class User extends Eloquent {
 	 *
 	 * @param	string	$name
 	 */
-	public function setName ($name)
+	public function setLastName ($name)
 	{
 		$this->name = $name;
 	}
@@ -141,16 +153,50 @@ class User extends Eloquent {
 	}
 	
 	/**
-	 * Get Accounts
-	 * All accounts related to the user.
+	 *	Get Avatar
 	 *
-     * @param	$display
-     * @return	array
-     */
-	public function getAccounts ($display)
+	 *	@return string
+	 */
+	public function getAvatar()
 	{
-		# Get related users
-		return $this->accounts->schema ($display);
+		return $this->avatar;
 	}
+	
+	/**
+	 *	Set Active
+	 *
+	 *	@param	int		$active
+	 *	@return self
+	 */
+	public function setAvatar($url)
+	{
+		$this->avatar = $url;
+		
+		return $this;
+	}
+	
+	/**
+	 *	Make Token
+	 *
+	 *	@return string
+	 */
+	public function makeToken ()
+	{
+		$rand = ['pork', 'belly', 'hadakamugi', 'tuna', 'ninja', 'breakfast', 'storm', 'napkin', 'bunny', 'domination'];
 
+		return md5 (uniqid ( $rand[rand (0, 9)] . ' ' . $rand[rand (0, 9)], true));
+	}
+	
+	/**
+	 *	Set Reset Token
+	 *
+	 *	@param	string	$token
+	 *	@return self
+	 */
+	public function setResetToken ($token)
+	{
+		$this->reset_token = $token;
+		
+		return $this;
+	}
 }
