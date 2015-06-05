@@ -1,4 +1,12 @@
-<?php namespace Cloudoki\OaStack
+<?php 
+
+/**
+ *	User Model	
+ *	Add the namespace if you want to extend your custom User model with this one.	
+ */
+ 
+//	namespace Cloudoki\OaStack;
+
 
 class User extends Eloquent {
 	
