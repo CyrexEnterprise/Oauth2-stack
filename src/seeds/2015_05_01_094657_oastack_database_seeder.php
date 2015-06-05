@@ -6,15 +6,16 @@ class OaStackSeeder extends Seeder {
 
     public function run()
     {
-        $this->call('OaAccountTableSeeder');
-        $this->call('OaUserTableSeeder');
+        $this->call('OaAccountsTableSeeder');
+        $this->call('OaUsersTableSeeder');
+        $this->call('OauthClientsTableSeeder');
 
-        $this->command->info('User table seeded!');
+        $this->command->info('OaStack tables seeded!');
     }
 
 }
 
-class OaAccountTableSeeder extends Seeder {
+class OaAccountsTableSeeder extends Seeder {
 
     public function run()
     {
@@ -23,11 +24,26 @@ class OaAccountTableSeeder extends Seeder {
 
 }
 
-class OaUserTableSeeder extends Seeder {
+class OaUsersTableSeeder extends Seeder {
 
     public function run()
     {
         User::create(['email' => 'jane@doe.com', 'firstname'=> 'Jane', 'lastname'=> 'Doe']);
+    }
+
+}
+
+class OauthClientsTableSeeder extends Seeder {
+
+    public function run()
+    {
+        $client = new Oauth2Client ();
+		$client ->setUser (1)
+				->setClientId ()
+				->setClientSecret ()
+				->setName ('Project app')
+				->setRedirectUri ('http://localhost/projectapp/auth.html')
+				->save ();
     }
 
 }

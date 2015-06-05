@@ -18,6 +18,7 @@
 		"php": ">=5.4.0",
 		"illuminate/support": "4.2.*",
 		"bshaffer/oauth2-server-php": "v1.6",
+		"koenbetsens/jobserver": "dev-master",
 		"koenbetsens/jobserver": "dev-master"
 	},
 	"autoload": {
@@ -25,8 +26,8 @@
 			"src/controllers",
 			"src/lang",
 			"src/migrations",
-			"src/seeds",
 			"src/models",
+			"src/seeds",
 			"src/views"
 		],
 		"psr-0": {

@@ -13,8 +13,6 @@ class Oauth2Client extends Eloquent
 	
 	protected $table = 'oauth_clients';
 	
-	//public $primaryKey = 'client_id';
-	
 	/**
 	 * Since we're using an existing db and Eloquent expects us to have (by default)
 	 * the updated_at, created_at columns, we need to disable the automatic timestamp updates
@@ -52,7 +50,7 @@ class Oauth2Client extends Eloquent
 
 	public function user ()
 	{
-		return $this->hasOne('User' /*, 'id', 'user_id'*/);
+		return $this->hasOne('User');
 	}
 	
 	/**
@@ -157,16 +155,20 @@ class Oauth2Client extends Eloquent
 	/**
 	 *	Set User
 	 *	Current user is set as app user. Easy to improve to any (exist confirmed) user.
+	 *
+	 *	@param	int	$id
 	 */
-	public function setUser ()
+	public function setUser ($id)
 	{
-		$user = 1;// OaStack::user ()->getKey();
+		$userid = (int) $id?: Guardian::user ()->getKey();
 		
-		if (!$user)
+		if (!$userid)
 		
 			throw new MissingParameterException ('an existing User ID is required');
 		
-		$this->user_id = (int) $user;
+		$this->user_id = $userid;
+		
+		return this;
 	}
 	
 	/**
