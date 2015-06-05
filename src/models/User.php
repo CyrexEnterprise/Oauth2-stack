@@ -10,7 +10,7 @@ class User extends Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('firstname', 'name', 'email', 'password');
+	protected $fillable = array('firstname', 'lastname', 'email', 'avatar');
 	
 	protected $dates = ['deleted_at'];
 	

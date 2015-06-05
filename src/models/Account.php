@@ -10,7 +10,7 @@ class Account extends Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('unique', 'name');
+	protected $fillable = array('name');
 	
     protected $dates = ['deleted_at'];
     

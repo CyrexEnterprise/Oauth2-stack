@@ -6,24 +6,24 @@ class OaStackSeeder extends Seeder {
 
     public function run()
     {
-        $this->call('AccountTableSeeder');
-        $this->call('UserTableSeeder');
+        $this->call('OaAccountTableSeeder');
+        $this->call('OaUserTableSeeder');
 
         $this->command->info('User table seeded!');
     }
 
 }
 
-class AccountTableSeeder extends Seeder {
+class OaAccountTableSeeder extends Seeder {
 
     public function run()
     {
-       User::create(['name' => 'Project Account']);
+       Account::create(['name' => 'Project Account']);
     }
 
 }
 
-class UserTableSeeder extends Seeder {
+class OaUserTableSeeder extends Seeder {
 
     public function run()
     {
