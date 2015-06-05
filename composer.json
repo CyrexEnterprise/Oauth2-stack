@@ -25,6 +25,7 @@
 			"src/controllers",
 			"src/lang",
 			"src/migrations",
+			"src/seeds",
 			"src/models",
 			"src/views"
 		],
