@@ -5,7 +5,7 @@
 
 		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-        {{ HTML::style('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css') }}
+        {{ HTML::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css') }}
 
 	</head>
 
