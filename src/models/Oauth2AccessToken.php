@@ -1,4 +1,4 @@
-<?php
+<?php namespace Cloudoki\OaStack;
 	
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 
