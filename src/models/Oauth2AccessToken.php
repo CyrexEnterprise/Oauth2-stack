@@ -54,6 +54,20 @@ class Oauth2AccessToken extends Eloquent
 	}
 	
 	/**
+	 *	Only Valids, with token
+	 *
+	 *	@param	object	$query
+	 *	@param	object	$client
+	 *
+	 *	@return	object
+	 */
+	public function scopeValidated ($query, $token)
+	{
+		return $query->where ('access_token', $token)
+					 ->whereRaw ('expires > now()');
+	}
+	
+	/**
 	 *	Only Valids, with client
 	 *
 	 *	@param	object	$query
