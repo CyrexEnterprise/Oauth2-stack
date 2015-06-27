@@ -1,6 +1,7 @@
 <?php
 use OAuth2\Response;
 use Cloudoki\OaStack\Oauth2Verifier;
+use Cloudoki\OaStack\Oauth2AccessToken;
 use Illuminate\Support\Facades\DB as DB;
 use Carbon\Carbon;
 
