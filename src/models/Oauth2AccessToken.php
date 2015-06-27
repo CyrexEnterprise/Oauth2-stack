@@ -1,6 +1,4 @@
 <?php namespace Cloudoki\OaStack;
-	
-use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Oauth2AccessToken extends Eloquent
 {
