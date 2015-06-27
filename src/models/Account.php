@@ -1,5 +1,7 @@
 <?php 
 
+use \Illuminate\Database\Eloquent\Model as Eloquent;
+
 /**
  *	Account Model	
  *	Add the namespace if you want to extend your custom Account model with this one.	
