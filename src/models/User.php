@@ -40,7 +40,7 @@ class User extends Eloquent {
 	 */
 	public function oauth2accesstokens ()
 	{
-		return $this->hasMany('Oauth2AccessToken');
+		return $this->hasMany('\Cloudoki\OaStack\Oauth2AccessToken');
 	}
 
 	/**
