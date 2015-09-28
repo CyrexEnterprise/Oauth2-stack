@@ -16,10 +16,9 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-		"illuminate/support": "4.2.*",
+		"illuminate/support": "5.1.*",
 		"bshaffer/oauth2-server-php": "v1.6",
-		"koenbetsens/jobserver": "dev-master",
-		"koenbetsens/jobserver": "dev-master"
+		"koenbetsens/jobserver": "dev-lvel5"
 	},
 	"autoload": {
 		"classmap": [
