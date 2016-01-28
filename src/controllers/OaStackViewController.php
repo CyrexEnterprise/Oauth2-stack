@@ -1,4 +1,8 @@
 <?php
+	
+namespace Cloudoki\OaStack;
+	
+use Illuminate\Routing\Controller as Controller;
 
 class OaStackViewController extends Controller {
 	
