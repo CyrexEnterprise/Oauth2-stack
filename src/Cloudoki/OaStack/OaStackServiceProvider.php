@@ -18,13 +18,16 @@ class OaStackServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('cloudoki/oastack');
+		# $this->package('cloudoki/oastack');
 		
 		# Oauth2 Routes
-		include __DIR__.'/../../routes.php';
+		if (! $this->app->routesAreCached ())
+		{
+			require __DIR__.'/../../routes.php';
+		}
 		
 		# Ouath2 simple filter
-		include __DIR__.'/../../filters.php';
+		# include __DIR__.'/../../filters.php';
 	}
 
 	/**
