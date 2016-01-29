@@ -246,11 +246,8 @@ class OaStackViewController extends Controller {
 	 */
 	public static function validate ($input, $rules = array ())
 	{
-		// Add path attributes
-		Input::merge ($input);
-		
 		// Perform validation
-		$validator = Validator::make (Input::all(), $rules);
+		$validator = Validator::make (array_merge ($this->request->all(), $input), $rules);
 		
 		
 		// Check if the validator failed
@@ -271,7 +268,7 @@ class OaStackViewController extends Controller {
 		 global $app;
 		 
 		 // Add general data
-		 $jobload->access_token = Input::get ('access_token');
+		 $jobload->access_token = Request::input ('access_token');
 
 		 return $app->jobserver->request ($job, $jobload);
 	 }
@@ -288,7 +285,7 @@ class OaStackViewController extends Controller {
 		if (is_array ($input))
 		{
 			self::validate ($input, $rules);
-			$payload = array_intersect_key (Input::all(), $rules);
+			$payload = array_intersect_key ($this->request->all(), $rules);
 		}
 		
 		# Request Foreground Job
@@ -296,7 +293,7 @@ class OaStackViewController extends Controller {
 		(
 			'action'=> $method,
 			'controller'=> $controller, 
-			'payload'=> isset ($payload)? $payload: self::prepInput (array ())
+			'payload'=> $payload
 		));
 	}
 }

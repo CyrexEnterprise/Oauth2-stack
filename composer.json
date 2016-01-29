@@ -16,7 +16,7 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-		"illuminate/html": "5.*",
+		"laravelcollective/html": "5.2.*",
 		"bshaffer/oauth2-server-php": "v1.6"
 	},
 	"autoload": {

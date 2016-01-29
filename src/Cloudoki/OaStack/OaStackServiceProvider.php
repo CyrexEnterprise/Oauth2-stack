@@ -29,6 +29,19 @@ class OaStackServiceProvider extends ServiceProvider {
 		# Oauth2 Views
 		$this->loadViewsFrom (__DIR__.'/../../views', 'oastack');
 		
+		$this->publishes (
+		[
+			__DIR__.'/../../views' => resource_path ('views/vendor/oastack'),
+		]);
+		
+		# Oauth2 i18n
+		$this->loadTranslationsFrom (__DIR__.'/../../lang', 'courier');
+		
+		$this->publishes (
+		[
+			__DIR__.'/../../lang' => resource_path ('lang/vendor/oastack'),
+		]);
+		
 		# Ouath2 simple filter
 		# include __DIR__.'/../../filters.php';
 	}

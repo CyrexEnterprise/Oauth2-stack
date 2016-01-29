@@ -30,7 +30,7 @@
 		{{ Form::open (['before' => 'csrf', 'action'=> 
 		   [
 			'OaStackViewController@resetrequest',
-			'client_id'=> Input::get ('client_id'), 'redirect_uri'=> Input::get ('redirect_uri'), 'response_type'=> Input::get ('response_type'), 'state'=> Input::get ('state')
+			'client_id'=> Request::input ('client_id'), 'redirect_uri'=> Request::input ('redirect_uri'), 'response_type'=> Request::input ('response_type'), 'state'=> Request::input ('state')
 			]])
 		}}
 			

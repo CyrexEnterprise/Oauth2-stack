@@ -17,6 +17,41 @@ If you need your local environment set up, read [this guide](http://blog.cloudok
 
 ---
 
+##Laravel 5.2 MQ Install
+Add our package as requirement in your composer file.
+```
+$ nano composer.json
+```
+```
+"require": {
+    "laravel/framework": "5.2.*",
+    "cloudoki/oauth2-stack": "dev-master"
+    ...
+```
+You might want to run an update. If something goes wrong, change your `minimum-stability` to `dev` in the `composer.json` file, for now.
+```
+$ composer update
+```
+
+The package is now installed in the project `vendor` folder. You'll need to register the package provider in your app config file next.
+Since Laravel 5, the Illuminate\Form is no longer part of the core pack, so you should register it as well.
+```
+$ nano config/app.php
+```
+```
+	'providers' => [
+		...
+		Cloudoki\OaStack\OaStackServiceProvider::class,
+		Illuminate\Html\HtmlServiceProvider::class
+    ],
+
+	'aliases' => [
+		...
+        'Form'		=> Illuminate\Html\FormFacade::class,
+    ],
+```
+
+
 ##Laravel 4.2 MQ Install
 Add our package as requirement in your composer file.
 ```
@@ -25,7 +60,7 @@ $ nano composer.json
 ```
 "require": {
     "laravel/framework": "4.2.*",
-    "cloudoki/oauth2-stack": "dev-master"
+    "cloudoki/oauth2-stack": "v0.4"
     ...
 ```
 You might want to run an update. If something goes wrong, change your `minimum-stability` to `dev` in the `composer.json` file, for now.
