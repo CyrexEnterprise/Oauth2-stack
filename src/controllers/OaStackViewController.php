@@ -62,7 +62,7 @@ class OaStackViewController extends Controller {
 	public function login ()
 	{
 		// Build View
-		return View::make ('oastack::oauth2.login');
+		return view ('oastack::oauth2.login');
 	}
 	
 	/**
@@ -76,11 +76,11 @@ class OaStackViewController extends Controller {
 		
 		if (isset ($login->error))
 		
-			return View::make('oastack::oauth2.login', ['error'=> $login->message]);
+			return view('oastack::oauth2.login', ['error'=> $login->message]);
 		
 		else if (isset ($login->view))
 			
-			return View::make ('oastack::oauth2.' . $login->view, (array) $login);
+			return view ('oastack::oauth2.' . $login->view, (array) $login);
 		
 
 		return Redirect::away($login->uri);
@@ -93,7 +93,7 @@ class OaStackViewController extends Controller {
 	public function forgot ()
 	{
 		// Build View
-		return View::make ('oastack::oauth2.forgot');
+		return view ('oastack::oauth2.forgot');
 	}
 	
 	/**
@@ -107,7 +107,7 @@ class OaStackViewController extends Controller {
 		
 		if (isset ($login->error))
 		
-			return View::make('oastack::oauth2.forgot', ['error'=> $login->message]);
+			return view('oastack::oauth2.forgot', ['error'=> $login->message]);
 		
 
 		return Redirect::route('login');
@@ -120,7 +120,7 @@ class OaStackViewController extends Controller {
 	public function reset ($token)
 	{
 		// Build View
-		return View::make ('oastack::oauth2.reset', ['reset_token'=> $token]);
+		return view ('oastack::oauth2.reset', ['reset_token'=> $token]);
 	}
 	
 	/**
@@ -136,7 +136,7 @@ class OaStackViewController extends Controller {
 
 		if (isset ($reset->error))
 		
-			return View::make('oastack::oauth2.reset', ['error'=> $reset->message]);
+			return view('oastack::oauth2.reset', ['error'=> $reset->message]);
 	
 		return Redirect::route('login');
 	}
@@ -152,7 +152,7 @@ class OaStackViewController extends Controller {
 
 		if (isset ($login->error))
 		
-			return View::make('oastack::oauth2.login', ['error'=> $login->message]);
+			return view('oastack::oauth2.login', ['error'=> $login->message]);
 		
 		
 		return Redirect::away($login->uri);
@@ -168,7 +168,7 @@ class OaStackViewController extends Controller {
 		$accounts = json_decode (self::restDispatch ('accounts', 'OAuth2Controller'));		
 		
 		// Build View
-		return View::make ('oastack::oauth2.invite', ['accounts'=> $accounts]);
+		return view ('oastack::oauth2.invite', ['accounts'=> $accounts]);
 	}
 	
 	/**
@@ -183,7 +183,7 @@ class OaStackViewController extends Controller {
 		$invite = self::restDispatch ('identifyinvite', 'OAuth2Controller', ['token'=> $token], self::$invitationRules);
 		
 		// Build View
-		return View::make ('oastack::oauth2.subscribe', json_decode ($invite, true));
+		return view ('oastack::oauth2.subscribe', json_decode ($invite, true));
 	}
 	
 	/**
@@ -205,7 +205,7 @@ class OaStackViewController extends Controller {
 		}
 		
 		// Build View
-		return View::make('oastack::oauth2.subscribed', $response);
+		return view('oastack::oauth2.subscribed', $response);
 	}
 	
 	/**
@@ -215,7 +215,7 @@ class OaStackViewController extends Controller {
 	public function registerapp ()
 	{
 		// Build View
-		return View::make ('oastack::oauth2.register');
+		return view ('oastack::oauth2.register');
 	}
 	
 	/**
@@ -235,7 +235,7 @@ class OaStackViewController extends Controller {
 		}
 		
 		// Build View
-		return View::make('oastack::oauth2.registered', $response);
+		return view('oastack::oauth2.registered', $response);
 	}
 	
 	/**

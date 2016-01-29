@@ -26,6 +26,9 @@ class OaStackServiceProvider extends ServiceProvider {
 			require __DIR__.'/../../routes.php';
 		}
 		
+		# Oauth2 Views
+		$this->loadViewsFrom (__DIR__.'/../../views', 'oastack');
+		
 		# Ouath2 simple filter
 		# include __DIR__.'/../../filters.php';
 	}
