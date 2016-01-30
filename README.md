@@ -41,13 +41,14 @@ $ nano config/app.php
 ```
 	'providers' => [
 		...
+		Collective\Html\HtmlServiceProvider::class,
 		Cloudoki\OaStack\OaStackServiceProvider::class,
-		Illuminate\Html\HtmlServiceProvider::class
     ],
 
 	'aliases' => [
 		...
-        'Form'		=> Illuminate\Html\FormFacade::class,
+        'Form'		=> Collective\Html\FormFacade::class,
+        'HTML'		=> Collective\Html\HtmlFacade::class,
     ],
 ```
 

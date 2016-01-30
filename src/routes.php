@@ -16,7 +16,7 @@ Route::group(array ('prefix'=> 'oauth2'), function ()
 	Route::get ('login', ['as' => 'login', 'uses'=> 'Cloudoki\OaStack\OaStackViewController@login']);
 	Route::post ('login', ['before'=> 'csrf', 'uses'=> 'Cloudoki\OaStack\OaStackViewController@loginrequest']);
 	
-	Route::get ('forgot', 'OaStackViewController@forgot');
+	Route::get ('forgot', 'Cloudoki\OaStack\OaStackViewController@forgot');
 	Route::post ('forgot', ['before'=> 'csrf', 'uses'=> 'Cloudoki\OaStack\OaStackViewController@resetrequest']);
 	Route::get ('reset/{reset_token}', 'Cloudoki\OaStack\OaStackViewController@reset');
 	Route::post ('reset/{reset_token}', 'Cloudoki\OaStack\OaStackViewController@changepassword');

@@ -35,7 +35,7 @@ class OaStackServiceProvider extends ServiceProvider {
 		]);
 		
 		# Oauth2 i18n
-		$this->loadTranslationsFrom (__DIR__.'/../../lang', 'courier');
+		$this->loadTranslationsFrom (__DIR__.'/../../lang', 'oastack');
 		
 		$this->publishes (
 		[

@@ -1,10 +1,12 @@
 <?php
 	
 namespace Cloudoki\OaStack;
-	
-use Illuminate\Routing\Controller as Controller;
 
-class OaStackViewController extends Controller {
+use Validator;
+use Illuminate\Http\Request;
+use Cloudoki\OaStack\BaseController;
+
+class OaStackViewController extends BaseController {
 	
 	protected static $loginRules = array
 	(	
@@ -72,7 +74,7 @@ class OaStackViewController extends Controller {
 	public function loginrequest ()
 	{
 		// Request Foreground Job
-		$login = json_decode (self::restDispatch ('login', 'OAuth2Controller', [], self::$loginRules));
+		$login = json_decode ($this->restDispatch ('login', 'OAuth2Controller', [], self::$loginRules));
 		
 		if (isset ($login->error))
 		
@@ -103,7 +105,7 @@ class OaStackViewController extends Controller {
 	public function resetrequest ()
 	{
 		// Request Foreground Job
-		$login = json_decode (self::restDispatch ('resetpassword', 'OAuth2Controller', [], self::$resetRules));
+		$login = json_decode ($this->restDispatch ('resetpassword', 'OAuth2Controller', [], self::$resetRules));
 		
 		if (isset ($login->error))
 		
@@ -236,64 +238,5 @@ class OaStackViewController extends Controller {
 		
 		// Build View
 		return view('oastack::oauth2.registered', $response);
-	}
-	
-	/**
-	 * Validate Input
-	 * Returns Laravel Validator object
-	 *
-	 * @throws Exception
-	 */
-	public static function validate ($input, $rules = array ())
-	{
-		// Perform validation
-		$validator = Validator::make (array_merge ($this->request->all(), $input), $rules);
-		
-		
-		// Check if the validator failed
-        if ($validator->fails())
-
-		    throw new InvalidParameterException ( 'Parameters validation failed!', $validator->messages()->all() );
-
-	}
-	
-	/**
-	 * Dispatch
-	 * The basic controller action between API and Worker
-	 *
-	 * @return mixed response
-	 */
-	 public static function jobdispatch($job, $jobload)
-	 {
-		 global $app;
-		 
-		 // Add general data
-		 $jobload->access_token = Request::input ('access_token');
-
-		 return $app->jobserver->request ($job, $jobload);
-	 }
-	 
-	 /**
-	 *	REST Dispatch
-	 *	Jobdispatch extension with validation
-	 *
-	 *	@return Job response
-	 */
-	public static function restDispatch ($method, $controller, $input = null, $rules = null)
-	{
-		# Validation
-		if (is_array ($input))
-		{
-			self::validate ($input, $rules);
-			$payload = array_intersect_key ($this->request->all(), $rules);
-		}
-		
-		# Request Foreground Job
-		return self::jobdispatch ( 'controllerDispatch', (object) array
-		(
-			'action'=> $method,
-			'controller'=> $controller, 
-			'payload'=> $payload
-		));
 	}
 }

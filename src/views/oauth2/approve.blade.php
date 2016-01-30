@@ -14,7 +14,7 @@
 		
 		{{ Form::open (['before' => 'csrf', 'action'=> 
 		   [
-			'OaStackViewController@approve',
+			'\Cloudoki\OaStack\OaStackViewController@approve',
 			'approve'=> $user->id, 'session_token'=> $session_token
 			]])
 		}}

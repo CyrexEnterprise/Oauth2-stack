@@ -27,7 +27,7 @@
 			
 		{{ Form::open (['before' => 'csrf', 'action'=> 
 		   [
-			'OaStackViewController@changepassword',
+			'\Cloudoki\OaStack\OaStackViewController@changepassword',
 			'reset_token'=> $reset_token
 			]])
 		}}
