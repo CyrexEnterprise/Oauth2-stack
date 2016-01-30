@@ -18,7 +18,7 @@
 		"php": ">=5.4.0",
 		"laravelcollective/html": "5.2.*",
 		"bshaffer/oauth2-server-php": "v1.6",
-		"cloudoki/except-io-nal": "v0.5"
+		"cloudoki/except-io-nal": "v0.5.*"
 	},
 	"autoload": {
 		"classmap": [
