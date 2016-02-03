@@ -42,6 +42,12 @@ class OaStackServiceProvider extends ServiceProvider {
 			__DIR__.'/../../lang' => resource_path ('lang/vendor/oastack'),
 		]);
 		
+		#Oauth2 Migrations
+		$this->publishes(
+		[
+			__DIR__.'/../../migrations/' => database_path ('migrations')
+		], 'migrations');
+		
 		# Ouath2 simple filter
 		# include __DIR__.'/../../filters.php';
 	}
