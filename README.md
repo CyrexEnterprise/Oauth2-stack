@@ -88,10 +88,18 @@ Feel free to override this by copy-pasting the routes to your project `./app/rou
 
 #### Config
 You will need to edit the uri's to match your project. We have created a config file for this purpose. Run this command to copy it in your .app/config folder:
+
+**Laravel 4.2**
 ```
 $ php artisan config:publish cloudoki/oauth2-stack
 ```
 *You may also create environment specific configs by placing them like so `app/config/packages/cloudoki/oastack/environment`.*
+
+**Laravel 5.2**
+```
+$ php artisan vendor:publish
+```
+*This will publish the package and everything in the boot method on the pacakage ServiceProvider file*
 
 Note that your `app/config/app.php` file needs a valid timezone setting.
 ```
@@ -100,9 +108,17 @@ Note that your `app/config/app.php` file needs a valid timezone setting.
 
 #### Models
 The Oauth2 related models, **Oauth2AccessToken**, **Oauth2Authorization**, **Oauth2Client** should be created into your database straight from the migration files. The User and Account models can be integrated (eg. by class extending) in your existing project, or also be built straight from the migration files.
+
+**Laravel 4.2**
 ```
 $ php artisan migrate --package="cloudoki/oauth2-stack"
 ```
+
+**Laravel 5.2**
+```
+$ php artisan vendor:publish --tag="migrations"
+```
+
 *Make sure your project database is connected, first...*
 
 
