@@ -5,7 +5,7 @@ namespace Cloudoki\OaStack;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
+use Cloudoki\InvalidParameterException;
 
 class BaseController extends Controller
 {
@@ -69,7 +69,7 @@ class BaseController extends Controller
         // Check if the validator failed
         if ($validator->fails ())
 
-            throw new \Cloudoki\InvalidParameterException( 'Parameters validation failed!', $validator->messages()->all ());
+            throw new InvalidParameterException( 'Parameters validation failed!', $validator->messages()->all ());
 
         // return all input
         return $input;

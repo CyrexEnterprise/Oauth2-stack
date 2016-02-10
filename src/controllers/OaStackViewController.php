@@ -5,7 +5,7 @@ namespace Cloudoki\OaStack;
 use Validator;
 use Illuminate\Http\Request;
 use Cloudoki\OaStack\BaseController;
-
+use Cloudoki\InvalidParameterException;
 class OaStackViewController extends BaseController {
 	
 	protected static $loginRules = array
