@@ -1,5 +1,7 @@
 <?php
-	
+
+namespace Cloudoki\OaStack;
+
 use OAuth2\Response;
 use Cloudoki\OaStack\Oauth2Verifier;
 use Cloudoki\OaStack\Oauth2AccessToken;
