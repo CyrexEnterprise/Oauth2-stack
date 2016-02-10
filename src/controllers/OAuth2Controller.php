@@ -31,13 +31,12 @@ class OAuth2Controller extends Controller {
 		
 		$client = self::validateClient ($server, $request, $response);
 		
-		if (!$client || $client->getRedirectUri () != $payload->redirect_uri)
-			
+		if (!$client || $client->getRedirectUri () != $payload->redirect_uri) {
 			throw new \Cloudoki\InvalidParameterException ('Invalid client id or redirect uri');
-		
-		
+
+		}
 		# Validate user
-		$user = User::email ($payload->email)->first ();
+		$user = \Cloudoki\OaStack\User::email ($payload->email)->first ();
 		
 		if (!$user || !$user->checkPassword ($payload->password))
 		
