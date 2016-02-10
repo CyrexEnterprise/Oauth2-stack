@@ -69,7 +69,7 @@ class BaseController extends Controller
         // Check if the validator failed
         if ($validator->fails ())
 
-            throw new InvalidParameterException( 'Parameters validation failed!', $validator->messages()->all ());
+            throw new \Cloudoki\InvalidParameterException( 'Parameters validation failed!', $validator->messages()->all ());
 
         // return all input
         return $input;

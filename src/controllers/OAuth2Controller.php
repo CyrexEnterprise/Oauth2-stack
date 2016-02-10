@@ -7,9 +7,8 @@ use Cloudoki\OaStack\Oauth2Verifier;
 use Cloudoki\OaStack\Oauth2AccessToken;
 use Illuminate\Support\Facades\DB as DB;
 use Carbon\Carbon;
-use Cloudoki\InvalidParameterException;
 use Illuminate\Routing\Controller;
-
+use Cloudoki\InvalidParameterException;
 class OAuth2Controller extends Controller {
 	
 	/**
@@ -34,7 +33,7 @@ class OAuth2Controller extends Controller {
 		
 		if (!$client || $client->getRedirectUri () != $payload->redirect_uri)
 			
-			throw new InvalidParameterException ('Invalid client id or redirect uri');
+			throw new \Cloudoki\InvalidParameterException ('Invalid client id or redirect uri');
 		
 		
 		# Validate user
@@ -42,7 +41,7 @@ class OAuth2Controller extends Controller {
 		
 		if (!$user || !$user->checkPassword ($payload->password))
 		
-			throw new InvalidParameterException ('Invalid password or e-mail.');
+			throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
 			
 	
 		# Validate Authorization
@@ -104,7 +103,7 @@ class OAuth2Controller extends Controller {
 		
 		if (!$sessiontoken || $sessiontoken->user->getKey () != (int) $payload->approve)
 			
-			throw new InvalidParameterException ('Session expired or invalid approval.');
+			throw new \Cloudoki\InvalidParameterException ('Session expired or invalid approval.');
 		
 		
 		# Token handling
@@ -196,7 +195,7 @@ class OAuth2Controller extends Controller {
 		
 		if (!$user)
 		
-			throw new InvalidParameterException ('Unknown e-mail address.');
+			throw new \Cloudoki\InvalidParameterException ('Unknown e-mail address.');
 			
 		# Reset token
 		$reset_token = $user->makeToken ();
@@ -230,12 +229,12 @@ class OAuth2Controller extends Controller {
 		# e-mail and token validation
 		if (!$user)
 		
-			throw new InvalidParameterException ('Invalid e-mail address or reset link.');
+			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail address or reset link.');
 			
 		# repeated password validation
 		if ($payload->password !== $payload->password_confirmation)
 		
-			throw new InvalidParameterException ('The passwords do not match.');
+			throw new \Cloudoki\InvalidParameterException ('The passwords do not match.');
 		
 		
 		# Update user
@@ -275,7 +274,7 @@ class OAuth2Controller extends Controller {
 		
 		if (!$user)
 			
-			throw new InvalidParameterException ('There is something wrong with that token.');
+			throw new \Cloudoki\InvalidParameterException ('There is something wrong with that token.');
 		
 		else return 
 		[
@@ -298,7 +297,7 @@ class OAuth2Controller extends Controller {
 		
 		if (!isset ($user, $account))
 		
-			throw new InvalidParameterException ('There is something wrong with the invitation token.'); 
+			throw new \Cloudoki\InvalidParameterException ('There is something wrong with the invitation token.');
 		
 		# Activate user
 		$user->setFirstname ($payload->firstname)

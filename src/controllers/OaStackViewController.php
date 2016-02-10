@@ -201,7 +201,7 @@ class OaStackViewController extends BaseController {
 	        // Request Foreground Job
 			$response = json_decode (self::restDispatch ('subscribe', 'OAuth2Controller', ['token'=> $token], self::$subscribeRules), true);
 		}
-		catch (InvalidParameterException $e)
+		catch (\Cloudoki\InvalidParameterException $e)
 		{
 			$response = ['errors'=> $e->getErrors ()];
 		}
@@ -231,7 +231,7 @@ class OaStackViewController extends BaseController {
 	        // Request Foreground Job
 			$response = json_decode (self::restDispatch ('registerclient', 'OAuth2Controller', [], self::$postRules), true);
 		}
-		catch (InvalidParameterException $e)
+		catch (\Cloudoki\InvalidParameterException $e)
 		{
 			$response = ['error'=> $e->getErrors ()];
 		}
