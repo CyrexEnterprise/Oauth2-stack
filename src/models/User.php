@@ -8,7 +8,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  */
 class User extends Eloquent {
 	
-	use SoftDeletingTrait;
+	//use SoftDeletingTrait;
 	
 	/**
 	 * Fillables
