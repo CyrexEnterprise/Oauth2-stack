@@ -227,6 +227,7 @@ class OaStackViewController extends BaseController {
 	 */
 	public function registeredapp ($response = array())
 	{
+
 		try
         {
 	        // Request Foreground Job
