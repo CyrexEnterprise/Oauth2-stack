@@ -1,5 +1,6 @@
-<?php namespace Cloudoki\OaStack;
+<?php
 
+namespace Cloudoki\OaStack;
 use OAuth2\GrantType\AuthorizationCode;
 use OAuth2\GrantType\RefreshToken;
 use OAuth2\Request;

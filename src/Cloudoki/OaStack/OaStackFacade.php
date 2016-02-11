@@ -1,5 +1,6 @@
-<?php namespace Cloudoki\OaStack\Facades;
+<?php
 
+namespace Cloudoki\OaStack\Facades;
 use Illuminate\Support\Facades\Facade;
 
 class OaStack extends Facade

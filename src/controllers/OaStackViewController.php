@@ -54,7 +54,8 @@ class OaStackViewController extends BaseController {
 	protected static $postRules = array
 	(	
 		'name'=> 'required|min:4',
-		'redirect'=> 'required|url'
+		'redirect'=> 'required|url',
+		'user_id' => 'required|integer',
 	);
 	
 	/**
@@ -228,6 +229,8 @@ class OaStackViewController extends BaseController {
 	{
 		try
         {
+
+			echo '1'; die;
 	        // Request Foreground Job
 			$response = json_decode (self::restDispatch ('registerclient', 'OAuth2Controller', [], self::$postRules), true);
 		}

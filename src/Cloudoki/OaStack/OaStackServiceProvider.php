@@ -1,4 +1,5 @@
-<?php namespace Cloudoki\OaStack;
+<?php
+namespace Cloudoki\OaStack;
 
 use Illuminate\Support\ServiceProvider;
 

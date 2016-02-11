@@ -3,13 +3,13 @@ namespace Cloudoki\OaStack;
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
- *	User Model	
- *	Add the namespace if you want to extend your custom User model with this one.	
+ *	User Model
+ *	Add the namespace if you want to extend your custom User model with this one.
  */
 class User extends Eloquent {
-	
+
 	//use SoftDeletingTrait;
-	
+
 	/**
 	 * Fillables
 	 * define which attributes are mass assignable (for security)
@@ -17,9 +17,9 @@ class User extends Eloquent {
 	 * @var array
 	 */
 	protected $fillable = array('firstname', 'lastname', 'email', 'avatar');
-	
+
 	protected $dates = ['deleted_at'];
-	
+
 	/**
 	 * Accounts relationship
 	 *
@@ -29,7 +29,7 @@ class User extends Eloquent {
 	{
 		return $this->belongsToMany ('Account')->withPivot ('invitation_token');
 	}
-	
+
 	/**
 	 * Acces Token relationship
 	 *
@@ -62,7 +62,7 @@ class User extends Eloquent {
 	{
 		return $query->where('email', $email);
 	}
-	
+
 	/**
 	 * Check Reset Token
 	 *
@@ -75,7 +75,7 @@ class User extends Eloquent {
 	{
 		return $query->where('reset_token', $token);
 	}
-	
+
 	/**
 	 * Get user first name
 	 *
@@ -85,7 +85,7 @@ class User extends Eloquent {
 	{
 		return $this->firstname;
 	}
-		
+
 	/**
 	 * Set user name
 	 *
@@ -105,7 +105,7 @@ class User extends Eloquent {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * Set user name
 	 *
@@ -115,7 +115,7 @@ class User extends Eloquent {
 	{
 		$this->name = $name;
 	}
-	
+
 	/**
 	 * Get user e-mail
 	 *
@@ -125,7 +125,7 @@ class User extends Eloquent {
 	{
 		return $this->email;
 	}
-		
+
 	/**
 	 * Set user e-mail
 	 *
@@ -135,7 +135,7 @@ class User extends Eloquent {
 	{
 		$this->email = $email;
 	}
-		
+
 	/**
 	 * Set the value for the u_password.
 	 *
@@ -157,7 +157,7 @@ class User extends Eloquent {
 	{
 		return Hash::check ($value, $this->password);
 	}
-	
+
 	/**
 	 *	Get Avatar
 	 *
@@ -167,7 +167,7 @@ class User extends Eloquent {
 	{
 		return $this->avatar;
 	}
-	
+
 	/**
 	 *	Set Active
 	 *
@@ -177,10 +177,10 @@ class User extends Eloquent {
 	public function setAvatar($url)
 	{
 		$this->avatar = $url;
-		
+
 		return $this;
 	}
-	
+
 	/**
 	 *	Make Token
 	 *
@@ -192,7 +192,7 @@ class User extends Eloquent {
 
 		return md5 (uniqid ( $rand[rand (0, 9)] . ' ' . $rand[rand (0, 9)], true));
 	}
-	
+
 	/**
 	 *	Set Reset Token
 	 *
@@ -202,7 +202,7 @@ class User extends Eloquent {
 	public function setResetToken ($token)
 	{
 		$this->reset_token = $token;
-		
+
 		return $this;
 	}
 }
