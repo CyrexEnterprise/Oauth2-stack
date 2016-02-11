@@ -229,8 +229,6 @@ class OaStackViewController extends BaseController {
 	{
 		try
         {
-
-			echo '1'; die;
 	        // Request Foreground Job
 			$response = json_decode (self::restDispatch ('registerclient', 'OAuth2Controller', [], self::$postRules), true);
 		}
