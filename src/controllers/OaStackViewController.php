@@ -72,6 +72,11 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	User Login
 	 *	Redirect success or show failure.
+	 * 	Call : http://api.oauth2.dev/oauth2/register
+	 *  raw json Content-Type: application/json
+	 * { "client_id": "oauth256bcac97458845.48077061", "email": "zen@corpfy.be",
+	 * "password": "secret", "response_type" : "token",
+	 * "redirect_uri" : "http://api.corporify.dev/1/me", "state" : 200}
 	 */
 	public function loginrequest ()
 	{
@@ -225,6 +230,10 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	Registered App View
 	 *	Show client app action response
+	 *
+	 * Call : http://api.oauth2.dev/oauth2/register
+	 * raw json Content-Type: application/json
+	 * { "name": "Server test", "redirect": "http://api.corporify.dev/1/me", "user_id": 2}
 	 */
 	public function registeredapp ($response = array())
 	{
