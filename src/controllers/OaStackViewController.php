@@ -153,12 +153,12 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	User Authorize
 	 *	Redirect success or show failure.
+	 * 	Call : http://api.corporify.dev/oauth2/authorize?session_token=95657ea89bcf56ed733ce67b00d2eb6491f5710a&approve=true
 	 */
 	public function approve ()
 	{
 		// Request Foreground Job
 		$login = json_decode (self::restDispatch ('authorize', 'OAuth2Controller', [], self::$approveRules));
-
 		if (isset ($login->error))
 		
 			return view('oastack::oauth2.login', ['error'=> $login->message]);
