@@ -2,7 +2,8 @@
 namespace Cloudoki\OaStack\Models;
 
 use \Illuminate\Database\Eloquent\Model as Eloquent;
-
+use \Cloudoki\MissingParameterException;
+use \Cloudoki\OaStack\Models\User;
 class Oauth2Client extends Eloquent
 {
 	/**

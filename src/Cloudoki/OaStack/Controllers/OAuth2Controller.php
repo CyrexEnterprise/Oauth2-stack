@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudoki\OaStack\Controllers;
+namespace Cloudoki\OaStack;
 
 use OAuth2\Response;
 use Carbon\Carbon;
@@ -9,9 +9,14 @@ use Cloudoki\InvalidParameterException;
 use Cloudoki\OaStack;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Config;
+use \Cloudoki\OaStack\Models\Oauth2AccessToken;
 use \Cloudoki\OaStack\Models\User;
+use \Cloudoki\OaStack\Models\Oauth2Client;
+use \Cloudoki\OaStack\Models\Oauth2Authorization;
 use \Cloudoki\OaStack\Models\Account;
+use \Cloudoki\OaStack\Oauth2Verifier;
+use \Cloudoki\OaStack\OaStackServiceProvider;
+
 class OAuth2Controller extends Controller {
 
 	/**
@@ -22,7 +27,7 @@ class OAuth2Controller extends Controller {
 	 *
 	 *	@return mixed
 	 */
-	public function login ($payload)
+	public static function login ($payload)
 	{
 		# Add payload to GET
 		$_GET = (array) $payload;
@@ -55,15 +60,16 @@ class OAuth2Controller extends Controller {
 				[
 					'access_token'=> Oauth2AccessToken::generateAccessToken(),
 					'client_id'=> $client->getClientId (),
-					'user_id'=> $user->id,
+					'user_id'=> $user->getId (),
 					'expires'=> new Carbon('+ 2 minute', Config::get ('app.timezone'))
 				]);
+
 			return
 				[
 					'view'=> 'approve',
 					'session_token'=> $sessiontoken->getToken (),
-					'user'=> $user,
-					'client'=> $client
+					'user'=> $user->schema ('basic'),
+					'client'=> $client->schema ('basic')
 				];
 		}
 
