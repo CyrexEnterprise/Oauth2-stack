@@ -37,7 +37,7 @@ class OAuth2Controller extends Controller {
 		}
 		# Validate user
 		if (!empty($payload->email)) {
-			$user = \Cloudoki\User::email ($payload->email)->first ();
+			$user = User::email ($payload->email)->first ();
 		} else {
 			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
 		}
