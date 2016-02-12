@@ -2,7 +2,7 @@
 namespace Cloudoki\OaStack;
 
 use \Illuminate\Database\Eloquent\Model as Eloquent;
-
+use Illuminate\Support\Facades\Hash;
 /**
  *	User Model
  *	Add the namespace if you want to extend your custom User model with this one.

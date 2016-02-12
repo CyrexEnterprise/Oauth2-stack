@@ -9,6 +9,7 @@ use Cloudoki\InvalidParameterException;
 use Cloudoki\OaStack;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Config;
 use \Cloudoki\OaStack\User;
 use \Cloudoki\OaStack\Account;
 class OAuth2Controller extends Controller {
@@ -21,7 +22,7 @@ class OAuth2Controller extends Controller {
 	 *
 	 *	@return mixed
 	 */
-	public static function login ($payload)
+	public function login ($payload)
 	{
 		# Add payload to GET
 		$_GET = (array) $payload;
@@ -54,16 +55,15 @@ class OAuth2Controller extends Controller {
 				[
 					'access_token'=> Oauth2AccessToken::generateAccessToken(),
 					'client_id'=> $client->getClientId (),
-					'user_id'=> $user->getId (),
+					'user_id'=> $user->id,
 					'expires'=> new Carbon('+ 2 minute', Config::get ('app.timezone'))
 				]);
-
 			return
 				[
 					'view'=> 'approve',
 					'session_token'=> $sessiontoken->getToken (),
-					'user'=> $user->schema ('basic'),
-					'client'=> $client->schema ('basic')
+					'user'=> $user,
+					'client'=> $client
 				];
 		}
 
