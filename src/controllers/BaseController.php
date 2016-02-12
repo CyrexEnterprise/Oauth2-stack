@@ -6,7 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Cloudoki\InvalidParameterException;
-
+use Illuminate\Support\Facades\Redirect;
 class BaseController extends Controller
 {
     /**

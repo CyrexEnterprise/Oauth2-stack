@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use Cloudoki\OaStack\BaseController;
 use Cloudoki\InvalidParameterException;
+use Illuminate\Support\Facades\Redirect;
 class OaStackViewController extends BaseController {
 	
 	protected static $loginRules = array

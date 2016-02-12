@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+namespace Cloudoki\OaStack;
 
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -6,8 +8,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  *	Account Model	
  *	Add the namespace if you want to extend your custom Account model with this one.	
  */
- 
-//	namespace Cloudoki\OaStack;
+
 
 
 class Account extends Eloquent {

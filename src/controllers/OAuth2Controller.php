@@ -8,6 +8,9 @@ use Illuminate\Routing\Controller;
 use Cloudoki\InvalidParameterException;
 use Cloudoki\OaStack;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use \Cloudoki\OaStack\User;
+use \Cloudoki\OaStack\Account;
 class OAuth2Controller extends Controller {
 
 	/**
@@ -29,18 +32,18 @@ class OAuth2Controller extends Controller {
 
 		$client = self::validateClient ($server, $request, $response);
 		if (!$client || $client->getRedirectUri () != $payload->redirect_uri) {
-			throw new \Cloudoki\Cloudoki\InvalidParameterException ('Invalid client id or redirect uri');
+			throw new \Cloudoki\InvalidParameterException ('Invalid client id or redirect uri');
 
 		}
 		# Validate user
 		if (!empty($payload->email)) {
-			$user = \Cloudoki\OaStack\User::email ($payload->email)->first ();
+			$user = \Cloudoki\User::email ($payload->email)->first ();
 		} else {
-			throw new \Cloudoki\Cloudoki\InvalidParameterException ('Invalid e-mail.');
+			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
 		}
 
 		if (isset($user) && !$user || !$user->checkPassword ($payload->password)) {
-			throw new \Cloudoki\Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
+			throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
 		}
 		# Validate Authorization
 		$authorization = $user->oauth2authorizations ()->where ('client_id', $client->getClientId ())->first ();
@@ -101,7 +104,7 @@ class OAuth2Controller extends Controller {
 
 		if (!$sessiontoken || $sessiontoken->user->getKey () != (int) $payload->approve)
 
-			throw new \Cloudoki\Cloudoki\InvalidParameterException ('Session expired or invalid approval.');
+			throw new \Cloudoki\InvalidParameterException ('Session expired or invalid approval.');
 
 
 		# Token handling
@@ -192,7 +195,7 @@ class OAuth2Controller extends Controller {
 
 		if (!$user)
 
-			throw new \Cloudoki\Cloudoki\InvalidParameterException ('Unknown e-mail address.');
+			throw new \Cloudoki\InvalidParameterException ('Unknown e-mail address.');
 
 		# Reset token
 		$reset_token = $user->makeToken ();
@@ -226,12 +229,12 @@ class OAuth2Controller extends Controller {
 		# e-mail and token validation
 		if (!$user)
 
-			throw new \Cloudoki\Cloudoki\InvalidParameterException ('Invalid e-mail address or reset link.');
+			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail address or reset link.');
 
 		# repeated password validation
 		if ($payload->password !== $payload->password_confirmation)
 
-			throw new \Cloudoki\Cloudoki\InvalidParameterException ('The passwords do not match.');
+			throw new \Cloudoki\InvalidParameterException ('The passwords do not match.');
 
 
 		# Update user
@@ -271,7 +274,7 @@ class OAuth2Controller extends Controller {
 
 		if (!$user)
 
-			throw new \Cloudoki\Cloudoki\nvalidParameterException ('There is something wrong with that token.');
+			throw new \Cloudoki\nvalidParameterException ('There is something wrong with that token.');
 
 		else return
 			[
@@ -294,7 +297,7 @@ class OAuth2Controller extends Controller {
 
 		if (!isset ($user, $account))
 
-			throw new \Cloudoki\Cloudoki\InvalidParameterException ('There is something wrong with the invitation token.');
+			throw new \Cloudoki\InvalidParameterException ('There is something wrong with the invitation token.');
 
 		# Activate user
 		$user->setFirstname ($payload->firstname)
@@ -335,7 +338,6 @@ class OAuth2Controller extends Controller {
 		//\Cloudoki\OaStack\OaStack::check ();
 		$payload = $payload ? $payload : Input::get ('payload');
 		$client = new Oauth2Client();
-		dd('dsasadsa');
 		$client->appendPayload ($payload)
 			->save();
 

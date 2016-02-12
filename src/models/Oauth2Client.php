@@ -1,5 +1,6 @@
 <?php
 namespace Cloudoki\OaStack;
+
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Oauth2Client extends Eloquent

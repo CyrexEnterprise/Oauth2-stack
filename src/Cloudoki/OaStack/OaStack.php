@@ -1,4 +1,6 @@
-<?php namespace Cloudoki\OaStack;
+<?php
+
+namespace Cloudoki\OaStack;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
@@ -39,13 +41,13 @@ class OaStack
 	 *	Perform allow function, throw exception if not allowed.
 	 *
 	 *	@return void
-	 *	@throws \InvalidUserException
+	 *	@throws \Cloudoki\InvalidUserException
 	 */
 	public static function check ($accountid = null, $roles = array())
 	{	
 		if (!self::allowed($accountid, $roles))
 			
-			throw new \InvalidUserException ('not authorized');
+			throw new \Cloudoki\InvalidUserException ('not authorized');
 	}
 	
 	/**
@@ -77,13 +79,13 @@ class OaStack
 	 *	the where $apk function should be a find function. Look for new Eloquent versions solving the current bug.
 	 *
 	 *	@return boolean
-	 *	@throws \InvalidParameterException
+	 *	@throws \Cloudoki\InvalidParameterException
 	 */
 	public static function accountRelation ($id)
 	{	
 		if (!is_int ($id))
 			
-			throw new \InvalidParameterException ('an integer ID is required');
+			throw new \Cloudoki\InvalidParameterException ('an integer ID is required');
 		
 		// User contains account
 		return self::user ()-> accounts->contains ($id);
@@ -96,7 +98,7 @@ class OaStack
 	 *  @param  int		$id			Account id to retreive rolesset from
 	 *  @param  string	$role		Required role
 	 *	@return boolean
-	 *	@throws \InvalidParameterException
+	 *	@throws \Cloudoki\InvalidParameterException
 	 *	
 	 *	User vs Account rolesset as array:
 	 *	return count ($roles) === count (array_intersect (self::user()->getRoles ($id), $roles));
@@ -106,7 +108,7 @@ class OaStack
 	{
 		if(!isset ($role) || !is_string ($role))
 		
-			throw new \InvalidParameterException ('Invalid roletokens container type');
+			throw new \Cloudoki\InvalidParameterException ('Invalid roletokens container type');
 	
 		
 		// User vs Account rolesset
