@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudoki\OaStack;
+namespace Cloudoki\OaStack\Controllers;
 
 use OAuth2\Response;
 use Carbon\Carbon;
@@ -10,8 +10,8 @@ use Cloudoki\OaStack;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Config;
-use \Cloudoki\OaStack\User;
-use \Cloudoki\OaStack\Account;
+use \Cloudoki\OaStack\Models\User;
+use \Cloudoki\OaStack\Models\Account;
 class OAuth2Controller extends Controller {
 
 	/**

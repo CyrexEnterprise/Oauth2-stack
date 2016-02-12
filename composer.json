@@ -22,12 +22,12 @@
 	},
 	"autoload": {
 		"classmap": [
-			"src/controllers",
-			"src/lang",
-			"src/migrations",
-			"src/models",
+			"src/Cloudoki/OaStack/Controllers",
+			"src/Cloudoki/OaStack/Models",
+			"src/Cloudoki/OaStack/Views",
 			"src/seeds",
-			"src/views"
+			"src/lang",
+			"src/migrations"
 		],
 		"psr-0": {
 			"Cloudoki\\OaStack\\": "src/"

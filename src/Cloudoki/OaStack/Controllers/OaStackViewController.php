@@ -1,6 +1,6 @@
 <?php
-	
-namespace Cloudoki\OaStack;
+
+namespace Cloudoki\OaStack\Controllers;
 
 use Validator;
 use Illuminate\Http\Request;
@@ -98,6 +98,7 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	User Forgot
 	 *	Show user forgot fields
+	 *  http://api.corporify.dev/oauth2/forgot/?email=zen@corpfy.be
 	 */
 	public function forgot ()
 	{
@@ -108,6 +109,7 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	User Forgot
 	 *	Redirect success or show failure.
+	 * http://api.corporify.dev/oauth2/forgot/?email=zen@corpfy.be
 	 */
 	public function resetrequest ()
 	{

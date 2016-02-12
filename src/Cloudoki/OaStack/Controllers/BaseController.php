@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudoki\OaStack;
+namespace Cloudoki\OaStack\Controllers;
 
 use Validator;
 use Illuminate\Http\Request;

@@ -1,5 +1,5 @@
 <?php
-namespace Cloudoki\OaStack;
+namespace Cloudoki\OaStack\Models;
 
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Facades\Hash;
