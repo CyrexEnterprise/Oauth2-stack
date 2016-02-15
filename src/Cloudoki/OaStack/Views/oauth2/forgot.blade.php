@@ -29,7 +29,7 @@
 	
 		{{ Form::open (['before' => 'csrf', 'action'=> 
 		   [
-			'\Cloudoki\OaStack\OaStackViewController@resetrequest',
+			'\Cloudoki\OaStack\Controllers\OaStackViewController@resetrequest',
 			'client_id'=> Request::input ('client_id'), 'redirect_uri'=> Request::input ('redirect_uri'), 'response_type'=> Request::input ('response_type'), 'state'=> Request::input ('state')
 			]])
 		}}

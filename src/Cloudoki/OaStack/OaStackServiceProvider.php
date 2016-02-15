@@ -28,7 +28,7 @@ class OaStackServiceProvider extends ServiceProvider {
 		}
 		
 		# Oauth2 Views
-		$this->loadViewsFrom (__DIR__.'/../../views', 'oastack');
+		$this->loadViewsFrom (__DIR__.'/Views', 'oastack');
 		
 		$this->publishes (
 		[

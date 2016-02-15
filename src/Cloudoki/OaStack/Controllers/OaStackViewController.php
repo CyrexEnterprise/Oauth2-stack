@@ -4,7 +4,7 @@ namespace Cloudoki\OaStack\Controllers;
 
 use Validator;
 use Illuminate\Http\Request;
-use Cloudoki\OaStack\BaseController;
+use Cloudoki\OaStack\Controllers\BaseController;
 use Cloudoki\InvalidParameterException;
 use Illuminate\Support\Facades\Redirect;
 class OaStackViewController extends BaseController {
