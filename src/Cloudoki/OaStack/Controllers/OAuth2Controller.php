@@ -16,7 +16,8 @@ use \Cloudoki\OaStack\Models\Oauth2Authorization;
 use \Cloudoki\OaStack\Models\Account;
 use \Cloudoki\OaStack\Oauth2Verifier;
 use \Cloudoki\OaStack\OaStackServiceProvider;
-
+use \DateTimeZone;
+use Illuminate\Support\Facades\Config;
 class OAuth2Controller extends Controller {
 
 	/**
