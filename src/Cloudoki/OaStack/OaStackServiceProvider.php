@@ -32,7 +32,7 @@ class OaStackServiceProvider extends ServiceProvider {
 		
 		$this->publishes (
 		[
-			__DIR__.'/../../views' => resource_path ('views/vendor/oastack'),
+			__DIR__.'/Views' => resource_path ('views/vendor/oastack'),
 		]);
 		
 		# Oauth2 i18n
