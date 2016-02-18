@@ -1,8 +1,7 @@
 <?php
 namespace Cloudoki\OaStack\Models;
 
-use Cloudoki\OaStack\Models\Oauth2Authorization as Oauth2Authorization ;
-use \Cloudoki\OaStack\Models\Oauth2AccessToken as Oauth2AccessToken;
+use Cloudoki\OaStack\Models\Oauth2Authorization;
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Facades\Hash;
 /**
@@ -40,7 +39,7 @@ class User extends Eloquent {
 	 */
 	public function oauth2accesstokens ()
 	{
-		return $this->hasMany('Oauth2AccessToken');
+		return $this->hasMany('\Cloudoki\OaStack\Models\Oauth2AccessToken');
 	}
 
 	/**
@@ -50,7 +49,7 @@ class User extends Eloquent {
 	 */
 	public function oauth2authorizations ()
 	{
-		return $this->hasMany('Oauth2Authorization');
+		return $this->hasMany('\Cloudoki\OaStack\Models\Oauth2Authorization');
 	}
 
 	/**
