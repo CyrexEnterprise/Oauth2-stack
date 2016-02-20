@@ -164,10 +164,10 @@ class OAuth2Controller extends Controller {
 	public static function invite ($user, $account, $invitation_token)
 	{
 		$data =
-			[
-				'url'=> Config::get ('oastack::invite_url') . '/' . $invitation_token,
-				'account'=> $account->getName ()
-			];
+		[
+			'url'=> config ('oastack.invite_url') . '/' . $invitation_token,
+			'account'=> $account->getName ()
+		];
 
 		Mail::send ('oastack::emails.invitation', $data, function ($message) use ($user)
 		{
@@ -212,10 +212,10 @@ class OAuth2Controller extends Controller {
 		$user->setResetToken ($reset_token)->save ();
 
 		$data =
-			[
-				'url'=> Config::get ('oastack::reset_url') . '/' . $reset_token,
-				'user'=> $user
-			];
+		[
+			'url'=> config ('oastack.reset_url') . '/' . $reset_token,
+			'user'=> $user
+		];
 
 		Mail::send ('oastack::emails.reset', $data, function ($message) use ($user)
 		{
