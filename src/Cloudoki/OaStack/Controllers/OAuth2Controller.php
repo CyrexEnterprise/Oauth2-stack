@@ -2,6 +2,10 @@
 
 namespace Cloudoki\OaStack;
 
+use Mail;
+use Config;
+use DateTimeZone;
+
 use OAuth2\Response;
 use Carbon\Carbon;
 use Illuminate\Routing\Controller;
@@ -9,15 +13,14 @@ use Cloudoki\InvalidParameterException;
 use Cloudoki\OaStack;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use \Cloudoki\OaStack\Models\Oauth2AccessToken;
-use \Cloudoki\OaStack\Models\User;
-use \Cloudoki\OaStack\Models\Oauth2Client;
-use \Cloudoki\OaStack\Models\Oauth2Authorization;
-use \Cloudoki\OaStack\Models\Account;
-use \Cloudoki\OaStack\Oauth2Verifier;
-use \Cloudoki\OaStack\OaStackServiceProvider;
-use \DateTimeZone;
-use Illuminate\Support\Facades\Config;
+use Cloudoki\OaStack\Models\Oauth2AccessToken;
+use Cloudoki\OaStack\Models\User;
+use Cloudoki\OaStack\Models\Oauth2Client;
+use Cloudoki\OaStack\Models\Oauth2Authorization;
+use Cloudoki\OaStack\Models\Account;
+use Cloudoki\OaStack\Oauth2Verifier;
+use Cloudoki\OaStack\OaStackServiceProvider;
+
 class OAuth2Controller extends Controller {
 
 	/**

@@ -74,7 +74,7 @@ class OaStackServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('oastack');
+		return ['oastack'];
 	}
 
 }
