@@ -19,8 +19,6 @@ class OaStackServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		# $this->package('cloudoki/oastack');
-		
 		# Oauth2 Routes
 		if (! $this->app->routesAreCached ())
 		{
@@ -40,17 +38,20 @@ class OaStackServiceProvider extends ServiceProvider {
 		
 		$this->publishes (
 		[
-			__DIR__.'/../../lang' => resource_path ('lang/vendor/oastack'),
-		]);
+			__DIR__.'/../../lang' => resource_path ('lang/vendor/oastack')
+		], 'lang');
+		
+		# Oauth2 config
+		$this->publishes (
+		[
+			__DIR__.'/../../config/oastack.php' => config_path ('oastack.php')
+		], 'config');
 		
 		#Oauth2 Migrations
 		$this->publishes(
 		[
 			__DIR__.'/../../migrations/' => database_path ('migrations')
 		], 'migrations');
-		
-		# Ouath2 simple filter
-		# include __DIR__.'/../../filters.php';
 	}
 
 	/**
