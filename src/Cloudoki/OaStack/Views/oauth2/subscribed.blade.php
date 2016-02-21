@@ -3,7 +3,7 @@
 @section('content')
 
 
-<article @if ( count ($errors) ) class="panel panel-warning" @else class="panel panel-default" @endif>
+<article @if ( isset ($errors) ) class="panel panel-warning" @else class="panel panel-default" @endif>
 
 	<div class="panel-heading">
 		<h3 class="panel-title">{{ trans('oastack::oauth2.user.subscribed.title', ['appname'=> Config::get ('app.name')]) }}</h3>
@@ -11,7 +11,7 @@
 
 	<div class="panel-body">
 
-	@if ( count ($errors) )
+	@if ( isset ($errors) )
 		
 		<div class="alert alert-danger" role="alert">
 			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

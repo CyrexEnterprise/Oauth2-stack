@@ -29,7 +29,7 @@ class User extends Eloquent {
 	 */
 	public function accounts ()
 	{
-		return $this->belongsToMany ('Account')->withPivot ('invitation_token');
+		return $this->belongsToMany ('App\Models\Account')->withPivot ('invitation_token');
 	}
 
 	/**

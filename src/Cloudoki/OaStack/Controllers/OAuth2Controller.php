@@ -6,20 +6,21 @@ use Mail;
 use Config;
 use DateTimeZone;
 
-use OAuth2\Response;
+use App\Models\User;
+use App\Models\Account;
+
 use Carbon\Carbon;
+use OAuth2\Response;
 use Illuminate\Routing\Controller;
 use Cloudoki\InvalidParameterException;
 use Cloudoki\OaStack;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Cloudoki\OaStack\Models\Oauth2AccessToken;
-use Cloudoki\OaStack\Models\User;
+use Cloudoki\OaStack\Oauth2Verifier;
 use Cloudoki\OaStack\Models\Oauth2Client;
 use Cloudoki\OaStack\Models\Oauth2Authorization;
-use Cloudoki\OaStack\Models\Account;
-use Cloudoki\OaStack\Oauth2Verifier;
-use Cloudoki\OaStack\OaStackServiceProvider;
+
 
 class OAuth2Controller extends Controller {
 
@@ -310,8 +311,8 @@ class OAuth2Controller extends Controller {
 			throw new \Cloudoki\InvalidParameterException ('There is something wrong with the invitation token.');
 
 		# Activate user
-		$user->setFirstname ($payload->firstname)
-			->setLastname ($payload->lastname)
+		$user->setFirstName ($payload->firstname)
+			->setLastName ($payload->lastname)
 			->setEmail ($payload->email)
 			->setPassword ($payload->password)
 			->save ();
