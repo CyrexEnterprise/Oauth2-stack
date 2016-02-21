@@ -64,7 +64,7 @@ class Oauth2Client extends Eloquent
 
 	public function user ()
 	{
-		return $this->hasOne('User');
+		return $this->hasOne('App\Models\User');
 	}
 
 	/**

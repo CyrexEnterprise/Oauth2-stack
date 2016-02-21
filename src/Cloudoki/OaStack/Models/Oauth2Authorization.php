@@ -32,6 +32,6 @@ class Oauth2Authorization extends Eloquent
 	 */
 	public function user ()
 	{
-		return $this->belongsTo ('User');
+		return $this->belongsTo ('App\Models\User');
 	}
 };
