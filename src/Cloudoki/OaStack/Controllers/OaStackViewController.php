@@ -6,11 +6,11 @@ use Validator;
 use Illuminate\Http\Request;
 use Cloudoki\OaStack\Controllers\BaseController;
 use Cloudoki\InvalidParameterException;
-use Illuminate\Support\Facades\Redirect;
+
 class OaStackViewController extends BaseController {
-	
+
 	protected static $loginRules = array
-	(	
+	(
 		'email'=> 'required|email',
 		'password'=> 'required|min:4',
 		'client_id'=> 'required|min:18',
@@ -18,47 +18,47 @@ class OaStackViewController extends BaseController {
 		'redirect_uri'=> 'required|min:8',
 		'state'=> ''
 	);
-	
+
 	protected static $resetRules = array
-	(	
+	(
 		'email'=> 'required|email',
 	);
-	
+
 	protected static $changepasswordRules = array
-	(	
+	(
 		'reset_token'=> 'required|size:32',
 		'email'=> 'required|email',
 		'password'=> 'required|min:6',
 		'password_confirmation'=> 'required|min:6'
 	);
-	
+
 	protected static $approveRules = array
-	(	
+	(
 		'session_token'=> 'required|min:18',
 		'approve'=> '',
 	);
-	
+
 	protected static $invitationRules = array
-	(	
+	(
 		'token'=> 'required|size:32'
 	);
-	
+
 	protected static $subscribeRules = array
-	(	
+	(
 		'token'=> 'required|size:32',
 		'firstname'=> 'required|min:2',
 		'lastname'=> 'required|min:2',
 		'email'=> 'required|email',
 		'password'=> 'required|min:6'
 	);
-	
+
 	protected static $postRules = array
-	(	
+	(
 		'name'=> 'required|min:4',
 		'redirect'=> 'required|url',
 		'user_id' => 'required|integer',
 	);
-	
+
 	/**
 	 *	User Login
 	 *	Show user login fields
@@ -68,33 +68,28 @@ class OaStackViewController extends BaseController {
 		// Build View
 		return view ('oastack::oauth2.login');
 	}
-	
+
 	/**
 	 *	User Login
 	 *	Redirect success or show failure.
-	 * 	Call : http://api.oauth2.dev/oauth2/register
-	 *  raw json Content-Type: application/json
-	 * { "client_id": "oauth256bcac97458845.48077061", "email": "zen@corpfy.be",
-	 * "password": "secret", "response_type" : "token",
-	 * "redirect_uri" : "http://api.corporify.dev/1/me", "state" : 200}
 	 */
 	public function loginrequest ()
 	{
 		// Request Foreground Job
 		$login = json_decode ($this->restDispatch ('login', 'OAuth2Controller', [], self::$loginRules));
-		
-		if (isset ($login->error))
-		
-			return view('oastack::oauth2.login', ['error'=> $login->message]);
-		
-		else if (isset ($login->view))
-			
-			return view ('oastack::oauth2.' . $login->view, (array) $login);
-		
 
-		return Redirect::away($login->uri);
+		if (isset ($login->error))
+
+			return view('oastack::oauth2.login', ['error'=> $login->message]);
+
+		else if (isset ($login->view))
+
+			return view ('oastack::oauth2.' . $login->view, (array) $login);
+
+
+		return redirect()->away($login->uri);
 	}
-	
+
 	/**
 	 *	User Forgot
 	 *	Show user forgot fields
@@ -105,7 +100,7 @@ class OaStackViewController extends BaseController {
 		// Build View
 		return view ('oastack::oauth2.forgot');
 	}
-	
+
 	/**
 	 *	User Forgot
 	 *	Redirect success or show failure.
@@ -115,15 +110,15 @@ class OaStackViewController extends BaseController {
 	{
 		// Request Foreground Job
 		$login = json_decode ($this->restDispatch ('resetpassword', 'OAuth2Controller', [], self::$resetRules));
-		
-		if (isset ($login->error))
-		
-			return view('oastack::oauth2.forgot', ['error'=> $login->message]);
-		
 
-		return Redirect::route('login');
+		if (isset ($login->error))
+
+			return view('oastack::oauth2.forgot', ['error'=> $login->message]);
+
+
+		return redirect()->route('login');
 	}
-	
+
 	/**
 	 *	User Reset Form
 	 *	Show user reset fields
@@ -133,7 +128,7 @@ class OaStackViewController extends BaseController {
 		// Build View
 		return view ('oastack::oauth2.reset', ['reset_token'=> $token]);
 	}
-	
+
 	/**
 	 *	Perform User Reset
 	 *	Show user reset result
@@ -146,12 +141,12 @@ class OaStackViewController extends BaseController {
 		$reset = json_decode (self::restDispatch ('changepassword', 'OAuth2Controller', ['reset_token'=> $token], self::$changepasswordRules));
 
 		if (isset ($reset->error))
-		
+
 			return view('oastack::oauth2.reset', ['error'=> $reset->message]);
-	
-		return Redirect::route('login');
+
+		return redirect()->route('login');
 	}
-	
+
 	/**
 	 *	User Authorize
 	 *	Redirect success or show failure.
@@ -162,13 +157,13 @@ class OaStackViewController extends BaseController {
 		// Request Foreground Job
 		$login = json_decode (self::restDispatch ('authorize', 'OAuth2Controller', [], self::$approveRules));
 		if (isset ($login->error))
-		
+
 			return view('oastack::oauth2.login', ['error'=> $login->message]);
-		
-		
-		return Redirect::away($login->uri);
+
+
+		return redirect()->away($login->uri);
 	}
-	
+
 	/**
 	 *	User Invite Form
 	 *	Show user invite fields
@@ -176,12 +171,12 @@ class OaStackViewController extends BaseController {
 	public function invite ()
 	{
 		// Accounts list
-		$accounts = json_decode (self::restDispatch ('accounts', 'OAuth2Controller'));		
-		
+		$accounts = json_decode (self::restDispatch ('accounts', 'OAuth2Controller'));
+
 		// Build View
 		return view ('oastack::oauth2.invite', ['accounts'=> $accounts]);
 	}
-	
+
 	/**
 	 *	Subscribe User
 	 *	Show user registration
@@ -192,11 +187,11 @@ class OaStackViewController extends BaseController {
 	{
 		// Request Foreground Job
 		$invite = self::restDispatch ('identifyinvite', 'OAuth2Controller', ['token'=> $token], self::$invitationRules);
-		
+
 		// Build View
 		return view ('oastack::oauth2.subscribe', json_decode ($invite, true));
 	}
-	
+
 	/**
 	 *	Subscribed User
 	 *	Show success or failure.
@@ -206,19 +201,19 @@ class OaStackViewController extends BaseController {
 	public function subscribed ($token)
 	{
 		try
-        {
-	        // Request Foreground Job
+		{
+			// Request Foreground Job
 			$response = json_decode (self::restDispatch ('subscribe', 'OAuth2Controller', ['token'=> $token], self::$subscribeRules), true);
 		}
 		catch (\Cloudoki\InvalidParameterException $e)
 		{
 			$response = ['errors'=> $e->getErrors ()];
 		}
-		
+
 		// Build View
 		return view('oastack::oauth2.subscribed', $response);
 	}
-	
+
 	/**
 	 *	Register App View
 	 *	Show client app registration
@@ -228,7 +223,7 @@ class OaStackViewController extends BaseController {
 		// Build View
 		return view ('oastack::oauth2.register');
 	}
-	
+
 	/**
 	 *	Registered App View
 	 *	Show client app action response
@@ -241,15 +236,15 @@ class OaStackViewController extends BaseController {
 	{
 
 		try
-        {
-	        // Request Foreground Job
+		{
+			// Request Foreground Job
 			$response = json_decode (self::restDispatch ('registerclient', 'OAuth2Controller', [], self::$postRules), true);
 		}
 		catch (\Cloudoki\InvalidParameterException $e)
 		{
 			$response = ['error'=> $e->getErrors ()];
 		}
-		
+
 		// Build View
 		return view('oastack::oauth2.registered', $response);
 	}

@@ -11,11 +11,11 @@ class Oauth2Authorization extends Eloquent
 	 * @const string
 	 */
 	const type = 'oauth2authorization';
-	
+
 	protected $table = 'oauth_authorizations';
-	
+
 	protected $fillable = ['client_id', 'user_id', 'authorization_date'];
-	
+
 	/**
 	 * Since we're using an existing db and Eloquent expects us to have (by default)
 	 * the updated_at, created_at columns, we need to disable the automatic timestamp updates
@@ -24,7 +24,7 @@ class Oauth2Authorization extends Eloquent
 	 * @var bool
 	 */
 	public $timestamps = false;
-	
+
 	/**
 	 * Users relationship
 	 *

@@ -36,26 +36,31 @@ class OAuth2Controller extends Controller {
 	{
 		# Add payload to GET
 		$_GET = (array) $payload;
+		
 		# Validate client
 		$server = Oauth2Verifier::getInstance ()->getServer ();
 		$request = Oauth2Verifier::getInstance ()->getRequest ();
 		$response = new Response();
 
 		$client = self::validateClient ($server, $request, $response);
-		if (!$client || $client->getRedirectUri () != $payload->redirect_uri) {
+		if (!$client || $client->getRedirectUri () != $payload->redirect_uri)
+		
 			throw new \Cloudoki\InvalidParameterException ('Invalid client id or redirect uri');
 
-		}
 		# Validate user
-		if (!empty($payload->email)) {
+		if (!empty($payload->email))
+			
 			$user = User::email ($payload->email)->first ();
-		} else {
+		
+		else
 			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
-		}
+		
 
-		if (isset($user) && !$user || !$user->checkPassword ($payload->password)) {
+		if (isset($user) && !$user || !$user->checkPassword ($payload->password))
+			
 			throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
-		}
+
+
 		# Validate Authorization
 		$authorization = $user->oauth2authorizations ()->where ('client_id', $client->getClientId ())->first ();
 
@@ -112,8 +117,7 @@ class OAuth2Controller extends Controller {
 		# Validate session token
 		$sessiontoken = Oauth2AccessToken::whereAccessToken ($payload->session_token)->valid ()->first ();
 
-
-		if (!$sessiontoken || $sessiontoken->user->getKey () != (int) $payload->approve)
+		if (!$sessiontoken || $sessiontoken->user->getId () != (int) $payload->approve)
 
 			throw new \Cloudoki\InvalidParameterException ('Session expired or invalid approval.');
 
@@ -285,7 +289,7 @@ class OAuth2Controller extends Controller {
 
 		if (!$user)
 
-			throw new \Cloudoki\nvalidParameterException ('There is something wrong with that token.');
+			throw new \Cloudoki\InvalidParameterException ('There is something wrong with that token.');
 
 		else return
 			[
@@ -355,6 +359,3 @@ class OAuth2Controller extends Controller {
 		return $client->schema ('basic');
 	}
 }
-
-
-

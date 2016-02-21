@@ -1,7 +1,7 @@
 <?php
 
 namespace Cloudoki\OaStack\Models;
-	
+
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Oauth2AccessToken extends Eloquent
@@ -12,9 +12,9 @@ class Oauth2AccessToken extends Eloquent
 	 * @const string
 	 */
 	protected $table = 'oauth_access_tokens';
-	
+
 	protected $guarded = array('scope');
-	
+
 	/**
 	 * Since we're using an existing db and Eloquent expects us to have (by default)
 	 * the updated_at, created_at columns, we need to disable the automatic timestamp updates
@@ -23,7 +23,7 @@ class Oauth2AccessToken extends Eloquent
 	 * @var bool
 	 */
 	public $timestamps = false;
-	
+
 
 	/**
 	 * User relationship
@@ -34,7 +34,7 @@ class Oauth2AccessToken extends Eloquent
 	{
 		return $this->belongsTo ('User');
 	}
-	
+
 	/**
 	 * Client relationship
 	 *
@@ -44,7 +44,7 @@ class Oauth2AccessToken extends Eloquent
 	{
 		return $this->belongsTo ('Oauth2Client', 'client_id', 'client_id');
 	}
-	
+
 	/**
 	 *	Only Valids
 	 *
@@ -56,7 +56,7 @@ class Oauth2AccessToken extends Eloquent
 	{
 		return $query->whereRaw ('expires > now()');
 	}
-	
+
 	/**
 	 *	Only Valids, with token
 	 *
@@ -70,7 +70,7 @@ class Oauth2AccessToken extends Eloquent
 		return $query->where ('access_token', $token)
 					 ->whereRaw ('expires > now()');
 	}
-	
+
 	/**
 	 *	Only Valids, with client
 	 *
@@ -84,8 +84,8 @@ class Oauth2AccessToken extends Eloquent
 		return $query->where ('client_id', $client->getClientId ())
 					 ->whereRaw ('expires > now()');
 	}
-	
-	
+
+
 	/**
 	 *	Get Token
 	 *
@@ -95,45 +95,45 @@ class Oauth2AccessToken extends Eloquent
 	{
 		return $this->access_token;
 	}
-	
-	
+
+
 	/**
-     * Generates an unique access token.
-     *
-     * Implementing classes may want to override this function to implement
-     * other access token generation schemes.
-     *
-     * @return
-     * An unique access token.
-     *
-     * @ingroup oauth2_section_4
-     */
+	 * Generates an unique access token.
+	 *
+	 * Implementing classes may want to override this function to implement
+	 * other access token generation schemes.
+	 *
+	 * @return
+	 * An unique access token.
+	 *
+	 * @ingroup oauth2_section_4
+	 */
 	protected static function generateAccessToken()
 	{
 		if (function_exists('mcrypt_create_iv')) 
 		{
 			$randomData = mcrypt_create_iv(20, MCRYPT_DEV_URANDOM);
 			if ($randomData !== false && strlen($randomData) === 20)
-			
+
 				return bin2hex($randomData);
 		}
-		
+
 		if (function_exists('openssl_random_pseudo_bytes'))
 		{
 			$randomData = openssl_random_pseudo_bytes(20);
 			if ($randomData !== false && strlen($randomData) === 20)
-			
+
 				return bin2hex($randomData);
 		}
-		
+
 		if (@file_exists('/dev/urandom')) 
 		{
 			$randomData = file_get_contents('/dev/urandom', false, null, 0, 20);
 			if ($randomData !== false && strlen($randomData) === 20)
-				
+
 				return bin2hex($randomData);
 		}
-		
+
 		# Last resort
 		$rand = ['potatoes', 'peaches', 'tomatoes', 'onions', 'bananas', 'watermelon', 'lettuce', 'grapes', 'peppers', 'artichokes'];
 

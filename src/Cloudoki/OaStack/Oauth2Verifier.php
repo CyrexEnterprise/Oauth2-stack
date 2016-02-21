@@ -36,10 +36,10 @@ class Oauth2Verifier
 
 	private function __construct ()
 	{
-		// Database	
+		// Database
 		$db = (object) Config::get('database.connections.mysql');
 		$dsn = 'mysql:dbname='.$db->database.';host='.$db->host;
-		
+
 		$pdoconfig = array
 		(
 			'client_table' => 'oauth_clients',
@@ -47,7 +47,7 @@ class Oauth2Verifier
 		);
 
 		$storage = new Pdo (array('dsn' => $dsn, 'username' => $db->username, 'password' => $db->password), $pdoconfig);
-		
+
 		$this->server = new Server($storage, array (
 			'allow_implicit' => true,
 			'enforce_redirect' => true,
@@ -82,21 +82,21 @@ class Oauth2Verifier
 
 		return $this->request;
 	}
-	
+
 	public function createRequestFromGlobals()
-    {
+	{
 		// Patch headerless bearer
 		$headers = Input::get('access_token')?
-		
+
 			array ('AUTHORIZATION'=> 'Bearer ' . Input::get('access_token')): null;
 
-		
+
 		$request = new Request($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER, Input::all(), $headers);
 
-        return $request;
-    }
-	
-	
+		return $request;
+	}
+
+
 
 	public static function isValid ()
 	{
@@ -133,7 +133,7 @@ class Oauth2Verifier
 		}
 		return false;
 	}
-	
+
 	/**
 	 *	Get User Object
 	 */
@@ -146,7 +146,7 @@ class Oauth2Verifier
 		}
 		return false;
 	}
-	
+
 	public function getRequestBody ()
 	{
 		$instance = self::getInstance ();

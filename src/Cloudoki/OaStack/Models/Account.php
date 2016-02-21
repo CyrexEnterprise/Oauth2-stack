@@ -5,8 +5,8 @@ namespace Cloudoki\OaStack\Models;
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
- *	Account Model	
- *	Add the namespace if you want to extend your custom Account model with this one.	
+ *	Account Model
+ *	Add the namespace if you want to extend your custom Account model with this one.
  */
 
 
@@ -22,9 +22,9 @@ class Account extends Eloquent {
 	 * @var array
 	 */
 	protected $fillable = array('name');
-	
-    protected $dates = ['deleted_at'];
-    
+
+	protected $dates = ['deleted_at'];
+
 	/**
 	 * Users relationship
 	 *
@@ -53,7 +53,7 @@ class Account extends Eloquent {
 	public function setName ($name)
 	{
 		$this->name = $name;
-		
+
 		return $this;
 	}
 

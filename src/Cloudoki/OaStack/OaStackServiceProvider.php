@@ -24,29 +24,29 @@ class OaStackServiceProvider extends ServiceProvider {
 		{
 			require __DIR__.'/../../routes.php';
 		}
-		
+
 		# Oauth2 Views
 		$this->loadViewsFrom (__DIR__.'/Views', 'oastack');
-		
+
 		$this->publishes (
 		[
 			__DIR__.'/Views' => resource_path ('views/vendor/oastack'),
 		]);
-		
+
 		# Oauth2 i18n
 		$this->loadTranslationsFrom (__DIR__.'/../../lang', 'oastack');
-		
+
 		$this->publishes (
 		[
 			__DIR__.'/../../lang' => resource_path ('lang/vendor/oastack')
 		], 'lang');
-		
+
 		# Oauth2 config
 		$this->publishes (
 		[
 			__DIR__.'/../../config/oastack.php' => config_path ('oastack.php')
 		], 'config');
-		
+
 		#Oauth2 Migrations
 		$this->publishes(
 		[
@@ -63,9 +63,9 @@ class OaStackServiceProvider extends ServiceProvider {
 	{
 
 		$this->app['oastack'] = $this->app->share(function($app)
-        {
-            return new OaStack;
-        });
+		{
+			return new OaStack;
+		});
 	}
 
 	/**

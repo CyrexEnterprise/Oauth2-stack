@@ -231,8 +231,7 @@ class Oauth2Client extends Eloquent
 	protected static function getSchema ($filename)
 	{
 		// Get schema file
-		$file = __DIR__.'/../schemas/' . $filename;
-		//$file = Config::get('oastack::schemas.path') . $filename;
+		$file = __DIR__.'/schemes/' . $filename;
 
 		if (!file_exists ($file))
 
