@@ -36,31 +36,26 @@ class OAuth2Controller extends Controller {
 	{
 		# Add payload to GET
 		$_GET = (array) $payload;
-		
 		# Validate client
 		$server = Oauth2Verifier::getInstance ()->getServer ();
 		$request = Oauth2Verifier::getInstance ()->getRequest ();
 		$response = new Response();
 
 		$client = self::validateClient ($server, $request, $response);
-		if (!$client || $client->getRedirectUri () != $payload->redirect_uri)
-		
+		if (!$client || $client->getRedirectUri () != $payload->redirect_uri) {
 			throw new \Cloudoki\InvalidParameterException ('Invalid client id or redirect uri');
 
+		}
 		# Validate user
-		if (!empty($payload->email))
-			
+		if (!empty($payload->email)) {
 			$user = User::email ($payload->email)->first ();
-		
-		else
+		} else {
 			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
-		
+		}
 
-		if (isset($user) && !$user || !$user->checkPassword ($payload->password))
-			
+		if (isset($user) && !$user || !$user->checkPassword ($payload->password)) {
 			throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
-
-
+		}
 		# Validate Authorization
 		$authorization = $user->oauth2authorizations ()->where ('client_id', $client->getClientId ())->first ();
 
@@ -214,7 +209,8 @@ class OAuth2Controller extends Controller {
 
 		# Reset token
 		$reset_token = $user->makeToken ();
-		$user->setResetToken ($reset_token)->save ();
+
+		$user->setResetToken ($reset_token);
 
 		$data =
 		[
@@ -239,7 +235,11 @@ class OAuth2Controller extends Controller {
 	 */
 	public static function changepassword ($payload)
 	{
-		$user = User::email ($payload->email)->resetToken ($payload->reset_token)->first ();
+		$token = $payload->reset_token;
+		
+		$user = User::email ($payload->email)
+			->whereHas ('accounts', function ($q) use ($token) { $q->where ('account_user.reset_token', $token); })
+			->first ();
 
 		# e-mail and token validation
 		if (!$user)
@@ -251,7 +251,7 @@ class OAuth2Controller extends Controller {
 
 			throw new \Cloudoki\InvalidParameterException ('The passwords do not match.');
 
-
+		
 		# Update user
 		$user->setPassword ($payload->password)
 			->setResetToken (null)
@@ -359,3 +359,6 @@ class OAuth2Controller extends Controller {
 		return $client->schema ('basic');
 	}
 }
+
+
+
