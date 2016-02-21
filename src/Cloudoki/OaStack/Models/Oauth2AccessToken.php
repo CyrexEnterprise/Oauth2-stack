@@ -42,7 +42,7 @@ class Oauth2AccessToken extends Eloquent
 	 */
 	public function client ()
 	{
-		return $this->belongsTo ('Oauth2Client', 'client_id', 'client_id');
+		return $this->belongsTo ('Cloudoki\OaStack\Models\Oauth2Client', 'client_id', 'client_id');
 	}
 
 	/**
