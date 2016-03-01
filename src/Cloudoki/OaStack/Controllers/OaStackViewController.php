@@ -80,7 +80,7 @@ class OaStackViewController extends BaseController {
 
 		if (isset ($login->error))
 
-			return view('oastack::oauth2.login', ['error'=> $login->message]);
+			return view('oastack::oauth2.login', ['error'=> isset ($login->message)? $login->message: "something went wrong"]);
 
 		else if (isset ($login->view))
 
