@@ -1,21 +1,18 @@
 <?php
 namespace Cloudoki\OaStack\Seeds;
 
-use Cloudoki\OaStack\Models\Account;
-use Cloudoki\OaStack\Models\User;
 use Illuminate\Database\Seeder;
 
-class OaStackSeeder extends Seeder {
-
+class OaStackSeeder extends Seeder 
+{
     public function run()
     {
-        $this->call('OaAccountsTableSeeder');
-        $this->call('OaUsersTableSeeder');
-        $this->call('OauthClientsTableSeeder');
+        $this->call(OaAccountsTableSeeder::class);
+        $this->call(OaUsersTableSeeder::class);
+        $this->call(OauthClientsTableSeeder::class);
 
         $this->command->info('OaStack tables seeded!');
     }
-
 }
 
 class OaAccountsTableSeeder extends Seeder {
