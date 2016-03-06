@@ -18,7 +18,8 @@ class OastackCreateAccountsTable extends Migration {
 			{
 				$table->increments('id');
 				$table->string('name', 32);
-
+				$table->string('slug', 32);
+				
 				$table->softDeletes();
 				$table->timestamps();
 			});

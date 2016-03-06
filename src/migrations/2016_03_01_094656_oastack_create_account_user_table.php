@@ -16,12 +16,10 @@ class OastackCreateAccountUserTable extends Migration {
 		
 			Schema::create ('account_user', function (Blueprint $table)
 			{
-				$table->increments ('id');
 				$table->integer ('account_id');
 				$table->integer ('user_id');
 				$table->string ('invitation_token', 32)->nullable ();
-				
-				$table->timestamps ();
+				$table->string ('reset_token', 32)->nullable ();
 			});
 	}
 
