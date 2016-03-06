@@ -1,5 +1,8 @@
 <?php
-	
+namespace Cloudoki\OaStack\Seeds;
+
+use Cloudoki\OaStack\Models\Account;
+use Cloudoki\OaStack\Models\User;
 use Illuminate\Database\Seeder;
 
 class OaStackSeeder extends Seeder {
