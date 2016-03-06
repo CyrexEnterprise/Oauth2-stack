@@ -2,7 +2,8 @@
 namespace Cloudoki\OaStack\Models;
 
 use Cloudoki\OaStack\Models\Oauth2Authorization;
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 /**
  *	User Model
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
  */
 class User extends Eloquent {
 
-	//use SoftDeletingTrait;
+	use SoftDeletes;
 
 	/**
 	 * Fillables

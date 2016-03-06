@@ -2,7 +2,8 @@
 
 namespace Cloudoki\OaStack\Models;
 
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  *	Account Model
@@ -13,7 +14,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Account extends Eloquent {
 
-	use SoftDeletingTrait;
+	use SoftDeletes;
 
 	/**
 	 * Fillables
