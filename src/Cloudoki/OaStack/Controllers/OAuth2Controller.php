@@ -331,11 +331,10 @@ class OAuth2Controller extends Controller {
 	 */
 	public function registeruser ()
 	{
-		// Will throw 403 if not valid
-		// OaStack::check ();
+		$payload = json_decode (Input::get ('payload'));
 
 		$client = new Oauth2Client ();
-		$client ->appendPayload (json_decode (Input::get ('payload')))
+		$client ->appendPayload ($payload)
 			->save ();
 
 		return $client->schema ('full');
@@ -347,11 +346,10 @@ class OAuth2Controller extends Controller {
 	 *	Register app
 	 *	Based on simple form.
 	 */
-	public function registerclient ($payload = [])
+	public function registerclient ($payload = null)
 	{
-		// Will throw 403 if not valid
-		//\Cloudoki\OaStack\OaStack::check ();
-		$payload = $payload ? $payload : Input::get ('payload');
+		$payload = $payload ?: json_decode (Input::get ('payload'));
+		
 		$client = new Oauth2Client();
 		$client->appendPayload ($payload)
 			->save();

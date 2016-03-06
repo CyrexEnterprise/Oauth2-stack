@@ -52,6 +52,16 @@ class User extends Eloquent {
 	{
 		return $this->hasMany('\Cloudoki\OaStack\Models\Oauth2Authorization');
 	}
+	
+	/**
+	 * Clients relationship
+	 *
+	 * @return hasMany
+	 */
+	public function oauth2clients ()
+	{
+		return $this->hasMany('\Cloudoki\OaStack\Models\Oauth2Client');
+	}
 
 	/**
 	 *	Find By Email

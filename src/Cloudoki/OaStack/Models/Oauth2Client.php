@@ -1,9 +1,11 @@
 <?php
 namespace Cloudoki\OaStack\Models;
 
-use \Illuminate\Database\Eloquent\Model as Eloquent;
-use \Cloudoki\MissingParameterException;
-use \Cloudoki\OaStack\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+
+
+
 class Oauth2Client extends Eloquent
 {
 	/**
@@ -46,21 +48,13 @@ class Oauth2Client extends Eloquent
 	{
 		$this->setClientId ();
 		$this->setClientSecret ();
-		$this->setUser ($payload->user_id);
-
+		
+		$this->users()->attach((int) $payload->user_id);
 		$this->setName ($payload->name);
 		$this->setRedirectUri ($payload->redirect);
 
 		return $this;
 	}
-
-	/**
-	 * Define the attributes that are mass assignable - security reasons.
-	 * Only this attributes can be changed.
-	 *
-	 * @var array
-	 */
-	// protected $fillable = array();
 
 	public function user ()
 	{
@@ -82,7 +76,9 @@ class Oauth2Client extends Eloquent
 	 */
 	public function setClientId ()
 	{
-		return $this->client_id = uniqid ('oauth2', true);
+		$this->client_id = uniqid ('oauth2', true);
+		
+		return $this;
 	}
 
 	/**
@@ -101,7 +97,9 @@ class Oauth2Client extends Eloquent
 	 */
 	public function setClientSecret ()
 	{
-		return $this->client_secret = md5 (uniqid ('secret'));
+		$this->client_secret = md5 (uniqid ('secret'));
+		
+		return $this;
 	}
 
 	/**
@@ -120,11 +118,9 @@ class Oauth2Client extends Eloquent
 	 */
 	public function setName ($name)
 	{
-		if (!$name || !is_string ($name))
-
-			throw new MissingParameterException ('an valid (string) name is required');
-
 		$this->client_name = $name;
+		
+		return $this;
 	}
 
 	/**
@@ -144,11 +140,9 @@ class Oauth2Client extends Eloquent
 	 */
 	public function setRedirectUri ($uri)
 	{
-		if (!$uri || !is_string ($uri))
-
-			throw new MissingParameterException ('an valid uri is required');
-
 		$this->redirect_uri = $uri;
+		
+		return $this;
 	}
 
 	/**
@@ -164,25 +158,6 @@ class Oauth2Client extends Eloquent
 
 			$user:
 			$user->schema ($display);
-	}
-
-	/**
-	 *	Set User
-	 *	Current user is set as app user. Easy to improve to any (exist confirmed) user.
-	 *
-	 *	@param	int	$id
-	 */
-	public function setUser ($id)
-	{
-		$userid = (int) $id?: Guardian::user ()->getKey();
-
-		if (!$userid)
-
-			throw new MissingParameterException ('an existing User ID is required');
-
-		$this->user_id = $userid;
-
-		return $this;
 	}
 
 	/**
@@ -252,4 +227,4 @@ class Oauth2Client extends Eloquent
 
 		return $model->getConstant($name);
 	}
-};
+}

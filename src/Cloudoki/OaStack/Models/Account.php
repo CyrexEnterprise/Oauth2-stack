@@ -2,6 +2,7 @@
 
 namespace Cloudoki\OaStack\Models;
 
+use Cloudoki\OaStack\Models\User;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,7 +34,7 @@ class Account extends Eloquent {
 	 */
 	public function users ()
 	{
-		return $this->belongsToMany ('App\Models\User')->withPivot ('invitation_token');
+		return $this->belongsToMany (User::class)->withPivot ('invitation_token');
 	}
 
 	/**
