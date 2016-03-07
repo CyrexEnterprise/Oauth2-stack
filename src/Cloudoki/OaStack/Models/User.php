@@ -51,7 +51,7 @@ class User extends BaseModel
 	}
 
 	/**
-	 * Authoirzations relationship
+	 * Authorisations relationship
 	 *
 	 * @return hasMany
 	 */
@@ -68,6 +68,19 @@ class User extends BaseModel
 	public function oauth2clients ()
 	{
 		return $this->hasMany('\Cloudoki\OaStack\Models\Oauth2Client');
+	}
+	
+	/**
+	 * Get Accounts
+	 * All accounts related to the user.
+	 *
+	 * @param   $display
+	 * @return  array
+	 */
+	public function getAccounts ($display)
+	{
+		# Get related users
+		return $this->accounts->schema ($display);
 	}
 
 	/**
