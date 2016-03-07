@@ -187,9 +187,14 @@ class OaStackViewController extends BaseController {
 	{
 		// Request Foreground Job
 		$invite = $this->restDispatch ('identifyinvite', 'Cloudoki\OaStack\OAuth2Controller', ['token'=> $token], self::$invitationRules);
+		
 
 		// Build View
-		return view ('oastack::oauth2.subscribe', json_decode ($invite, true));
+		return view ('oastack::oauth2.subscribe', 
+		[
+			'user'=> (array) $invite->user,
+			'account'=> (array) $invite->account
+		]);
 	}
 
 	/**
@@ -211,7 +216,7 @@ class OaStackViewController extends BaseController {
 		}
 
 		// Build View
-		return view('oastack::oauth2.subscribed', $response);
+		return view('oastack::oauth2.subscribed', (array) $response);
 	}
 
 	/**
@@ -246,6 +251,6 @@ class OaStackViewController extends BaseController {
 		}
 
 		// Build View
-		return view('oastack::oauth2.registered', $response);
+		return view('oastack::oauth2.registered', (array) $response);
 	}
 }

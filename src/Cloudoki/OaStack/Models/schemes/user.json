@@ -12,6 +12,7 @@
 		"email": "getEmail",
 		"firstname": "getFirstName",
 		"lastname": "getLastName",
+		"fullname": "getFullName",
 		"avatar": "getAvatar",
 		"accounts": "getAccounts:id"
 	},

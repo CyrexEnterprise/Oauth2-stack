@@ -4,9 +4,21 @@ namespace Cloudoki\OaStack\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
+use Cloudoki\OaStack\Collections\BaseCollection;
 
 class BaseModel extends Model
 {
+	/**
+	 *	Base Collection
+	 *	Add a custom collection extension
+	 *
+	 *	@return Collection
+	 */
+	public function newCollection (array $models = array ())
+	{
+		return new BaseCollection ($models);
+	}
+	
 	/**
 	 * Id
 	 * Get resource id

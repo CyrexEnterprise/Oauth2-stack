@@ -62,6 +62,28 @@ class Account extends BaseModel
 
 		return $this;
 	}
+	
+	/**
+	 * Get account slug
+	 *
+	 * @return	string
+	 */
+	public function getSlug ()
+	{
+		return $this->slug;
+	}
+
+	/**
+	 * Set account slug
+	 *
+	 * @param	string	$slug
+	 */
+	public function setSlug ($slug)
+	{
+		$this->slug = $slug;
+
+		return $this;
+	}
 
 	/**
 	 *	Get Invitation Token

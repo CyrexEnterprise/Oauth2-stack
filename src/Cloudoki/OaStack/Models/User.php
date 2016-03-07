@@ -37,7 +37,7 @@ class User extends BaseModel
 	 */
 	public function accounts ()
 	{
-		return $this->belongsToMany ('App\Models\Account')->withPivot ('invitation_token');
+		return $this->belongsToMany ('Cloudoki\OaStack\Models\Account')->withPivot ('invitation_token');
 	}
 
 	/**
@@ -47,7 +47,7 @@ class User extends BaseModel
 	 */
 	public function oauth2accesstokens ()
 	{
-		return $this->hasMany('\Cloudoki\OaStack\Models\Oauth2AccessToken');
+		return $this->hasMany('Cloudoki\OaStack\Models\Oauth2AccessToken');
 	}
 
 	/**
@@ -57,7 +57,7 @@ class User extends BaseModel
 	 */
 	public function oauth2authorizations ()
 	{
-		return $this->hasMany('\Cloudoki\OaStack\Models\Oauth2Authorization');
+		return $this->hasMany('Cloudoki\OaStack\Models\Oauth2Authorization');
 	}
 	
 	/**
@@ -67,7 +67,7 @@ class User extends BaseModel
 	 */
 	public function oauth2clients ()
 	{
-		return $this->hasMany('\Cloudoki\OaStack\Models\Oauth2Client');
+		return $this->hasMany('Cloudoki\OaStack\Models\Oauth2Client');
 	}
 	
 	/**
@@ -127,6 +127,8 @@ class User extends BaseModel
 	public function setFirstName ($firstname)
 	{
 		$this->firstname = $firstname;
+		
+		return $this;
 	}
 
 	/**
@@ -136,7 +138,7 @@ class User extends BaseModel
 	 */
 	public function getLastName ()
 	{
-		return $this->name;
+		return $this->lastname;
 	}
 
 	/**
@@ -146,7 +148,19 @@ class User extends BaseModel
 	 */
 	public function setLastName ($name)
 	{
-		$this->name = $name;
+		$this->lastname = $name;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get user name
+	 *
+	 * @return	string
+	 */
+	public function getFullName ()
+	{
+		return $this->firstname . ' ' . $this->lastname;
 	}
 
 	/**
@@ -167,6 +181,8 @@ class User extends BaseModel
 	public function setEmail ($email)
 	{
 		$this->email = $email;
+		
+		return $this;
 	}
 
 	/**
@@ -178,6 +194,8 @@ class User extends BaseModel
 	public function setPassword($value)
 	{
 		$this->password = Hash::make ($value);
+		
+		return $this;
 	}
 
 	/**
@@ -225,7 +243,7 @@ class User extends BaseModel
 
 		return md5 (uniqid ( $rand[rand (0, 9)] . ' ' . $rand[rand (0, 9)], true));
 	}
-
+	
 	/**
 	 *	Set Reset Token
 	 *
@@ -234,17 +252,9 @@ class User extends BaseModel
 	 */
 	public function setResetToken ($token)
 	{
-		$this->reset_token = $token;
+		$account = $this->accounts->first();
+		$this->accounts()->updateExistingPivot($account->getId (), ['reset_token'=> $token]);
 
 		return $this;
-	}
-
-	/**
-	 *	Get Id
-	 *	@return string
-	 */
-	public function getId ()
-	{
-		return $this->id;
 	}
 }
