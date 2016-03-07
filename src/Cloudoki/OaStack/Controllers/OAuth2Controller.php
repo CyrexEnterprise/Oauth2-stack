@@ -6,21 +6,20 @@ use Mail;
 use Config;
 use DateTimeZone;
 
-use App\Models\User;
-use App\Models\Account;
+use Cloudoki\OaStack;
+use Cloudoki\OaStack\Models\User;
+use Cloudoki\OaStack\Models\Account;
+use Cloudoki\OaStack\Models\Oauth2Client;
+use Cloudoki\OaStack\Models\Oauth2AccessToken;
+use Cloudoki\OaStack\Models\Oauth2Authorization;
+use Cloudoki\OaStack\Oauth2Verifier;
 
 use Carbon\Carbon;
 use OAuth2\Response;
 use Illuminate\Routing\Controller;
 use Cloudoki\InvalidParameterException;
-use Cloudoki\OaStack;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Cloudoki\OaStack\Models\Oauth2AccessToken;
-use Cloudoki\OaStack\Oauth2Verifier;
-use Cloudoki\OaStack\Models\Oauth2Client;
-use Cloudoki\OaStack\Models\Oauth2Authorization;
-
 
 class OAuth2Controller extends Controller {
 
@@ -357,6 +356,3 @@ class OAuth2Controller extends Controller {
 		return $client->schema ('basic');
 	}
 }
-
-
-

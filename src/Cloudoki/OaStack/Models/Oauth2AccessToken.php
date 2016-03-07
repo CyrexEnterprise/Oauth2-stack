@@ -2,6 +2,8 @@
 
 namespace Cloudoki\OaStack\Models;
 
+use Cloudoki\OaStack\Models\User;
+use Cloudoki\OaStack\Models\Oauth2Client;
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Oauth2AccessToken extends Eloquent
@@ -32,7 +34,7 @@ class Oauth2AccessToken extends Eloquent
 	 */
 	public function user ()
 	{
-		return $this->belongsTo ('App\Models\User');
+		return $this->belongsTo (User::class);
 	}
 
 	/**
@@ -42,7 +44,7 @@ class Oauth2AccessToken extends Eloquent
 	 */
 	public function client ()
 	{
-		return $this->belongsTo ('Cloudoki\OaStack\Models\Oauth2Client', 'client_id', 'client_id');
+		return $this->belongsTo (Oauth2Client::class, 'client_id', 'client_id');
 	}
 
 	/**

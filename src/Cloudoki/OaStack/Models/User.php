@@ -1,17 +1,24 @@
 <?php
 namespace Cloudoki\OaStack\Models;
 
+use Cloudoki\OaStack\Models\BaseModel;
 use Cloudoki\OaStack\Models\Oauth2Authorization;
-use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 /**
  *	User Model
  *	Add the namespace if you want to extend your custom User model with this one.
  */
-class User extends Eloquent {
-
+class User extends BaseModel
+{
 	use SoftDeletes;
+	
+	/**
+	 * The model type.
+	 *
+	 * @const string
+	 */
+	const type = 'user';
 
 	/**
 	 * Fillables

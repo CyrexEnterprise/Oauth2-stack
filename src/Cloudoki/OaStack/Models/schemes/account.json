@@ -1,0 +1,22 @@
+{
+	"basic" :
+	{
+		"id": "getId",
+		"name": "getName",
+		"slug": "getSlug"
+	},
+	"full" :
+	{
+		"id": "getId",
+		"type": "getConst:type",
+		"name": "getName",
+		"slug": "getSlug",
+		"users": "getUsers:id"
+	},
+	"set" : {
+        "protected": {
+		    "name" : "setName",
+		    "slug" : "setSlug"
+	    }
+    }
+}

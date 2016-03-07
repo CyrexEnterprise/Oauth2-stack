@@ -1,12 +1,13 @@
 <?php
 namespace Cloudoki\OaStack\Models;
 
+use Cloudoki\OaStack\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use Cloudoki\OaStack\Models\BaseModel;
 
 
 
-class Oauth2Client extends Eloquent
+class Oauth2Client extends BaseModel
 {
 	/**
 	 * The model type.
@@ -58,7 +59,7 @@ class Oauth2Client extends Eloquent
 
 	public function user ()
 	{
-		return $this->hasOne('App\Models\User');
+		return $this->hasOne(User::class);
 	}
 
 	/**
@@ -158,73 +159,5 @@ class Oauth2Client extends Eloquent
 
 			$user:
 			$user->schema ($display);
-	}
-
-	/**
-	 *	Schema
-	 *	Filter response, based on schema.json and display type
-	 *
-	 * @param $display
-	 * @return object
-	 * @throws MissingParameterException
-	 * @throws MissingSchemaException
-	 */
-	public function schema ($display)
-	{
-		$rules = (array) self::getSchema ($this::type . '.json');
-		$response = array();
-
-		// Validate
-		if (!$display || !$rules)
-
-			throw new MissingParameterException ('Schema mismatch or display parameter missing');
-
-		// Return id
-		if ($display == 'id')
-
-			return $this->getId ();
-
-		// Evaluate schema
-		foreach ($rules [$display] as $key => $funcpair)
-		{
-			$func = explode (':', $funcpair);
-
-			$response[$key] = $this::$func[0] (isset ($func[1])? $func[1]: null, isset ($func[2])? $func[2]: null);
-		}
-
-		return (object) $response;
-	}
-
-	/**
-	 * Get Seed Content
-	 * Retreive content from schema seed file
-	 *
-	 * @param $filename
-	 * @return mixed
-	 * @throws MissingSchemaException
-	 */
-	protected static function getSchema ($filename)
-	{
-		// Get schema file
-		$file = __DIR__.'/schemes/' . $filename;
-
-		if (!file_exists ($file))
-
-			throw new MissingSchemaException ('Schema file not found');
-
-		else return json_decode (file_get_contents ($file));
-	}
-
-	/**
-	 *	Get Constant
-	 *	Get constant defined on model
-	 *
-	 *	@return const mixed
-	 */
-	public function getConst ($name)
-	{
-		$model = new ReflectionClass ($this);
-
-		return $model->getConstant($name);
 	}
 }

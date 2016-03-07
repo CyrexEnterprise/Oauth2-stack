@@ -3,19 +3,23 @@
 namespace Cloudoki\OaStack\Models;
 
 use Cloudoki\OaStack\Models\User;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use Cloudoki\OaStack\Models\BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  *	Account Model
  *	Add the namespace if you want to extend your custom Account model with this one.
  */
-
-
-
-class Account extends Eloquent {
-
+class Account extends BaseModel
+{
 	use SoftDeletes;
+	
+	/**
+	 * The model type.
+	 *
+	 * @const string
+	 */
+	const type = 'account';
 
 	/**
 	 * Fillables

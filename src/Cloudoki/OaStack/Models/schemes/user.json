@@ -1,0 +1,27 @@
+{
+	"basic" :
+	{
+		"id": "getId",
+		"email": "getEmail",
+		"firstname": "getFirstname",
+		"lastname": "getLastname"
+	},
+	"full" :
+	{
+		"id": "getId",
+		"email": "getEmail",
+		"firstname": "getFirstName",
+		"lastname": "getLastName",
+		"avatar": "getAvatar",
+		"accounts": "getAccounts:id"
+	},
+	"set" : {
+        "protected": {
+	        "firstname" : "setFirstName",
+		    "lastname" : "setLastName",
+		    "email" : "setEmail",
+		    "avatar": "setAvatar",
+		    "password": "setPassword"
+		}
+    }
+}

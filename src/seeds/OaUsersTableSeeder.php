@@ -9,7 +9,8 @@ class OaUsersTableSeeder extends Seeder
 {
     public function run()
     {
-		$user = new User (['email' => 'jane@doe.com', 'firstname'=> 'Jane', 'lastname'=> 'Doe']); //User::create(['email' => 'jane@doe.com', 'firstname'=> 'Jane', 'lastname'=> 'Doe']);
+		$user = new User (['email' => 'zen@cloudoki.com', 'firstname'=> 'Zen', 'lastname'=> 'Bot']);
+		$user->setPassword ('secret');
 		
 		Account::first()
 			->users()

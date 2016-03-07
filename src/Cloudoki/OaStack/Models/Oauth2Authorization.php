@@ -1,7 +1,8 @@
 <?php
 namespace Cloudoki\OaStack\Models;
 
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Cloudoki\OaStack\Models\User;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Oauth2Authorization extends Eloquent
 {
@@ -32,6 +33,6 @@ class Oauth2Authorization extends Eloquent
 	 */
 	public function user ()
 	{
-		return $this->belongsTo ('App\Models\User');
+		return $this->belongsTo (User::class);
 	}
 };

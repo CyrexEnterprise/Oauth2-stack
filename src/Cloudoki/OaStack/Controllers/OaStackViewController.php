@@ -76,8 +76,8 @@ class OaStackViewController extends BaseController {
 	public function loginrequest ()
 	{
 		// Request Foreground Job
-		$login = json_decode ($this->restDispatch ('login', 'OAuth2Controller', [], self::$loginRules));
-
+		$login = $this->restDispatch ('login', 'Cloudoki\OaStack\OAuth2Controller', [], self::$loginRules);
+		
 		if (isset ($login->error))
 
 			return view('oastack::oauth2.login', ['error'=> isset ($login->message)? $login->message: "something went wrong"]);
@@ -109,7 +109,7 @@ class OaStackViewController extends BaseController {
 	public function resetrequest ()
 	{
 		// Request Foreground Job
-		$login = json_decode ($this->restDispatch ('resetpassword', 'OAuth2Controller', [], self::$resetRules));
+		$login = $this->restDispatch ('resetpassword', 'Cloudoki\OaStack\OAuth2Controller', [], self::$resetRules);
 
 		if (isset ($login->error))
 
@@ -138,7 +138,7 @@ class OaStackViewController extends BaseController {
 	public function changepassword ($token)
 	{
 		// Request Foreground Job
-		$reset = json_decode (self::restDispatch ('changepassword', 'OAuth2Controller', ['reset_token'=> $token], self::$changepasswordRules));
+		$reset = $this->restDispatch ('changepassword', 'Cloudoki\OaStack\OAuth2Controller', ['reset_token'=> $token], self::$changepasswordRules);
 
 		if (isset ($reset->error))
 
@@ -155,7 +155,7 @@ class OaStackViewController extends BaseController {
 	public function approve ()
 	{
 		// Request Foreground Job
-		$login = json_decode (self::restDispatch ('authorize', 'OAuth2Controller', [], self::$approveRules));
+		$login = $this->restDispatch ('authorize', 'Cloudoki\OaStack\OAuth2Controller', [], self::$approveRules);
 		if (isset ($login->error))
 
 			return view('oastack::oauth2.login', ['error'=> $login->message]);
@@ -171,7 +171,7 @@ class OaStackViewController extends BaseController {
 	public function invite ()
 	{
 		// Accounts list
-		$accounts = json_decode (self::restDispatch ('accounts', 'OAuth2Controller'));
+		$accounts = $this->restDispatch ('accounts', 'Cloudoki\OaStack\OAuth2Controller');
 
 		// Build View
 		return view ('oastack::oauth2.invite', ['accounts'=> $accounts]);
@@ -186,7 +186,7 @@ class OaStackViewController extends BaseController {
 	public function subscribe ($token)
 	{
 		// Request Foreground Job
-		$invite = self::restDispatch ('identifyinvite', 'OAuth2Controller', ['token'=> $token], self::$invitationRules);
+		$invite = $this->restDispatch ('identifyinvite', 'Cloudoki\OaStack\OAuth2Controller', ['token'=> $token], self::$invitationRules);
 
 		// Build View
 		return view ('oastack::oauth2.subscribe', json_decode ($invite, true));
@@ -203,7 +203,7 @@ class OaStackViewController extends BaseController {
 		try
 		{
 			// Request Foreground Job
-			$response = json_decode (self::restDispatch ('subscribe', 'OAuth2Controller', ['token'=> $token], self::$subscribeRules), true);
+			$response = $this->restDispatch ('subscribe', 'Cloudoki\OaStack\OAuth2Controller', ['token'=> $token], self::$subscribeRules);
 		}
 		catch (\Cloudoki\InvalidParameterException $e)
 		{
@@ -238,7 +238,7 @@ class OaStackViewController extends BaseController {
 		try
 		{
 			// Request Foreground Job
-			$response = json_decode (self::restDispatch ('registerclient', 'OAuth2Controller', [], self::$postRules), true);
+			$response = $this->restDispatch ('registerclient', 'Cloudoki\OaStack\OAuth2Controller', [], self::$postRules);
 		}
 		catch (\Cloudoki\InvalidParameterException $e)
 		{

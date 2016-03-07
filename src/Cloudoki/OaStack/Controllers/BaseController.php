@@ -5,8 +5,10 @@ namespace Cloudoki\OaStack\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Cloudoki\InvalidParameterException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Redirect;
+
+
 class BaseController extends Controller
 {
 	/**
@@ -69,34 +71,37 @@ class BaseController extends Controller
 		// Check if the validator failed
 		if ($validator->fails ())
 
-			throw new \Cloudoki\InvalidParameterException( 'Parameters validation failed!', $validator->messages()->all ());
+			throw new ValidationException ( $validator );
 
 		// return all input
 		return $input;
 	}
 
-	/**
-	 * Dispatch
-	 * The basic controller action between API and Worker
-	 *
-	 * @return mixed response
-	 */
-	public static function jobdispatch($job, $jobload)
+	 /**
+     * Dispatch
+     * The basic controller action between API and Worker
+     *
+     * @return mixed response
+     */
+	public static function jobdispatch($job, $jobload, $direct = false)
 	{
-		 // mock respons
-		 // return response()->json ([$job, $jobload]);
+		# Add general data
+		$jobload->access_token = config ('app.access_token', null);
 
-		 // Sync hell
-		 return self::doExec ($job, json_encode ($jobload));
+		# Response
+		$response = app()->frontqueue->request($job, $jobload);
+		
+		if (isset ($response->error)) 
+			
+			return response ($response->error, $response->code);
 
-		 /*global $app;
-
-		 // Add general data
-		 $jobload->open = round(microtime(true), 3);
-		 $jobload->access_token = Input::get('access_token');
-
-		 return $app->jobserver->request($job, $jobload);*/
+		# Frontqueue call
+		return $direct? 
+			
+			$response: 
+			response()->json ($response);
 	}
+
 
 	/**
 	 *  REST Dispatch
@@ -112,14 +117,13 @@ class BaseController extends Controller
 		# Validation
 		$payload = array_intersect_key ($this->validate ($input, $rules), $rules);
 
-
 		# Request Foreground Job
-		return self::jobdispatch ( 'controllerDispatch', (object)
-		[
-			'action'=>	  $method,
-			'controller'=>  $controller,
-			'payload'=>	 $payload
-		]);
+		$response = self::jobdispatch ('controllerDispatch', (object) ['action'=> $method, 'controller'=>  $controller, 'payload'=> (object) $payload], true);
+		
+		return is_string ($response)? 
+		
+			json_decode ($response): 
+			(object) $response;
 	}
 
 	/**
