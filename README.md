@@ -6,6 +6,11 @@ The package includes **DB** migration files, the **Oauth2 Server**, **Account/Us
 
 The goal of this package is to split it up in multiple Framework Branches. Right now, however, the Oauth2-Stack package is focussed on **Laravel 4.2 with Eloquent** in **MQ** alignment (3-layer environment).
 
+**v0.4** is the stable Laravel 4.2 compatible release
+
+**v0.5** is the stable Laravel 5.2 compatible release
+
+
 ##### Dependencies
 **Oauth2 Server** - The Oauth2 Stack is based on [Brent Shaffer's Oauth2 Server](https://github.com/bshaffer/oauth2-server-php), tweaked for multi-layer usage.
 
