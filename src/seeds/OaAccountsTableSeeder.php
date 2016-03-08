@@ -8,6 +8,6 @@ class OaAccountsTableSeeder extends Seeder
 {
     public function run()
     {
-       Account::create(['name' => 'Project Account']);
+       Account::create(['name' => 'Acme', 'slug' => 'acme']);
     }
 }

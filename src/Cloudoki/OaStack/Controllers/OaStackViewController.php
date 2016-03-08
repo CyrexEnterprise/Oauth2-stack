@@ -93,7 +93,6 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	User Forgot
 	 *	Show user forgot fields
-	 *  http://api.corporify.dev/oauth2/forgot/?email=zen@corpfy.be
 	 */
 	public function forgot ()
 	{
@@ -104,7 +103,6 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	User Forgot
 	 *	Redirect success or show failure.
-	 * http://api.corporify.dev/oauth2/forgot/?email=zen@corpfy.be
 	 */
 	public function resetrequest ()
 	{
@@ -150,7 +148,6 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	User Authorize
 	 *	Redirect success or show failure.
-	 * 	Call : http://api.corporify.dev/oauth2/authorize?session_token=95657ea89bcf56ed733ce67b00d2eb6491f5710a&approve=true
 	 */
 	public function approve ()
 	{
@@ -232,10 +229,6 @@ class OaStackViewController extends BaseController {
 	/**
 	 *	Registered App View
 	 *	Show client app action response
-	 *
-	 * Call : http://api.oauth2.dev/oauth2/register
-	 * raw json Content-Type: application/json
-	 * { "name": "Server test", "redirect": "http://api.corporify.dev/1/me", "user_id": 2}
 	 */
 	public function registeredapp ($response = array())
 	{
