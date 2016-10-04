@@ -52,7 +52,7 @@ class OAuth2Controller extends Controller {
 			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
 		}
 
-		if (isset($user) && !$user || !$user->checkPassword ($payload->password)) {
+		if (!isset($user) || !$user->checkPassword ($payload->password)) {
 			throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
 		}
 		# Validate Authorization
