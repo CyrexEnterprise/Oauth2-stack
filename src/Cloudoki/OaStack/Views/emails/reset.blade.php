@@ -11,7 +11,7 @@
 	<div class="panel-body">
 	
 		<p>{{ trans('oastack::emails.reset.info', ['firstname'=> $user->firstname]) }}</p>
-		<strong>{{ $url }}</strong>
+		<strong>{!! $url !!}</strong>
 		
 	</div>
 	

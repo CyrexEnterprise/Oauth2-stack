@@ -20,42 +20,42 @@
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span>
 				
-				{{ $message }}
+				{!! $message !!}
 			</div>
 			
 		@else
 		
 		<p>{{ trans('oastack::oauth2.user.invite.info') }}</p>
 	
-		{{ Form::open (['url' => '#']) }}
+		{!! Form::open (['url' => '#']) !!}
 					
 			<div class="input-group">
-				{{ Form::label ('firstname', trans('oastack::oauth2.user.invite.firstname'), ['class'=> 'input-group-addon']) }}
-				{{ Form::text ('firstname', '', ['placeholder'=> trans('oastack::oauth2.user.invite.fholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
+				{!! Form::label ('firstname', trans('oastack::oauth2.user.invite.firstname'), ['class'=> 'input-group-addon']) !!}
+				{!! Form::text ('firstname', '', ['placeholder'=> trans('oastack::oauth2.user.invite.fholder'), 'required'=> 'required', 'class'=> 'form-control']) !!}
 			</div>
 			<br>
 			
 			<div class="input-group">
-				{{ Form::label ('lastname', trans('oastack::oauth2.user.invite.lastname'), ['class'=> 'input-group-addon']) }}
-				{{ Form::text ('lastname', '', ['placeholder'=> trans('oastack::oauth2.user.invite.lholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
+				{!! Form::label ('lastname', trans('oastack::oauth2.user.invite.lastname'), ['class'=> 'input-group-addon']) !!}
+				{!! Form::text ('lastname', '', ['placeholder'=> trans('oastack::oauth2.user.invite.lholder'), 'required'=> 'required', 'class'=> 'form-control']) !!}
 			</div>
 			<br>
 			
 			<div class="input-group">
-				{{ Form::label ('email', trans('oastack::oauth2.user.invite.email'), ['class'=> 'input-group-addon']) }}
-				{{ Form::email ('email', '', ['placeholder'=> trans('oastack::oauth2.user.invite.eholder'), 'required'=> 'required', 'class'=> 'form-control']) }}
+				{!! Form::label ('email', trans('oastack::oauth2.user.invite.email'), ['class'=> 'input-group-addon']) !!}
+				{!! Form::email ('email', '', ['placeholder'=> trans('oastack::oauth2.user.invite.eholder'), 'required'=> 'required', 'class'=> 'form-control']) !!}
 			</div>
 			<br>
 			
 			<div class="input-group">
 				<span class="input-group-addon">{{ trans('oastack::oauth2.user.invite.account') }}</span>
-				{{ Form::select('size', $accounts, ['class'=> 'input-group-addon']) }}
+				{!! Form::select('size', $accounts, ['class'=> 'input-group-addon']) !!}
 			</div>
 			<br>
 						
-			{{ Form::submit(trans('oastack::oauth2.user.invite.submit'), ['class'=> 'btn btn-primary']) }}
+			{!! Form::submit(trans('oastack::oauth2.user.invite.submit'), ['class'=> 'btn btn-primary']) !!}
 		
-		{{ Form::close () }}
+		{!! Form::close () !!}
 		
 		@endif
 	</div>
@@ -63,7 +63,7 @@
 	<div class="panel-footer">
 	
 		{{ trans ('oastack::oauth2.user.invite.footer') }}
-		<a href="{{ Config::get ('oastack::config.privacy_url') }}">{{ Config::get ('oastack::config.privacy_url') }}</a>
+		<a href="{!! Config::get ('oastack::config.privacy_url') !!}">{!! Config::get ('oastack::config.privacy_url') !!}</a>
 		
 	</div>
 		

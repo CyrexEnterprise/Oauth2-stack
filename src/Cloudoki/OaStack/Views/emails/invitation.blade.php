@@ -11,7 +11,7 @@
 	<div class="panel-body">
 	
 		<p>{{ trans('oastack::emails.invite.info', ['account'=> $account]) }}</p>
-		<strong>{{ $url }}</strong>
+		<strong>{!! $url !!}</strong>
 		
 	</div>
 	

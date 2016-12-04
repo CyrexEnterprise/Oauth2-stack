@@ -16,7 +16,7 @@
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span>
 				
-				{{ $error }}
+				{!! $error !!}
 			</div>
 			
 			<input type="submit" class='btn btn-default' onclick="history.go(-1);" value="{{ trans('oastack::oauth2.user.login.retry') }}" />
@@ -27,30 +27,30 @@
 			
 		
 	
-		{{ Form::open (['before' => 'csrf', 'action'=> 
+		{!! Form::open (['before' => 'csrf', 'action'=> 
 		   [
 			'\Cloudoki\OaStack\Controllers\OaStackViewController@loginrequest',
 			'client_id'=> Request::input ('client_id'), 'redirect_uri'=> Request::input ('redirect_uri'), 'response_type'=> Request::input ('response_type'), 'state'=> Request::input ('state')
 			]])
-		}}
+		!!}
 			
 			<div class="input-group">
-				{{ Form::label ('email', trans('oastack::oauth2.user.login.email'), ['class'=> 'input-group-addon']) }}
-				{{ Form::email ('email', '', ['required'=> 'required', 'class'=> 'form-control']) }}
+				{!! Form::label ('email', trans('oastack::oauth2.user.login.email'), ['class'=> 'input-group-addon']) !!}
+				{!! Form::email ('email', '', ['required'=> 'required', 'class'=> 'form-control']) !!}
 			</div>
 			<br>
 			
 			<div class="input-group">
-				{{ Form::label ('password', trans('oastack::oauth2.user.login.password'), ['class'=> 'input-group-addon']) }}
-				{{ Form::password ('password', ['required'=> 'required', 'class'=> 'form-control']) }}
+				{!! Form::label ('password', trans('oastack::oauth2.user.login.password'), ['class'=> 'input-group-addon']) !!}
+				{!! Form::password ('password', ['required'=> 'required', 'class'=> 'form-control']) !!}
 			</div>
 			<br>
 			
 			<a href="forgot" class="btn btn-link pull-right">{{ trans('oastack::oauth2.user.login.forgot') }}</a>
 			
-			{{ Form::submit(trans('oastack::oauth2.user.login.submit'), ['class'=> 'btn btn-default']) }}
+			{!! Form::submit(trans('oastack::oauth2.user.login.submit'), ['class'=> 'btn btn-default']) !!}
 		
-		{{ Form::close() }}
+		{!! Form::close() !!}
 		
 		@endif
 	</div>

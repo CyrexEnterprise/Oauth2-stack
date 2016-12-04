@@ -12,14 +12,14 @@
 		
 		<p class="cp-info">{{ trans('oastack::oauth2.user.approve.info', (array) $client) }}</p>
 		
-		{{ Form::open (['before' => 'csrf', 'action'=> ['\Cloudoki\OaStack\Controllers\OaStackViewController@approve', 'approve'=> $user->id, 'session_token'=> $session_token]]) }}
+		{!! Form::open (['before' => 'csrf', 'action'=> ['\Cloudoki\OaStack\Controllers\OaStackViewController@approve', 'approve'=> $user->id, 'session_token'=> $session_token]]) !!}
 			
 		<div class="btn-group cp-input" role="group">
-			{{ Form::submit(trans('oastack::oauth2.user.approve.allow'), ['class'=> 'btn btn-default form-btn']) }}
+			{!! Form::submit(trans('oastack::oauth2.user.approve.allow'), ['class'=> 'btn btn-default form-btn']) !!}
 			<a href="logout" type="button" class="btn btn-default cp-btn">{{ trans('oastack::oauth2.user.approve.deny') }}</a>
 		</div>
 		
-		{{ Form::close () }}
+		{!! Form::close () !!}
 
 	</div>
 	

@@ -16,7 +16,7 @@
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span>
 				
-				{{ $error }}
+				{!! $error !!}
 			</div>
 			
 			<input type="submit" class='btn btn-default' onclick="history.go(-1);" value="{{ trans('oastack::oauth2.user.forgot.retry') }}" />
@@ -27,23 +27,23 @@
 			
 		
 	
-		{{ Form::open (['before' => 'csrf', 'action'=> 
+		{!! Form::open (['before' => 'csrf', 'action'=> 
 		   [
 			'\Cloudoki\OaStack\Controllers\OaStackViewController@resetrequest',
 			'client_id'=> Request::input ('client_id'), 'redirect_uri'=> Request::input ('redirect_uri'), 'response_type'=> Request::input ('response_type'), 'state'=> Request::input ('state')
 			]])
-		}}
+		!!}
 			
 			<div class="input-group">
-				{{ Form::label ('email', trans('oastack::oauth2.user.forgot.email'), ['class'=> 'input-group-addon']) }}
-				{{ Form::email ('email', '', ['required'=> 'required', 'class'=> 'form-control']) }}
+				{!! Form::label ('email', trans('oastack::oauth2.user.forgot.email'), ['class'=> 'input-group-addon']) !!}
+				{!! Form::email ('email', '', ['required'=> 'required', 'class'=> 'form-control']) !!}
 			</div>
 			<br>
 			
-			{{ Form::submit(trans('oastack::oauth2.user.forgot.submit'), ['class'=> 'btn btn-primary']) }}
-			{{ Form::button(trans('oastack::oauth2.user.forgot.back'), ['onclick'=> 'history.go(-1);', 'class'=> 'btn btn-default']) }}
+			{!! Form::submit(trans('oastack::oauth2.user.forgot.submit'), ['class'=> 'btn btn-primary']) !!}
+			{!! Form::button(trans('oastack::oauth2.user.forgot.back'), ['onclick'=> 'history.go(-1);', 'class'=> 'btn btn-default']) !!}
 		
-		{{ Form::close() }}
+		{!! Form::close() !!}
 		
 		@endif
 	</div>
