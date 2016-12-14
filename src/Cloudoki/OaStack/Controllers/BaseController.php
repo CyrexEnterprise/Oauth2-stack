@@ -5,7 +5,7 @@ namespace Cloudoki\OaStack\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -28,7 +28,6 @@ class BaseController extends Controller
 	 */
 	var $request;
 
-
 	/**
 	 * BaseController construct
 	 * MQ preps
@@ -49,7 +48,10 @@ class BaseController extends Controller
 		// Add display fallback
 		$attr['display'] = $this->request->input ('display', self::display);
 
-		return array_merge ($this->request->all(), $attr);
+		$postParams = $this->request->request->all();
+		$queryParams = $this->request->all();
+
+		return array_merge ($queryParams, $postParams, $attr);
 	}
 
 	/**
@@ -63,10 +65,8 @@ class BaseController extends Controller
 		// Add path attributes
 		$input = $this->prepInput ($input);
 
-
 		// Perform validation
 		$validator = Validator::make ($input, $rules);
-
 
 		// Check if the validator failed
 		if ($validator->fails ())
@@ -90,15 +90,15 @@ class BaseController extends Controller
 
 		# Response
 		$response = app()->frontqueue->request($job, $jobload);
-		
-		if (isset ($response->error)) 
-			
+
+		if (isset ($response->error))
+
 			return response ($response->error, $response->code);
 
 		# Frontqueue call
-		return $direct? 
-			
-			$response: 
+		return $direct?
+
+			$response:
 			response()->json ($response);
 	}
 
@@ -111,18 +111,46 @@ class BaseController extends Controller
 	 */
 	public function restDispatch ($method, $controller, $input = [], $rules = [])
 	{
+
 		# Extend rules
 		$rules = array_merge ($this->baseValidationRules, $rules);
 
 		# Validation
 		$payload = array_intersect_key ($this->validate ($input, $rules), $rules);
 
-		# Request Foreground Job
-		$response = self::jobdispatch ('controllerDispatch', (object) ['action'=> $method, 'controller'=>  $controller, 'payload'=> (object) $payload], true);
-		
-		return is_string ($response)? 
-		
-			json_decode ($response): 
+		$externalDispatcher = config ('oastack.jobDispatcher', null);
+
+		if ($externalDispatcher !== null) {
+			// Instead of using the built-in job dispatching logic,
+			// we call the user-specified method that handles it
+			// in the base application.
+			$dispatchFunc = array($externalDispatcher, 'dispatch');
+
+			$response = call_user_func($dispatchFunc,
+				'controllerDispatch',
+				(object) [
+					'action'=> $method,
+					'controller'=> $controller,
+					'payload'=> (object) $payload
+				],
+				true
+			);
+		} else {
+			# Request Foreground Job
+			$response = self::jobdispatch (
+				'controllerDispatch',
+				(object) [
+					'action'=> $method,
+					'controller'=> $controller,
+					'payload'=> (object) $payload
+				],
+				true
+			);
+		}
+
+		return is_string ($response)?
+
+			json_decode ($response):
 			(object) $response;
 	}
 

@@ -45,15 +45,29 @@ class OAuth2Controller extends Controller {
 			throw new \Cloudoki\InvalidParameterException ('Invalid client id or redirect uri');
 
 		}
-		# Validate user
-		if (!empty($payload->email)) {
-			$user = User::email ($payload->email)->first ();
-		} else {
+
+		if (empty($payload->email)) {
 			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
 		}
 
-		if (!isset($user) || !$user->checkPassword ($payload->password)) {
-			throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
+		$userModelClass = config ('oastack.userModel', null);
+
+		if ($userModelClass != null) {
+			// We have to use the base app's user model and authentication strategy
+			$userModel = app()->make($userModelClass);
+
+			$user = call_user_func(array($userModel, 'findByLoginId'), $payload->email);
+
+			if (!isset($user) || !$user->checkPassword ($payload->password)) {
+				throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
+			}
+		} else {
+			// We're allowed to use our own `user` model and authentication strategy
+			$user = User::email ($payload->email)->first ();
+
+			if (!isset($user) || !$user->checkPassword ($payload->password)) {
+				throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
+			}
 		}
 		# Validate Authorization
 		$authorization = $user->oauth2authorizations ()->where ('client_id', $client->getClientId ())->first ();
@@ -64,7 +78,7 @@ class OAuth2Controller extends Controller {
 				[
 					'access_token'=> Oauth2AccessToken::generateAccessToken(),
 					'client_id'=> $client->getClientId (),
-					'user_id'=> $user->getId (),
+					'user_id'=> $user->id,
 					'expires'=> new Carbon('+ 2 minute', Config::get ('app.timezone'))
 				]);
 
@@ -85,7 +99,7 @@ class OAuth2Controller extends Controller {
 					[
 						'access_token'=> Oauth2AccessToken::generateAccessToken(),
 						'client_id'=> $client->getClientId (),
-						'user_id'=> $user->getId (),
+						'user_id'=> $user->id,
 						'expires'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))->addYear ()
 					]);
 
@@ -111,19 +125,18 @@ class OAuth2Controller extends Controller {
 		# Validate session token
 		$sessiontoken = Oauth2AccessToken::whereAccessToken ($payload->session_token)->valid ()->first ();
 
-		if (!$sessiontoken || $sessiontoken->user->getId () != (int) $payload->approve)
+		if (!$sessiontoken || $sessiontoken->user->id != (int) $payload->approve)
 
 			throw new \Cloudoki\InvalidParameterException ('Session expired or invalid approval.');
 
-
 		# Token handling
-		Oauth2Authorization::create (['client_id'=> $sessiontoken->client->getClientId (), 'user_id'=> $sessiontoken->user->getId (), 'authorization_date'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))]);
+		Oauth2Authorization::create (['client_id'=> $sessiontoken->client->getClientId (), 'user_id'=> $sessiontoken->user->id, 'authorization_date'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))]);
 
 		$accesstoken = Oauth2AccessToken::create (
 			[
 				'access_token'=> Oauth2AccessToken::generateAccessToken(),
 				'client_id'=> $sessiontoken->client->getClientId (),
-				'user_id'=> $sessiontoken->user->getId (),
+				'user_id'=> $sessiontoken->user->id,
 				'expires'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))->addYear ()
 			]);
 

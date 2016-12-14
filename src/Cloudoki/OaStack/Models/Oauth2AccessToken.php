@@ -2,7 +2,6 @@
 
 namespace Cloudoki\OaStack\Models;
 
-use Cloudoki\OaStack\Models\User;
 use Cloudoki\OaStack\Models\Oauth2Client;
 use \Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -34,7 +33,8 @@ class Oauth2AccessToken extends Eloquent
 	 */
 	public function user ()
 	{
-		return $this->belongsTo (User::class);
+		$userModelClass = config ('oastack.userModel', 'Cloudoki\\OaStack\\Models\\User');
+		return $this->belongsTo ($userModelClass);
 	}
 
 	/**
@@ -98,6 +98,20 @@ class Oauth2AccessToken extends Eloquent
 		return $this->access_token;
 	}
 
+	/**
+	 *	Expires all authentication tokens of the provided user id.
+	 *
+	 *	@param	int	$userId
+	 *
+	 *	@return	null
+	 */
+	public static function expireAllUserTokens ($userId)
+	{
+		self::where('user_id', '=', $userId)
+			->whereRaw('expires > now()')
+			->update(['expires' => date('Y-m-d H:i:s')]);
+	}
+
 
 	/**
 	 * Generates an unique access token.
@@ -112,7 +126,7 @@ class Oauth2AccessToken extends Eloquent
 	 */
 	protected static function generateAccessToken()
 	{
-		if (function_exists('mcrypt_create_iv')) 
+		if (function_exists('mcrypt_create_iv'))
 		{
 			$randomData = mcrypt_create_iv(20, MCRYPT_DEV_URANDOM);
 			if ($randomData !== false && strlen($randomData) === 20)
@@ -128,7 +142,7 @@ class Oauth2AccessToken extends Eloquent
 				return bin2hex($randomData);
 		}
 
-		if (@file_exists('/dev/urandom')) 
+		if (@file_exists('/dev/urandom'))
 		{
 			$randomData = file_get_contents('/dev/urandom', false, null, 0, 20);
 			if ($randomData !== false && strlen($randomData) === 20)

@@ -14,7 +14,7 @@ class OaStackViewController extends BaseController {
 		'email'=> 'required|email',
 		'password'=> 'required|min:4',
 		'client_id'=> 'required|min:18',
-		'response_type'=> 'required|min:5',
+		'response_type'=> 'required|min:4',
 		'redirect_uri'=> 'required|min:8',
 		'state'=> ''
 	);
@@ -75,9 +75,10 @@ class OaStackViewController extends BaseController {
 	 */
 	public function loginrequest ()
 	{
+
 		// Request Foreground Job
 		$login = $this->restDispatch ('login', 'Cloudoki\OaStack\OAuth2Controller', [], self::$loginRules);
-		
+
 		if (isset ($login->error))
 
 			return view('oastack::oauth2.login', ['error'=> isset ($login->message)? $login->message: "something went wrong"]);
@@ -184,10 +185,10 @@ class OaStackViewController extends BaseController {
 	{
 		// Request Foreground Job
 		$invite = $this->restDispatch ('identifyinvite', 'Cloudoki\OaStack\OAuth2Controller', ['token'=> $token], self::$invitationRules);
-		
+
 
 		// Build View
-		return view ('oastack::oauth2.subscribe', 
+		return view ('oastack::oauth2.subscribe',
 		[
 			'user'=> (array) $invite->user,
 			'account'=> (array) $invite->account
