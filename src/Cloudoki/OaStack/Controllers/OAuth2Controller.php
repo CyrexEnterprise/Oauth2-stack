@@ -50,7 +50,7 @@ class OAuth2Controller extends Controller {
 			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
 		}
 
-		$userModelClass = config ('oastack.userModel', null);
+		$userModelClass = config ('oastack.user_model', null);
 
 		if ($userModelClass != null) {
 			// We have to use the base app's user model and authentication strategy

@@ -118,7 +118,7 @@ class BaseController extends Controller
 		# Validation
 		$payload = array_intersect_key ($this->validate ($input, $rules), $rules);
 
-		$externalDispatcher = config ('oastack.jobDispatcher', null);
+		$externalDispatcher = config ('oastack.job_dispatcher', null);
 
 		if ($externalDispatcher !== null) {
 			// Instead of using the built-in job dispatching logic,

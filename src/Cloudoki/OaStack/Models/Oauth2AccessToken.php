@@ -33,7 +33,7 @@ class Oauth2AccessToken extends Eloquent
 	 */
 	public function user ()
 	{
-		$userModelClass = config ('oastack.userModel', 'Cloudoki\\OaStack\\Models\\User');
+		$userModelClass = config ('oastack.user_model', 'Cloudoki\\OaStack\\Models\\User');
 		return $this->belongsTo ($userModelClass);
 	}
 
