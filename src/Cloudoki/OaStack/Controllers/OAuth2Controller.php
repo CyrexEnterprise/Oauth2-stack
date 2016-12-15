@@ -69,6 +69,7 @@ class OAuth2Controller extends Controller {
 				throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
 			}
 		}
+
 		# Validate Authorization
 		$authorization = $user->oauth2authorizations ()->where ('client_id', $client->getClientId ())->first ();
 
@@ -82,11 +83,13 @@ class OAuth2Controller extends Controller {
 					'expires'=> new Carbon('+ 2 minute', Config::get ('app.timezone'))
 				]);
 
+
+
 			return
 				[
 					'view'=> 'approve',
 					'session_token'=> $sessiontoken->getToken (),
-					'user'=> $user->schema ('basic'),
+					'user'=> $user->getViewPresenter (),
 					'client'=> $client->schema ('basic')
 				];
 		}
@@ -102,6 +105,7 @@ class OAuth2Controller extends Controller {
 						'user_id'=> $user->id,
 						'expires'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))->addYear ()
 					]);
+
 
 		return
 			[
@@ -248,7 +252,7 @@ class OAuth2Controller extends Controller {
 	public static function changepassword ($payload)
 	{
 		$token = $payload->reset_token;
-		
+
 		$user = User::email ($payload->email)
 			->whereHas ('accounts', function ($q) use ($token) { $q->where ('account_user.reset_token', $token); })
 			->first ();
@@ -263,7 +267,7 @@ class OAuth2Controller extends Controller {
 
 			throw new \Cloudoki\InvalidParameterException ('The passwords do not match.');
 
-		
+
 		# Update user
 		$user->setPassword ($payload->password)
 			->setResetToken (null)
@@ -305,7 +309,7 @@ class OAuth2Controller extends Controller {
 
 		else return
 			[
-				'user'=>  $user->schema ('full'),
+				'user'=>  $user->getViewPresenter (),
 				'account'=>  $account->schema ('basic')
 			];
 	}
@@ -361,7 +365,7 @@ class OAuth2Controller extends Controller {
 	public function registerclient ($payload = null)
 	{
 		$payload = $payload ?: json_decode (Input::get ('payload'));
-		
+
 		$client = new Oauth2Client();
 		$client->appendPayload ($payload)
 			->save();
