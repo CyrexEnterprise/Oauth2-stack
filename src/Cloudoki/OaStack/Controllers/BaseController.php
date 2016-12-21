@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Support\Facades\Redirect;
+use Cloudoki\OaStack\Exceptions\Handler as OaStackHandler;
 
 
 class BaseController extends Controller
@@ -34,6 +35,13 @@ class BaseController extends Controller
 	 */
 	public function __construct (Request $request)
 	{
+		// Override the base app's global exception handler with this
+		// package's custom exception handler
+		// As seen here: https://laracasts.com/discuss/channels/requests/custom-exception-handler-based-on-route-group
+		\App::singleton(
+			\Illuminate\Contracts\Debug\ExceptionHandler::class,
+			OaStackHandler::class
+		);
 		$this->request = $request;
 	}
 
