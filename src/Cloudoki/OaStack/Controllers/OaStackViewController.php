@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use Cloudoki\OaStack\Controllers\BaseController;
 use Cloudoki\InvalidParameterException;
+use Cloudoki\OaStack\Exceptions\Handler as OaStackHandler;
 
 class OaStackViewController extends BaseController {
 
@@ -58,6 +59,18 @@ class OaStackViewController extends BaseController {
 		'redirect'=> 'required|url',
 		'user_id' => 'required|integer',
 	);
+
+	public function __construct (Request $request)
+	{
+		parent::__construct($request);
+		// Override the base app's global exception handler with this
+		// package's custom exception handler
+		// As seen here: https://laracasts.com/discuss/channels/requests/custom-exception-handler-based-on-route-group
+		\App::singleton(
+			\Illuminate\Contracts\Debug\ExceptionHandler::class,
+			OaStackHandler::class
+		);
+	}
 
 	/**
 	 *	User Login
