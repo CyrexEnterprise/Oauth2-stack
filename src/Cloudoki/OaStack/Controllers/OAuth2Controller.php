@@ -50,24 +50,15 @@ class OAuth2Controller extends Controller {
 			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
 		}
 
-		$userModelClass = config ('oastack.user_model', null);
+		$userModelClass = config ('oastack.user_model', User::class);
 
-		if ($userModelClass != null) {
-			// We have to use the base app's user model and authentication strategy
-			$userModel = app()->make($userModelClass);
+		// We have to use the base app's user model and authentication strategy
+		$userModel = app()->make($userModelClass);
 
-			$user = call_user_func(array($userModel, 'findByLoginId'), $payload->email);
+		$user = call_user_func(array($userModel, 'findByLoginId'), $payload->email);
 
-			if (!isset($user) || !$user->checkPassword ($payload->password)) {
-				throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
-			}
-		} else {
-			// We're allowed to use our own `user` model and authentication strategy
-			$user = User::email ($payload->email)->first ();
-
-			if (!isset($user) || !$user->checkPassword ($payload->password)) {
-				throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
-			}
+		if (!isset($user) || !$user->checkPassword ($payload->password)) {
+			throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
 		}
 
 		# Validate Authorization

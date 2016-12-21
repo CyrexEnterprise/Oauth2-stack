@@ -5,6 +5,8 @@ use Cloudoki\OaStack\Models\BaseModel;
 use Cloudoki\OaStack\Models\Oauth2Authorization;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
+use Cloudoki\OaStack\Traits\User as UserTrait;
+
 /**
  *	User Model
  *	Add the namespace if you want to extend your custom User model with this one.
@@ -12,7 +14,8 @@ use Illuminate\Support\Facades\Hash;
 class User extends BaseModel
 {
 	use SoftDeletes;
-	
+	use UserTrait;
+
 	/**
 	 * The model type.
 	 *
@@ -40,36 +43,6 @@ class User extends BaseModel
 		return $this->belongsToMany ('Cloudoki\OaStack\Models\Account')->withPivot ('invitation_token');
 	}
 
-	/**
-	 * Acces Token relationship
-	 *
-	 * @return hasMany
-	 */
-	public function oauth2accesstokens ()
-	{
-		return $this->hasMany('Cloudoki\OaStack\Models\Oauth2AccessToken');
-	}
-
-	/**
-	 * Authorisations relationship
-	 *
-	 * @return hasMany
-	 */
-	public function oauth2authorizations ()
-	{
-		return $this->hasMany('Cloudoki\OaStack\Models\Oauth2Authorization');
-	}
-	
-	/**
-	 * Clients relationship
-	 *
-	 * @return hasMany
-	 */
-	public function oauth2clients ()
-	{
-		return $this->hasMany('Cloudoki\OaStack\Models\Oauth2Client');
-	}
-	
 	/**
 	 * Get Accounts
 	 * All accounts related to the user.
@@ -127,7 +100,7 @@ class User extends BaseModel
 	public function setFirstName ($firstname)
 	{
 		$this->firstname = $firstname;
-		
+
 		return $this;
 	}
 
@@ -149,10 +122,10 @@ class User extends BaseModel
 	public function setLastName ($name)
 	{
 		$this->lastname = $name;
-		
+
 		return $this;
 	}
-	
+
 	/**
 	 * Get user name
 	 *
@@ -181,7 +154,7 @@ class User extends BaseModel
 	public function setEmail ($email)
 	{
 		$this->email = $email;
-		
+
 		return $this;
 	}
 
@@ -194,19 +167,8 @@ class User extends BaseModel
 	public function setPassword($value)
 	{
 		$this->password = Hash::make ($value);
-		
-		return $this;
-	}
 
-	/**
-	 * Check password
-	 *
-	 * @param string $value
-	 * @return bool
-	 */
-	public function checkPassword ($value)
-	{
-		return Hash::check ($value, $this->password);
+		return $this;
 	}
 
 	/**
@@ -243,7 +205,7 @@ class User extends BaseModel
 
 		return md5 (uniqid ( $rand[rand (0, 9)] . ' ' . $rand[rand (0, 9)], true));
 	}
-	
+
 	/**
 	 *	Set Reset Token
 	 *
