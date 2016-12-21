@@ -13,13 +13,13 @@ class OastackCreateOauthAccessTokensTable extends Migration {
 	public function up()
 	{
 		if (!Schema::hasTable('oauth_access_tokens'))
-			
+
 			Schema::create ('oauth_access_tokens', function (Blueprint $table)
 			{
 				$table->increments ('id');
-				$table->string ('access_token', 40);
+				$table->string ('access_token', 40)->unique();
 				$table->string ('client_id', 80);
-				$table->integer ('user_id');
+				$table->integer ('user_id')->index();
 				$table->timestamp ('expires');
 				$table->string ('scope', 80)->nullable ();
 			});
