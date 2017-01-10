@@ -10,6 +10,7 @@ The goal of this package is to split it up in multiple Framework Branches. Right
 
 **v0.5** is the stable Laravel 5.2 compatible release
 
+**v5.1.x** is the tag pattern for the the stable Laravel 5.1 compatible release
 
 ##### Dependencies
 **Oauth2 Server** - The Oauth2 Stack is based on [Brent Shaffer's Oauth2 Server](https://github.com/bshaffer/oauth2-server-php), tweaked for multi-layer usage.
@@ -114,7 +115,7 @@ $ php artisan config:publish cloudoki/oauth2-stack
 ```
 *You may also create environment specific configs by placing them like so `app/config/packages/cloudoki/oastack/environment`.*
 
-**Laravel 5.2**
+**Laravel 5.1 and 5.2**
 ```
 $ php artisan vendor:publish
 ```
@@ -133,7 +134,7 @@ The Oauth2 related models, **Oauth2AccessToken**, **Oauth2Authorization**, **Oau
 $ php artisan migrate --package="cloudoki/oauth2-stack"
 ```
 
-**Laravel 5.2**
+**Laravel 5.1 and 5.2**
 ```
 $ php artisan vendor:publish --tag="migrations"
 ```
