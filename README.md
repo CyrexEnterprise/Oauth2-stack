@@ -88,6 +88,20 @@ $ nano app/config/app.php
 $ php artisan dump-autoload
 ```
 
+##Laravel 5.1
+
+Laravel 5.1 maintenance is kept in the `lvl51` branch and the releases are tagged as `v5.1.x`.
+
+For the installation follow the same instructions of the Laravel 5.2 installation. Just change the relevant line in `composer.json` to
+
+```
+"cloudoki/oauth2-stack": "v5.1.*"
+```
+
+or use a specific version to lock the dependency to it.
+
+---
+
 If you go deep into the package you'll find out that the `/oauth2` routes are defined right there.
 Feel free to override this by copy-pasting the routes to your project `./app/routes.php` file and disabling the include in `OaStackServiceProvider.php`. The same goes for the filters file, which identifies `auth`, a basic token check.
 
