@@ -3,6 +3,7 @@
 namespace Cloudoki\OaStack\Exceptions;
 
 use Exception;
+use Cloudoki\InvalidParameterException;
 use App\Exceptions\Handler as AppExceptionHandler;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -45,6 +46,11 @@ class Handler extends AppExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return response()->view('oastack::oauth2.login', ['error'=> 'Invalid request.']);
+        if ($e instanceof InvalidParameterException) {
+            $message = $e->getMessage();
+        } else {
+            $message = 'Invalid request.';
+        }
+        return response()->view('oastack::oauth2.login', ['error'=> $message]);
     }
 }
