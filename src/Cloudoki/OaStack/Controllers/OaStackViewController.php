@@ -142,6 +142,10 @@ class OaStackViewController extends BaseController {
 
 			return view('oastack::oauth2.reset', ['error'=> $reset->message]);
 
+		if (config('oastack.redirect_url'))
+
+			return redirect()->away(config('oastack.redirect_url'));
+
 		return redirect()->route('login');
 	}
 

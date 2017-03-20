@@ -14,5 +14,9 @@ return array(
 	
 	'invite_url' => 'http://localhost/oauth2/invitation',
 	'reset_url' =>  'http://localhost/oauth2/reset',
-	'privacy_url' => 'http://en.wikipedia.org/wiki/Privacy_policy'
+	'privacy_url' => 'http://en.wikipedia.org/wiki/Privacy_policy',
+	/*
+	 * The URL to which users should be redirected after resetting their password
+	 */
+	'redirect_url' => ''
 );
