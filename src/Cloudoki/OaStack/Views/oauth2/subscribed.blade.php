@@ -30,9 +30,15 @@
 	@else
 		
 		<p>{{ trans('oastack::oauth2.user.subscribed.info', ['account'=> $name]) }}</p>
-		
-		<a class="btn btn-default" href='{{ Config::get ('oastack.redirect_url') }}'>{{ trans('oastack::oauth2.user.subscribed.proceed') }}</a>
-		
+
+		@if ( empty ( Config::get ('oastack.redirect_url' ) ) )
+
+			<a class="btn btn-default" href='{{ Config::get ('oastack.redirect_url') }}'>{{ trans('oastack::oauth2.user.subscribed.proceed') }}</a>
+
+		@else
+
+			<a class="btn btn-default" href='{{ Config::get ('app.url') }}'>{{ trans('oastack::oauth2.user.subscribed.proceed') }}</a>
+
 	@endif
 	
 	</div>
