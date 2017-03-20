@@ -19,4 +19,6 @@ return array(
 	// Optional. The `user` model of the base application.
 	// The user model must use the provided Traits\User trait.
 	'user_model' =>  env('OASTACK_USER_MODEL', null),
+	// The URL to which users should be redirected after resetting their password
+	'redirect_url' => ''
 );
