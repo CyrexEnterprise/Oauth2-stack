@@ -5,7 +5,7 @@ namespace Cloudoki\OaStack\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Contracts\Validation\ValidationException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Redirect;
 
 class BaseController extends Controller
@@ -47,10 +47,7 @@ class BaseController extends Controller
 		// Add display fallback
 		$attr['display'] = $this->request->input ('display', self::display);
 
-		$postParams = $this->request->request->all();
-		$queryParams = $this->request->all();
-
-		return array_merge ($queryParams, $postParams, $attr);
+		return array_merge ($this->request->all(), $attr);
 	}
 
 	/**
