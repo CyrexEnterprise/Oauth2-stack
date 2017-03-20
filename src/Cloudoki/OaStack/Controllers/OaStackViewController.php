@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use Cloudoki\OaStack\Controllers\BaseController;
 use Cloudoki\InvalidParameterException;
+use Cloudoki\OaStack\Exceptions\Handler as OaStackHandler;
 
 class OaStackViewController extends BaseController {
 
@@ -14,7 +15,7 @@ class OaStackViewController extends BaseController {
 		'email'=> 'required|email',
 		'password'=> 'required|min:4',
 		'client_id'=> 'required|min:18',
-		'response_type'=> 'required|min:5',
+		'response_type'=> 'required|min:4',
 		'redirect_uri'=> 'required|min:8',
 		'state'=> ''
 	);
@@ -59,6 +60,18 @@ class OaStackViewController extends BaseController {
 		'user_id' => 'required|integer',
 	);
 
+	public function __construct (Request $request)
+	{
+		parent::__construct($request);
+		// Override the base app's global exception handler with this
+		// package's custom exception handler
+		// As seen here: https://laracasts.com/discuss/channels/requests/custom-exception-handler-based-on-route-group
+		\App::singleton(
+			\Illuminate\Contracts\Debug\ExceptionHandler::class,
+			OaStackHandler::class
+		);
+	}
+
 	/**
 	 *	User Login
 	 *	Show user login fields
@@ -75,12 +88,13 @@ class OaStackViewController extends BaseController {
 	 */
 	public function loginrequest ()
 	{
+
 		// Request Foreground Job
 		$login = $this->restDispatch ('login', 'Cloudoki\OaStack\OAuth2Controller', [], self::$loginRules);
-		
+
 		if (isset ($login->error))
 
-			return view('oastack::oauth2.login', ['error'=> isset ($login->message)? $login->message: "something went wrong"]);
+			return view('oastack::oauth2.login', ['error'=> isset ($login->error)? $login->error: "something went wrong"]);
 
 		else if (isset ($login->view))
 
@@ -188,10 +202,10 @@ class OaStackViewController extends BaseController {
 	{
 		// Request Foreground Job
 		$invite = $this->restDispatch ('identifyinvite', 'Cloudoki\OaStack\OAuth2Controller', ['token'=> $token], self::$invitationRules);
-		
+
 
 		// Build View
-		return view ('oastack::oauth2.subscribe', 
+		return view ('oastack::oauth2.subscribe',
 		[
 			'user'=> (array) $invite->user,
 			'account'=> (array) $invite->account

@@ -45,16 +45,22 @@ class OAuth2Controller extends Controller {
 			throw new \Cloudoki\InvalidParameterException ('Invalid client id or redirect uri');
 
 		}
-		# Validate user
-		if (!empty($payload->email)) {
-			$user = User::email ($payload->email)->first ();
-		} else {
+
+		if (empty($payload->email)) {
 			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
 		}
+
+		$userModelClass = config ('oastack.user_model', User::class);
+
+		// We have to use the base app's user model and authentication strategy
+		$userModel = app()->make($userModelClass);
+
+		$user = call_user_func(array($userModel, 'findByLoginId'), $payload->email);
 
 		if (!isset($user) || !$user->checkPassword ($payload->password)) {
 			throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
 		}
+
 		# Validate Authorization
 		$authorization = $user->oauth2authorizations ()->where ('client_id', $client->getClientId ())->first ();
 
@@ -64,15 +70,17 @@ class OAuth2Controller extends Controller {
 				[
 					'access_token'=> Oauth2AccessToken::generateAccessToken(),
 					'client_id'=> $client->getClientId (),
-					'user_id'=> $user->getId (),
+					'user_id'=> $user->id,
 					'expires'=> new Carbon('+ 2 minute', Config::get ('app.timezone'))
 				]);
+
+
 
 			return
 				[
 					'view'=> 'approve',
 					'session_token'=> $sessiontoken->getToken (),
-					'user'=> $user->schema ('basic'),
+					'user'=> $user->getViewPresenter (),
 					'client'=> $client->schema ('basic')
 				];
 		}
@@ -85,9 +93,10 @@ class OAuth2Controller extends Controller {
 					[
 						'access_token'=> Oauth2AccessToken::generateAccessToken(),
 						'client_id'=> $client->getClientId (),
-						'user_id'=> $user->getId (),
+						'user_id'=> $user->id,
 						'expires'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))->addYear ()
 					]);
+
 
 		return
 			[
@@ -111,19 +120,18 @@ class OAuth2Controller extends Controller {
 		# Validate session token
 		$sessiontoken = Oauth2AccessToken::whereAccessToken ($payload->session_token)->valid ()->first ();
 
-		if (!$sessiontoken || $sessiontoken->user->getId () != (int) $payload->approve)
+		if (!$sessiontoken || $sessiontoken->user->id != (int) $payload->approve)
 
 			throw new \Cloudoki\InvalidParameterException ('Session expired or invalid approval.');
 
-
 		# Token handling
-		Oauth2Authorization::create (['client_id'=> $sessiontoken->client->getClientId (), 'user_id'=> $sessiontoken->user->getId (), 'authorization_date'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))]);
+		Oauth2Authorization::create (['client_id'=> $sessiontoken->client->getClientId (), 'user_id'=> $sessiontoken->user->id, 'authorization_date'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))]);
 
 		$accesstoken = Oauth2AccessToken::create (
 			[
 				'access_token'=> Oauth2AccessToken::generateAccessToken(),
 				'client_id'=> $sessiontoken->client->getClientId (),
-				'user_id'=> $sessiontoken->user->getId (),
+				'user_id'=> $sessiontoken->user->id,
 				'expires'=> Carbon::now(new DateTimeZone(Config::get ('app.timezone')))->addYear ()
 			]);
 
@@ -235,7 +243,7 @@ class OAuth2Controller extends Controller {
 	public static function changepassword ($payload)
 	{
 		$token = $payload->reset_token;
-		
+
 		$user = User::email ($payload->email)
 			->whereHas ('accounts', function ($q) use ($token) { $q->where ('account_user.reset_token', $token); })
 			->first ();
@@ -250,7 +258,7 @@ class OAuth2Controller extends Controller {
 
 			throw new \Cloudoki\InvalidParameterException ('The passwords do not match.');
 
-		
+
 		# Update user
 		$user->setPassword ($payload->password)
 			->setResetToken (null)
@@ -292,7 +300,7 @@ class OAuth2Controller extends Controller {
 
 		else return
 			[
-				'user'=>  $user->schema ('full'),
+				'user'=>  $user->getViewPresenter (),
 				'account'=>  $account->schema ('basic')
 			];
 	}
@@ -348,7 +356,7 @@ class OAuth2Controller extends Controller {
 	public function registerclient ($payload = null)
 	{
 		$payload = $payload ?: json_decode (Input::get ('payload'));
-		
+
 		$client = new Oauth2Client();
 		$client->appendPayload ($payload)
 			->save();
