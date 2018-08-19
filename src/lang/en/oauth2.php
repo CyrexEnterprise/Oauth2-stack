@@ -10,7 +10,7 @@ return array(
 	| The following language lines are used by the /oauth2 views.
 	|
 	*/
-	
+
 	'user' =>
 	[
 		'login' =>
@@ -23,7 +23,7 @@ return array(
 			'retry'		=> 'Try again',
 			'forgot'	=> 'Forgot password?'
 		],
-		
+
 		'forgot' =>
 		[
 			'title'		=> 'Forgot Password',
@@ -33,7 +33,7 @@ return array(
 			'retry'		=> 'Try again',
 			'back'		=> 'Go back',
 		],
-		
+
 		'approve' =>
 		[
 			'title'		=> 'Authorize :name',
@@ -42,7 +42,7 @@ return array(
 			'deny'		=> 'Deny',
 			'footer'	=> 'You are logged in as :fullname.'
 		],
-		
+
 		'reset' =>
 		[
 			'title'		=> 'Reset Password',
@@ -53,7 +53,7 @@ return array(
 			'minchars'	=> 'min. 6 chars',
 			'submit'	=> 'Change'
 		],
-		
+
 		'invite' =>
 		[
 			'title'		=> 'Invite User',
@@ -65,9 +65,10 @@ return array(
 			'email'		=> 'E-mail address',
 			'eholder'	=> 'johndoe@gmail.com',
 			'account'	=> 'Account',
-			'submit'	=> 'Send Invite'
+			'submit'	=> 'Send Invite',
+			'footer'	=> 'You can find out more about our privacy policy at '
 		],
-		
+
 		'subscribe' =>
 		[
 			'subject'	=> 'User Registration',
@@ -85,7 +86,7 @@ return array(
 			'submit'	=> 'Register',
 			'footer'	=> 'You can find out more about our privacy policy at '
 		],
-		
+
 		'subscribed' =>
 		[
 			'title'	=> ':appname Registration',
@@ -94,7 +95,7 @@ return array(
 			'proceed'	=> 'Proceed'
 		]
 	],
-	
+
 	'app' =>
 	[
 		'register' =>
@@ -105,7 +106,7 @@ return array(
 			'redirect'		=> 'Redirect URI:',
 			'submit'		=> 'Register OAuth2 app'
 		],
-		
+
 		'registered' =>
 		[
 			'title'			=> 'OAuth2 app registered',
@@ -117,5 +118,5 @@ return array(
 			'more'			=> 'One More'
 		]
 	]
-	
+
 );

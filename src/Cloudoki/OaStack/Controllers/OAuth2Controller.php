@@ -19,6 +19,7 @@ use OAuth2\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 
@@ -43,18 +44,18 @@ class OAuth2Controller extends Controller {
 
 		$client = self::validateClient ($server, $request, $response);
 		if (!$client || $client->getRedirectUri () != $payload->redirect_uri) {
-			throw new MissingMandatoryParametersException ('Invalid client id or redirect uri');
+			throw new ValidationException ('Invalid client id or redirect uri');
 
 		}
 		# Validate user
 		if (!empty($payload->email)) {
 			$user = User::email ($payload->email)->first ();
 		} else {
-			throw new MissingMandatoryParametersException ('Invalid e-mail.');
+			throw new ValidationException ('Invalid e-mail.');
 		}
 
 		if (!isset($user) || !$user->checkPassword ($payload->password)) {
-			throw new MissingMandatoryParametersException ('Invalid password or e-mail.');
+			throw new ValidationException ('Invalid password or e-mail.');
 		}
 		# Validate Authorization
 		$authorization = $user->oauth2authorizations ()->where ('client_id', $client->getClientId ())->first ();

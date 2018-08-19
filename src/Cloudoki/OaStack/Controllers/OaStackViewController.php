@@ -4,8 +4,10 @@ namespace Cloudoki\OaStack\Controllers;
 
 use Validator;
 use Illuminate\Http\Request;
-use Cloudoki\OaStack\Controllers\BaseController;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
+use Cloudoki\OaStack\Controllers\BaseController;
+
 
 class OaStackViewController extends BaseController {
 
@@ -75,19 +77,20 @@ class OaStackViewController extends BaseController {
 	 */
 	public function loginrequest ()
 	{
-		// Request Foreground Job
-		$login = $this->restDispatch ('login', 'Cloudoki\OaStack\OAuth2Controller', [], self::$loginRules);
-
-		if (isset ($login->error))
-
+		try
+		{
+			// Request Foreground Job
+			$login = $this->restDispatch ('login', 'Cloudoki\OaStack\OAuth2Controller', [], self::$loginRules);
+		}
+		catch (ValidationException $e)
+		{
 			return view('oastack::oauth2.login', ['error'=> isset ($login->message)? $login->message: "something went wrong"]);
+		}
 
-		else if (isset ($login->view))
+		return isset ($login->view)?
 
-			return view ('oastack::oauth2.' . $login->view, (array) $login);
-
-
-		return redirect()->away($login->uri);
+				view ('oastack::oauth2.' . $login->view, (array) $login):
+				redirect()->away($login->uri);
 	}
 
 	/**
