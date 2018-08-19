@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Cloudoki\OaStack\Oauth2Verifier;
 use OAuth2\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 
 class OaStack
@@ -24,13 +26,13 @@ class OaStack
 		(
 			// Is there an access token?
 			!Input::get ('access_token') ||
-		
+
 			// Is the acces token valid?
 			!self::validAccess () ||
-		
+
 			// Is the user and account connected?
 			($accountid && !self::accountRelation ($accountid)) ||
-		
+
 			// Has the user the required roles for the account?
 			($accountid && count($roles) && !self::hasRoles ($accountid, $roles))
 		);
@@ -41,13 +43,13 @@ class OaStack
 	 *	Perform allow function, throw exception if not allowed.
 	 *
 	 *	@return void
-	 *	@throws \Cloudoki\InvalidUserException
+	 *	@throws AccessDeniedHttpException
 	 */
 	public static function check ($accountid = null, $roles = array())
 	{
 		if (!self::allowed($accountid, $roles))
-		
-			throw new \Cloudoki\InvalidUserException ('not authorized');
+
+			throw new AccessDeniedHttpException ();
 	}
 
 	/**
@@ -57,7 +59,7 @@ class OaStack
 	 *	@return User
 	 */
 	public static function user ()
-	{		
+	{
 		return Oauth2Verifier::getUser ();
 	}
 
@@ -79,14 +81,14 @@ class OaStack
 	 *	the where $apk function should be a find function. Look for new Eloquent versions solving the current bug.
 	 *
 	 *	@return boolean
-	 *	@throws \Cloudoki\InvalidParameterException
+	 *	@throws InvalidParameterException
 	 */
 	public static function accountRelation ($id)
 	{
 		if (!is_int ($id))
-		
-			throw new \Cloudoki\InvalidParameterException ('an integer ID is required');
-	
+
+			throw new InvalidParameterException ('an integer ID is required');
+
 		// User contains account
 		return self::user ()-> accounts->contains ($id);
 	}
@@ -98,7 +100,7 @@ class OaStack
 	 *  @param  int		$id			Account id to retreive rolesset from
 	 *  @param  string	$role		Required role
 	 *	@return boolean
-	 *	@throws \Cloudoki\InvalidParameterException
+	 *	@throws InvalidParameterException
 	 *
 	 *	User vs Account rolesset as array:
 	 *	return count ($roles) === count (array_intersect (self::user()->getRoles ($id), $roles));
@@ -107,10 +109,10 @@ class OaStack
 	public static function hasRoles ($id, $role)
 	{
 		if(!isset ($role) || !is_string ($role))
-	
-			throw new \Cloudoki\InvalidParameterException ('Invalid roletokens container type');
 
-	
+			throw new InvalidParameterException ('Invalid roletokens container type');
+
+
 		// User vs Account rolesset
 		return in_array ($role, self::user()->getRoles ($id));
 	}

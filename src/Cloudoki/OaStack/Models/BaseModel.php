@@ -18,7 +18,7 @@ class BaseModel extends Model
 	{
 		return new BaseCollection ($models);
 	}
-	
+
 	/**
 	 * Id
 	 * Get resource id
@@ -36,15 +36,14 @@ class BaseModel extends Model
 	 *
 	 * @param $display
 	 * @return object
-	 * @throws MissingParameterException
-	 * @throws MissingSchemeException
+	 * @throws ValidationException
 	 */
 	public function schema ($display)
 	{
 		$response = array();
 
 		$rules = (array) self::getScheme ($this::type . '.json');
-		
+
 		# Validate
 		if (!$display || !$rules)
 		{
@@ -71,7 +70,7 @@ class BaseModel extends Model
 	 *
 	 * @param $input
 	 * @return mixed
-	 * @throws MissingSchemeException
+	 * @throws ValidationException
 	 */
 	public function schemaUpdate ($input)
 	{
@@ -101,7 +100,7 @@ class BaseModel extends Model
 	 *
 	 * @param $filename
 	 * @return mixed
-	 * @throws MissingSchemeException
+	 * @throws ValidationException
 	 */
 	protected static function getScheme ($filename)
 	{
@@ -127,7 +126,7 @@ class BaseModel extends Model
 
 		return $model->getConstant($name);
 	}
-	
+
 	/**
 	 *	Get Meta
 	 *	Get non indexable data from object
@@ -138,20 +137,20 @@ class BaseModel extends Model
 	{
 		# Check for existance
 		if (!$this->meta) return null;
-		
+
 		# Convert if required
 		if (!isset ($this->meta_json))
-			
+
 			$this->meta_json = json_decode ($this->meta, true);
-		
-		
+
+
 		# Retrieve value from meta
 		return isset ($this->meta_json[$key])?
-		
+
 			$this->meta_json[$key]:
 			null;
 	}
-	
+
 	/**
 	 *	Set Meta
 	 *	Set non indexable data on object
@@ -163,12 +162,12 @@ class BaseModel extends Model
 	{
 		# Convert if required
 		if (!isset ($this->meta_json))
-			
+
 			$this->meta_json = json_decode ($this->meta?: "{}", true);
-		
+
 		# The scheme update function
 		# should be updated for :-style $key parsing
-					
+
 		return $this;
 	}
 

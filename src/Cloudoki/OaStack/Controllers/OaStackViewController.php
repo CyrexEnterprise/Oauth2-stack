@@ -5,7 +5,7 @@ namespace Cloudoki\OaStack\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use Cloudoki\OaStack\Controllers\BaseController;
-use Cloudoki\InvalidParameterException;
+use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 
 class OaStackViewController extends BaseController {
 
@@ -77,7 +77,7 @@ class OaStackViewController extends BaseController {
 	{
 		// Request Foreground Job
 		$login = $this->restDispatch ('login', 'Cloudoki\OaStack\OAuth2Controller', [], self::$loginRules);
-		
+
 		if (isset ($login->error))
 
 			return view('oastack::oauth2.login', ['error'=> isset ($login->message)? $login->message: "something went wrong"]);
@@ -188,10 +188,10 @@ class OaStackViewController extends BaseController {
 	{
 		// Request Foreground Job
 		$invite = $this->restDispatch ('identifyinvite', 'Cloudoki\OaStack\OAuth2Controller', ['token'=> $token], self::$invitationRules);
-		
+
 
 		// Build View
-		return view ('oastack::oauth2.subscribe', 
+		return view ('oastack::oauth2.subscribe',
 		[
 			'user'=> (array) $invite->user,
 			'account'=> (array) $invite->account
@@ -211,7 +211,7 @@ class OaStackViewController extends BaseController {
 			// Request Foreground Job
 			$response = $this->restDispatch ('subscribe', 'Cloudoki\OaStack\OAuth2Controller', ['token'=> $token], self::$subscribeRules);
 		}
-		catch (\Cloudoki\InvalidParameterException $e)
+		catch (Exception $e)
 		{
 			$response = ['errors'=> $e->getErrors ()];
 		}
@@ -242,7 +242,7 @@ class OaStackViewController extends BaseController {
 			// Request Foreground Job
 			$response = $this->restDispatch ('registerclient', 'Cloudoki\OaStack\OAuth2Controller', [], self::$postRules);
 		}
-		catch (\Cloudoki\InvalidParameterException $e)
+		catch (Exception $e)
 		{
 			$response = ['error'=> $e->getErrors ()];
 		}

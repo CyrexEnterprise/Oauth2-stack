@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
 /*
 |--------------------------------------------------------------------------
 | API-side Authentication Filter
@@ -13,20 +15,20 @@ Route::filter ('auth', function()
 {
 	# Default bearer
 	$bearer = Request::header ('Authorization');
-	
-	
+
+
 	# Get based bearer, debug only
 	if(!$bearer && Config::get ('app.debug'))
-	
+
 		$bearer = Input::get('bearer');
-	
+
 	if(!$bearer || strlen ($bearer) < 18)
-	
-		throw new \InvalidUserException ('no valid authorization provided');
-	
+
+		throw new AccessDeniedHttpException ('no valid authorization provided');
+
 
 	# Add Access token to input
 	$bearer = explode(' ', $bearer);
-	
+
 	Input::merge (array('access_token'=> array_pop ($bearer)));
 });
