@@ -86,7 +86,7 @@ class OaStackViewController extends BaseController {
 		{
 			return view('oastack::oauth2.login', ['error'=> isset ($login->message)? $login->message: "something went wrong"]);
 		}
-
+		return response()->json($login)
 		return isset ($login->view)?
 
 				view ('oastack::oauth2.' . $login->view, (array) $login):

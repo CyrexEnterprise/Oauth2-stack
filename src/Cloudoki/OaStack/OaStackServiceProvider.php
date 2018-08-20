@@ -61,11 +61,14 @@ class OaStackServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-
-		$this->app['oastack'] = $this->app->share(function($app)
+		$this->app->singleton('oastack', function ($app)
+		{
+    	return new OaStack;
+    });
+		/*$this->app['oastack'] = $this->app->share(function($app)
 		{
 			return new OaStack;
-		});
+		});*/
 	}
 
 	/**

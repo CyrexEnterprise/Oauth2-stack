@@ -38,7 +38,7 @@ class OAuth2Controller extends Controller {
 		# Add payload to GET
 		$_GET = (array) $payload;
 		# Validate client
-		$server = Oauth2Verifier::getInstance ()->getServer ();
+		$server = Oauth2Verifier::getInstance ($payload)->getServer ();
 		$request = Oauth2Verifier::getInstance ()->getRequest ();
 		$response = new Response();
 
