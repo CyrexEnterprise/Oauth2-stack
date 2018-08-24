@@ -6,7 +6,6 @@ use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
-use Cloudoki\OaStack\Controllers\BaseController;
 use Cloudoki\InvalidParameterException;
 use Cloudoki\OaStack\Exceptions\Handler as OaStackHandler;
 

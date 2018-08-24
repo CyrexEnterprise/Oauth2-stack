@@ -6,14 +6,11 @@ use Mail;
 use Config;
 use DateTimeZone;
 
-use Cloudoki\OaStack;
 use Cloudoki\OaStack\Models\User;
 use Cloudoki\OaStack\Models\Account;
 use Cloudoki\OaStack\Models\Oauth2Client;
 use Cloudoki\OaStack\Models\Oauth2AccessToken;
 use Cloudoki\OaStack\Models\Oauth2Authorization;
-use Cloudoki\OaStack\Oauth2Verifier;
-
 use Carbon\Carbon;
 use OAuth2\Response;
 use Illuminate\Routing\Controller;
