@@ -18,7 +18,7 @@
 			<span class="sr-only">Error:</span>
 			
 			@foreach ($error as $message) 
-				{{ $message }}
+				{!! $message !!}
 				<br>
 			@endforeach
 		</div>
@@ -58,7 +58,7 @@
 		<br>
 		
 		<div class="well well-sm">
-			{{ $redirecturi or "" }}
+			{!! $redirecturi or "" !!}
 		</div>
 
 	@endif
