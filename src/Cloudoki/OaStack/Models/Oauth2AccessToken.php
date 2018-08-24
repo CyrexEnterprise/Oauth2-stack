@@ -124,7 +124,7 @@ class Oauth2AccessToken extends Eloquent
 	 *
 	 * @ingroup oauth2_section_4
 	 */
-	protected static function generateAccessToken()
+	public static function generateAccessToken()
 	{
 		if (function_exists('mcrypt_create_iv'))
 		{

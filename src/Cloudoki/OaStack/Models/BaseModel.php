@@ -54,14 +54,14 @@ class BaseModel extends Model
 		if ($display == 'id') return $this->getId ();
 
 		# Evaluate schema
-		foreach ($rules [$display] as $key => $funcpair)
-		{
-			$func = explode (':', $funcpair);
-
-			$response[$key] = $this::$func[0] (isset ($func[1])? $func[1]: null, isset ($func[2])? $func[2]: null);
-		}
-
-		return (object) $response;
+		foreach ($rules [$display] as $key => $funcpair) {
+            $func = explode(':', $funcpair);
+            
+            $functionName = $func[0];
+            $response[$key] = $this->$functionName (isset ($func[1]) ? $func[1] : null, isset ($func[2]) ? $func[2] : null);
+        }
+        
+        return (object) $response;
 	}
 
 	/**
