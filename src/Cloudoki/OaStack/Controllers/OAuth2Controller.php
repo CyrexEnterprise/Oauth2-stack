@@ -46,7 +46,7 @@ class OAuth2Controller extends Controller {
 		}
 
 		if (empty($payload->email)) {
-			throw new \Cloudoki\InvalidParameterException ('Invalid e-mail.');
+			throw new InvalidParameterException ('Invalid e-mail.');
 		}
 
 		$userModelClass = config ('oastack.user_model', null);
@@ -58,14 +58,14 @@ class OAuth2Controller extends Controller {
 			$user = call_user_func(array($userModel, 'findByLoginId'), $payload->email);
 
 			if (!isset($user) || !$user->checkPassword ($payload->password)) {
-				throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
+				throw new InvalidParameterException ('Invalid password or e-mail.');
 			}
 		} else {
 			// We're allowed to use our own `user` model and authentication strategy
 			$user = User::email ($payload->email)->first ();
 
 			if (!isset($user) || !$user->checkPassword ($payload->password)) {
-				throw new \Cloudoki\InvalidParameterException ('Invalid password or e-mail.');
+				throw new InvalidParameterException ('Invalid password or e-mail.');
 			}
 		}
 

@@ -3,12 +3,12 @@
 namespace Cloudoki\OaStack\Exceptions;
 
 use Exception;
-use Cloudoki\InvalidParameterException;
 use App\Exceptions\Handler as AppExceptionHandler;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends AppExceptionHandler
